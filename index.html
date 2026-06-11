@@ -8,9 +8,10 @@
     <style>
         :root {
             --gold: #FFD700;
-            --bg: #0a0a0a;
-            --card: #111;
-            --border: #222;
+            --gold2: #FFC107;
+            --bg: #060606;
+            --card: #0f0f0f;
+            --border: #1a1a1a;
         }
 
         * {
@@ -26,58 +27,102 @@
             overflow-x: hidden;
         }
 
+        /* HEADER */
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 30px;
-            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+            padding: 14px 35px;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.15);
             position: sticky;
             top: 0;
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(20px);
+            background: rgba(6, 6, 6, 0.97);
+            backdrop-filter: blur(25px);
             z-index: 1000;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 6px;
-            font-size: 26px;
+            gap: 8px;
+            font-size: 28px;
             font-weight: 900;
             color: var(--gold);
             text-decoration: none;
+            letter-spacing: -1px;
         }
 
         .logo-icon {
             position: relative;
-            font-size: 36px;
+            font-size: 40px;
             font-weight: 900;
             color: var(--gold);
         }
 
-        .logo-icon .crown {
+        .logo-crown {
             position: absolute;
-            top: -18px;
+            top: -20px;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 16px;
+            font-size: 18px;
+            animation: float 2s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            50% {
+                transform: translateX(-50%) translateY(-5px);
+            }
         }
 
         .header-btn {
-            background: var(--gold);
-            color: #0a0a0a;
+            background: linear-gradient(135deg, var(--gold), var(--gold2));
+            color: #000;
             border: none;
-            padding: 10px 20px;
+            padding: 11px 24px;
             font-weight: 700;
             font-size: 13px;
             cursor: pointer;
             border-radius: 50px;
+            transition: all 0.3s;
+            letter-spacing: 0.5px;
         }
 
+        .header-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+        }
+
+        /* HERO */
         .hero {
-            padding: 60px 30px 40px;
+            padding: 70px 35px 50px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(255, 215, 0, 0.03) 0%, transparent 60%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
         }
 
         .hero-badge {
@@ -85,39 +130,54 @@
             background: rgba(255, 215, 0, 0.1);
             border: 1px solid rgba(255, 215, 0, 0.3);
             color: var(--gold);
-            padding: 8px 20px;
+            padding: 8px 22px;
             border-radius: 50px;
             font-size: 13px;
             font-weight: 600;
-            margin-bottom: 25px;
+            margin-bottom: 28px;
+            letter-spacing: 1px;
+            position: relative;
         }
 
         .hero h1 {
-            font-size: 48px;
+            font-size: 52px;
             font-weight: 900;
-            line-height: 1.1;
-            margin-bottom: 15px;
+            line-height: 1.15;
+            margin-bottom: 18px;
+            letter-spacing: -1.5px;
+            position: relative;
         }
 
         .hero h1 .gold {
             color: var(--gold);
+            text-shadow: 0 0 40px rgba(255, 215, 0, 0.3);
         }
 
         .hero p {
-            font-size: 16px;
-            color: #999;
-            margin-bottom: 30px;
+            font-size: 17px;
+            color: #888;
+            margin-bottom: 35px;
+            position: relative;
+            max-width: 550px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
         }
 
         .hero-stats {
             display: flex;
             justify-content: center;
-            gap: 40px;
+            gap: 50px;
             flex-wrap: wrap;
+            position: relative;
+        }
+
+        .stat-item {
+            text-align: center;
         }
 
         .stat-number {
-            font-size: 32px;
+            font-size: 34px;
             font-weight: 900;
             color: var(--gold);
             display: block;
@@ -125,154 +185,208 @@
 
         .stat-label {
             font-size: 12px;
-            color: #777;
+            color: #666;
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
+        /* PLATFORM TABS */
         .platform-tabs {
             display: flex;
             justify-content: center;
-            gap: 8px;
-            padding: 20px 30px;
+            gap: 10px;
+            padding: 20px 35px 10px;
             flex-wrap: wrap;
         }
 
         .platform-tab {
-            padding: 10px 20px;
-            border: 1px solid #333;
+            padding: 10px 22px;
+            border: 1px solid #222;
             background: transparent;
-            color: #fff;
+            color: #aaa;
             cursor: pointer;
             font-size: 13px;
             font-weight: 600;
             border-radius: 50px;
             transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .platform-tab img {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            object-fit: cover;
         }
 
         .platform-tab:hover,
         .platform-tab.active {
             background: var(--gold);
-            color: #0a0a0a;
+            color: #000;
             border-color: var(--gold);
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.2);
         }
 
+        /* SERVICES */
         .services {
-            padding: 20px 30px 60px;
-            max-width: 1100px;
+            padding: 20px 35px 70px;
+            max-width: 1150px;
             margin: 0 auto;
         }
 
         .section-title {
             text-align: center;
-            font-size: 32px;
+            font-size: 30px;
             font-weight: 900;
-            margin-bottom: 40px;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 13px;
+            margin-bottom: 35px;
         }
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 16px;
         }
 
         .service-card {
             background: var(--card);
             border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 22px 18px;
+            border-radius: 16px;
+            padding: 25px 20px;
             text-align: center;
             transition: all 0.3s;
             position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .service-card:hover::before {
+            opacity: 1;
         }
 
         .service-card:hover {
             border-color: var(--gold);
-            transform: translateY(-3px);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
         }
 
         .service-card.popular {
             border-color: var(--gold);
-            background: linear-gradient(180deg, #1a1a08 0%, #111 100%);
+            background: linear-gradient(180deg, #1a1a06 0%, #0f0f0f 100%);
         }
 
         .popular-badge {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            background: var(--gold);
-            color: #0a0a0a;
+            top: 12px;
+            right: 12px;
+            background: linear-gradient(135deg, var(--gold), #FFA000);
+            color: #000;
             font-size: 10px;
             font-weight: 700;
-            padding: 4px 10px;
+            padding: 5px 12px;
             border-radius: 50px;
         }
 
         .service-icon {
-            font-size: 36px;
-            margin-bottom: 8px;
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 12px;
+            display: block;
+            border-radius: 12px;
         }
 
         .service-type {
-            font-size: 12px;
-            color: #aaa;
+            font-size: 11px;
+            color: #888;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
+            letter-spacing: 1.5px;
+            margin-bottom: 6px;
+            font-weight: 600;
         }
 
         .service-quantity {
-            font-size: 26px;
+            font-size: 28px;
             font-weight: 900;
             color: var(--gold);
-            margin-bottom: 3px;
+            margin-bottom: 4px;
         }
 
         .service-desc {
-            color: #777;
+            color: #666;
             font-size: 11px;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
 
         .service-price {
             font-size: 22px;
             font-weight: 900;
-            margin-bottom: 3px;
+            margin-bottom: 4px;
         }
 
         .service-price .old {
             text-decoration: line-through;
-            color: #555;
+            color: #444;
             font-size: 13px;
-            margin-right: 5px;
+            margin-right: 6px;
+            font-weight: 400;
         }
 
         .service-delivery {
             font-size: 11px;
             color: #4CAF50;
-            margin-bottom: 6px;
+            margin-bottom: 5px;
+            font-weight: 600;
         }
 
         .service-warning {
             font-size: 10px;
             color: #ff6b6b;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
             font-weight: 600;
+            background: rgba(255, 107, 107, 0.08);
+            padding: 5px 10px;
+            border-radius: 6px;
+            display: inline-block;
         }
 
         .btn-buy {
             width: 100%;
-            padding: 11px;
-            background: var(--gold);
-            color: #0a0a0a;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--gold), #FFC107);
+            color: #000;
             border: none;
             font-weight: 700;
-            font-size: 13px;
+            font-size: 14px;
             cursor: pointer;
             border-radius: 10px;
             transition: all 0.3s;
+            letter-spacing: 0.5px;
         }
 
         .btn-buy:hover {
-            background: #FFE44D;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+            transform: scale(1.02);
         }
 
         /* MODAL */
@@ -283,7 +397,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(0, 0, 0, 0.96);
             z-index: 2000;
             justify-content: center;
             align-items: center;
@@ -295,70 +409,81 @@
 
         .modal {
             background: #111;
-            border: 1px solid #333;
-            border-radius: 18px;
-            padding: 35px 25px;
-            max-width: 430px;
-            width: 90%;
+            border: 1px solid #2a2a2a;
+            border-radius: 20px;
+            padding: 35px 28px;
+            max-width: 440px;
+            width: 92%;
             text-align: center;
             position: relative;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
         }
 
         .modal-close {
             position: absolute;
-            top: 15px;
-            right: 15px;
+            top: 14px;
+            right: 14px;
             background: none;
             border: none;
-            color: #fff;
+            color: #666;
             font-size: 22px;
             cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .modal-close:hover {
+            color: #fff;
         }
 
         .modal-icon {
-            font-size: 50px;
-            margin-bottom: 10px;
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 12px;
+            display: block;
+            border-radius: 14px;
         }
 
         .modal h2 {
-            font-size: 20px;
-            margin-bottom: 5px;
+            font-size: 21px;
+            margin-bottom: 4px;
+            font-weight: 700;
         }
 
         .modal-quantity {
-            font-size: 28px;
+            font-size: 30px;
             font-weight: 900;
             color: var(--gold);
             margin: 8px 0;
         }
 
         .modal-price {
-            font-size: 32px;
+            font-size: 34px;
             font-weight: 900;
-            margin: 10px 0;
+            margin: 12px 0;
         }
 
         .modal-warning {
             background: rgba(255, 107, 107, 0.1);
-            border: 1px solid rgba(255, 107, 107, 0.3);
+            border: 1px solid rgba(255, 107, 107, 0.25);
             color: #ff6b6b;
-            padding: 10px;
-            border-radius: 8px;
+            padding: 10px 14px;
+            border-radius: 10px;
             font-size: 13px;
             font-weight: 600;
-            margin-bottom: 15px;
+            margin-bottom: 18px;
         }
 
         .modal-input {
             width: 100%;
-            padding: 12px;
+            padding: 13px;
             background: #0a0a0a;
-            border: 1px solid #333;
+            border: 1px solid #2a2a2a;
             color: #fff;
             border-radius: 10px;
             font-size: 15px;
-            margin-bottom: 15px;
+            margin-bottom: 16px;
             text-align: center;
+            transition: border 0.3s;
         }
 
         .modal-input:focus {
@@ -366,31 +491,70 @@
             border-color: var(--gold);
         }
 
-        .btn-pay {
-            width: 100%;
-            padding: 14px;
-            background: var(--gold);
-            color: #0a0a0a;
-            border: none;
-            font-weight: 700;
-            font-size: 15px;
-            cursor: pointer;
-            border-radius: 10px;
+        .pix-section {
+            background: #0a0a0a;
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 14px;
         }
 
-        /* UPSELL MODAL */
+        .pix-section .pix-label {
+            color: #888;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        .pix-key-box {
+            background: #151515;
+            border: 1px solid #333;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            word-break: break-all;
+            cursor: pointer;
+            color: #ccc;
+            transition: all 0.3s;
+            user-select: all;
+        }
+
+        .pix-key-box:hover {
+            border-color: var(--gold);
+            color: #fff;
+        }
+
+        .pix-name {
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        .copied-msg {
+            color: #4CAF50;
+            font-size: 12px;
+            margin-top: 8px;
+            display: none;
+            font-weight: 600;
+        }
+
+        .copied-msg.show {
+            display: block;
+        }
+
+        /* UPSELL */
         .upsell-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
-            margin: 15px 0;
+            margin: 16px 0;
         }
 
         .upsell-item {
             background: #0a0a0a;
-            border: 1px solid #333;
+            border: 1px solid #2a2a2a;
             border-radius: 12px;
-            padding: 15px;
+            padding: 16px;
             cursor: pointer;
             transition: all 0.3s;
             text-align: center;
@@ -398,35 +562,51 @@
 
         .upsell-item:hover {
             border-color: var(--gold);
+            background: #111;
         }
 
-        .upsell-item .upsell-name {
-            font-size: 12px;
-            color: #aaa;
+        .upsell-item .upsell-type {
+            font-size: 10px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             margin-bottom: 4px;
         }
 
         .upsell-item .upsell-qty {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: 900;
             color: var(--gold);
         }
 
         .upsell-item .upsell-price {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 700;
+            margin-top: 4px;
+        }
+
+        .upsell-tag {
+            font-size: 10px;
+            color: #4CAF50;
+            font-weight: 600;
         }
 
         .btn-skip {
             background: transparent;
-            border: 1px solid #444;
-            color: #999;
+            border: 1px solid #333;
+            color: #777;
             padding: 10px;
             cursor: pointer;
             border-radius: 10px;
             width: 100%;
             margin-top: 8px;
             font-size: 13px;
+            transition: all 0.3s;
+        }
+
+        .btn-skip:hover {
+            color: #fff;
+            border-color: #555;
         }
 
         /* CHAT */
@@ -438,28 +618,34 @@
         }
 
         .chat-bubble {
-            width: 55px;
-            height: 55px;
-            background: var(--gold);
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--gold), #FFC107);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            font-size: 26px;
-            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.3);
+            font-size: 24px;
+            box-shadow: 0 8px 35px rgba(255, 215, 0, 0.35);
+            transition: transform 0.3s;
+        }
+
+        .chat-bubble:hover {
+            transform: scale(1.1);
         }
 
         .chat-box {
             display: none;
             position: absolute;
-            bottom: 70px;
+            bottom: 72px;
             right: 0;
-            width: 320px;
+            width: 330px;
             background: #111;
-            border: 1px solid #333;
-            border-radius: 14px;
+            border: 1px solid #2a2a2a;
+            border-radius: 16px;
             overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
         }
 
         .chat-box.active {
@@ -467,79 +653,135 @@
         }
 
         .chat-header {
-            background: var(--gold);
-            color: #0a0a0a;
-            padding: 12px 18px;
+            background: linear-gradient(135deg, #1a1a1a, #111);
+            color: var(--gold);
+            padding: 14px 18px;
             font-weight: 700;
             font-size: 14px;
+            border-bottom: 1px solid #222;
         }
 
         .chat-messages {
-            height: 250px;
+            height: 240px;
             overflow-y: auto;
-            padding: 15px;
+            padding: 14px;
         }
 
         .chat-msg {
             margin-bottom: 12px;
-            font-size: 13px;
+            font-size: 12px;
+            line-height: 1.5;
         }
 
         .chat-msg.bot {
-            color: #ccc;
+            color: #bbb;
+            background: #181818;
+            padding: 10px 14px;
+            border-radius: 0 12px 12px 12px;
+            display: inline-block;
+            max-width: 85%;
         }
 
         .chat-msg.user {
             text-align: right;
-            color: var(--gold);
+            color: #000;
+            background: var(--gold);
+            padding: 10px 14px;
+            border-radius: 12px 0 12px 12px;
+            display: inline-block;
+            max-width: 85%;
+            float: right;
+            clear: both;
         }
 
         .chat-input-area {
             display: flex;
-            border-top: 1px solid #333;
+            border-top: 1px solid #222;
         }
 
         .chat-input-area input {
             flex: 1;
-            padding: 12px;
+            padding: 12px 14px;
             background: #0a0a0a;
             border: none;
             color: #fff;
             font-size: 13px;
         }
 
+        .chat-input-area input:focus {
+            outline: none;
+        }
+
         .chat-input-area button {
-            padding: 12px 15px;
+            padding: 12px 16px;
             background: var(--gold);
-            color: #0a0a0a;
+            color: #000;
             border: none;
             font-weight: 700;
             cursor: pointer;
+            font-size: 16px;
+        }
+
+        /* FEATURES */
+        .features {
+            padding: 60px 35px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin-top: 35px;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .feature-emoji {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .feature-title {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .feature-desc {
+            color: #777;
+            font-size: 12px;
+            line-height: 1.5;
         }
 
         /* FOOTER */
         footer {
             text-align: center;
-            padding: 40px 30px;
-            border-top: 1px solid #222;
+            padding: 45px 35px 30px;
+            border-top: 1px solid #1a1a1a;
+            background: #040404;
         }
 
         .footer-links {
             display: flex;
             justify-content: center;
-            gap: 25px;
-            margin-bottom: 20px;
+            gap: 30px;
+            margin-bottom: 18px;
             flex-wrap: wrap;
         }
 
         .footer-link {
-            color: #fff;
+            color: #ccc;
             text-decoration: none;
             font-size: 14px;
             font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 7px;
             transition: color 0.3s;
         }
 
@@ -548,20 +790,31 @@
         }
 
         .footer-copy {
-            color: #555;
-            font-size: 12px;
+            color: #444;
+            font-size: 11px;
             margin-top: 15px;
+            letter-spacing: 1px;
+        }
+
+        .footer-pix {
+            color: #666;
+            font-size: 11px;
+            margin-top: 8px;
+            word-break: break-all;
         }
 
         @media (max-width: 768px) {
             .header {
                 padding: 12px 15px;
             }
+            .logo {
+                font-size: 22px;
+            }
             .hero {
-                padding: 40px 15px;
+                padding: 40px 15px 30px;
             }
             .hero h1 {
-                font-size: 32px;
+                font-size: 30px;
             }
             .hero-stats {
                 gap: 20px;
@@ -570,11 +823,17 @@
                 font-size: 24px;
             }
             .services {
-                padding: 20px 15px;
+                padding: 15px 15px 40px;
             }
             .services-grid {
                 grid-template-columns: 1fr 1fr;
                 gap: 10px;
+            }
+            .service-card {
+                padding: 18px 12px;
+            }
+            .service-quantity {
+                font-size: 22px;
             }
             .chat-box {
                 width: 280px;
@@ -587,66 +846,79 @@
     <header class="header">
         <a href="#" class="logo">
             <span class="logo-icon">
-                <span class="crown">👑</span>
+                <span class="logo-crown">👑</span>
                 6
             </span>
             SIXGROW
         </a>
-        <button class="header-btn" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">COMPRAR</button>
+        <button class="header-btn" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">COMPRAR AGORA</button>
     </header>
 
     <section class="hero">
-        <div class="hero-badge">⭐ A MAIS CONFIÁVEL DO BRASIL</div>
+        <div class="hero-badge">👑 A MAIS CONFIÁVEL DO BRASIL</div>
         <h1>Domine as <span class="gold">Redes Sociais</span> com SixGrow</h1>
-        <p>Seguidores, curtidas e visualizações para Instagram, TikTok e Spotify. Entrega rápida e suporte 24h.</p>
+        <p>Seguidores, curtidas e visualizações para Instagram, TikTok, Spotify e Twitch. Entrega em 10 minutos e suporte 24h.</p>
         <div class="hero-stats">
-            <div class="stat-item">
-                <span class="stat-number" id="counterClients">0</span>
-                <span class="stat-label">Clientes</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number" id="counterServices">0</span>
-                <span class="stat-label">Entregas</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">99.9%</span>
-                <span class="stat-label">Satisfação</span>
-            </div>
+            <div class="stat-item"><span class="stat-number" id="counterClients">0</span><span class="stat-label">Clientes</span></div>
+            <div class="stat-item"><span class="stat-number" id="counterServices">0</span><span class="stat-label">Entregas</span></div>
+            <div class="stat-item"><span class="stat-number">99.9%</span><span class="stat-label">Satisfação</span></div>
         </div>
     </section>
 
     <div class="platform-tabs" id="platformTabs">
-        <button class="platform-tab active" data-platform="instagram">📱 Instagram</button>
-        <button class="platform-tab" data-platform="tiktok">🎵 TikTok</button>
-        <button class="platform-tab" data-platform="spotify">🟢 Spotify</button>
+        <button class="platform-tab active" data-platform="instagram"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="IG" style="filter:invert(1);width:18px;height:18px;"> Instagram</button>
+        <button class="platform-tab" data-platform="tiktok"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg" alt="TT" style="filter:invert(1);width:18px;height:18px;"> TikTok</button>
+        <button class="platform-tab" data-platform="spotify"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/spotify.svg" alt="SP" style="filter:invert(1);width:18px;height:18px;"> Spotify</button>
+        <button class="platform-tab" data-platform="twitch"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/twitch.svg" alt="TW" style="filter:invert(1);width:18px;height:18px;"> Twitch</button>
     </div>
 
     <section class="services" id="services">
         <h2 class="section-title" id="platformTitle">Serviços Instagram</h2>
+        <p class="section-subtitle">⏱️ Todos os serviços entregues em até 10 minutos</p>
         <div class="services-grid" id="servicesGrid"></div>
+    </section>
+
+    <section class="features">
+        <h2 class="section-title">Por que SixGrow?</h2>
+        <div class="features-grid">
+            <div class="feature-item"><div class="feature-emoji">⚡</div><div class="feature-title">Entrega em 10 min</div><div class="feature-desc">Começa instantaneamente</div></div>
+            <div class="feature-item"><div class="feature-emoji">🛡️</div><div class="feature-title">100% Seguro</div><div class="feature-desc">Sem senha, só o @</div></div>
+            <div class="feature-item"><div class="feature-emoji">💬</div><div class="feature-title">Suporte 24h</div><div class="feature-desc">Sempre prontos pra ajudar</div></div>
+            <div class="feature-item"><div class="feature-emoji">💰</div><div class="feature-title">Melhor Preço</div><div class="feature-desc">Qualidade imbatível</div></div>
+        </div>
     </section>
 
     <!-- MODAL PAGAMENTO -->
     <div class="modal-overlay" id="paymentModal">
         <div class="modal">
             <button class="modal-close" onclick="closeModal()">✕</button>
-            <div class="modal-icon" id="modalIcon"></div>
+            <img class="modal-icon" id="modalIcon" src="" alt="">
             <h2 id="modalName"></h2>
             <div class="modal-quantity" id="modalQuantity"></div>
             <div class="modal-price" id="modalPrice"></div>
             <div class="modal-warning">⚠️ O perfil precisa estar <strong>PÚBLICO</strong></div>
             <input type="text" class="modal-input" id="modalUsername" placeholder="Seu @ da rede social">
-            <button class="btn-pay" onclick="processPayment()">💳 PAGAR COM EVOPAY</button>
+            <div class="pix-section">
+                <div class="pix-name">💠 Pague via Pix</div>
+                <p class="pix-label">Chave aleatória (copie):</p>
+                <div class="pix-key-box" onclick="copyPix()" title="Clique para copiar">
+                    f542662f-e948-4863-b9c4-4c936cce8b6b
+                </div>
+                <p style="color:#999;font-size:11px;margin-top:6px;">Titular: <strong>Pedro Sitonio</strong></p>
+                <div class="copied-msg" id="copiedMsg">✅ Chave Pix copiada!</div>
+            </div>
+            <p style="color:#888;font-size:11px;margin-bottom:12px;">Após pagar, envie o comprovante no Discord</p>
+            <button class="btn-buy" onclick="confirmOrder()">✅ CONFIRMAR PEDIDO</button>
         </div>
     </div>
 
-    <!-- UPSELL MODAL -->
+    <!-- UPSELL -->
     <div class="modal-overlay" id="upsellModal">
         <div class="modal">
             <button class="modal-close" onclick="closeUpsell()">✕</button>
             <div style="font-size:40px;">🚀</div>
             <h2>Quer turbinar ainda mais?</h2>
-            <p style="color:#999;font-size:13px;margin:8px 0;">Aproveite o desconto especial:</p>
+            <p style="color:#888;font-size:12px;margin:8px 0;">Aproveite preços especiais:</p>
             <div class="upsell-grid" id="upsellGrid"></div>
             <button class="btn-skip" onclick="finishOrder()">Não, obrigado</button>
         </div>
@@ -667,75 +939,93 @@
         <div class="chat-bubble" onclick="toggleChat()">💬</div>
     </div>
 
-    <!-- FOOTER -->
     <footer>
         <div class="footer-links">
-            <a href="https://www.instagram.com/sixgrowup/" target="_blank" class="footer-link">📷 @sixgrowup</a>
-            <a href="https://discord.gg/sixgrowup" target="_blank" class="footer-link">🎮 discord.gg/sixgrowup</a>
+            <a href="https://www.instagram.com/sixgrowup/" target="_blank" class="footer-link">
+                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="IG" style="filter:invert(1);width:16px;height:16px;"> @sixgrowup
+            </a>
+            <a href="https://discord.gg/sixgrowup" target="_blank" class="footer-link">
+                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg" alt="DC" style="filter:invert(1);width:16px;height:16px;"> discord.gg/sixgrowup
+            </a>
         </div>
-        <p style="color:#777;font-size:13px;margin-bottom:10px;">📧 saulofuzis@gmail.com</p>
-        <p class="footer-copy">SIXGROW © 2025 - Todos os direitos reservados</p>
+        <p style="color:#666;font-size:12px;">📧 saulofuzis@gmail.com</p>
+        <p class="footer-pix">Pix: f542662f-e948-4863-b9c4-4c936cce8b6b - Pedro Sitonio</p>
+        <p class="footer-copy">👑 SIXGROW © 2025 - Todos os direitos reservados</p>
     </footer>
 
     <script>
-                // ============ DADOS ============
-        const EVOPAY_TOKEN = 'ab461db5-280e-42a8-a473-5cbd821d1cf3';
-        const EVOPAY_API = 'https://api.evopay.cash/v1/payment';
+        const PIX_KEY = 'f542662f-e948-4863-b9c4-4c936cce8b6b';
+        const PIX_NAME = 'Pedro Sitonio';
 
         let currentPlatform = 'instagram';
         let currentService = null;
         let currentUsername = '';
         let orderServices = [];
 
+        const platformIcons = {
+            instagram: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg',
+            tiktok: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg',
+            spotify: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/spotify.svg',
+            twitch: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/twitch.svg'
+        };
+
         const services = {
             instagram: [
-                { id: 'ig1', icon: '👤', type: 'Seguidores', quantity: '100', desc: 'Alta qualidade', price: 8.90, oldPrice: 17.90, delivery: '24h', popular: false },
-                { id: 'ig2', icon: '👥', type: 'Seguidores', quantity: '500', desc: 'Alta qualidade', price: 19.90, oldPrice: 39.90, delivery: '48h', popular: false },
-                { id: 'ig3', icon: '👑', type: 'Seguidores', quantity: '1.000', desc: 'Mais vendido', price: 29.90, oldPrice: 59.90, delivery: '72h', popular: true },
-                { id: 'ig4', icon: '🚀', type: 'Seguidores', quantity: '5.000', desc: 'Crescimento rápido', price: 99.90, oldPrice: 199.90, delivery: '5 dias', popular: false },
-                { id: 'ig5', icon: '💎', type: 'Seguidores', quantity: '10.000', desc: 'Pacote premium', price: 179.90, oldPrice: 359.90, delivery: '7 dias', popular: false },
-                { id: 'ig6', icon: '❤️', type: 'Curtidas', quantity: '500', desc: 'Likes reais', price: 10.90, oldPrice: 21.90, delivery: '12h', popular: false },
-                { id: 'ig7', icon: '🔥', type: 'Curtidas', quantity: '1.000', desc: 'Likes reais', price: 17.90, oldPrice: 35.90, delivery: '24h', popular: false },
-                { id: 'ig8', icon: '👁️', type: 'Visualizações', quantity: '5.000', desc: 'Views stories/reels', price: 14.90, oldPrice: 29.90, delivery: '24h', popular: false },
-                { id: 'ig9', icon: '📈', type: 'Visualizações', quantity: '10.000', desc: 'Views stories/reels', price: 24.90, oldPrice: 49.90, delivery: '48h', popular: true },
+                { id: 'ig1', type: 'Seguidores', quantity: '100', desc: 'Alta qualidade', price: 5.90, oldPrice: 14.90, popular: false },
+                { id: 'ig2', type: 'Seguidores', quantity: '500', desc: 'Alta qualidade', price: 12.90, oldPrice: 29.90, popular: false },
+                { id: 'ig3', type: 'Seguidores', quantity: '1.000', desc: 'Mais vendido', price: 19.90, oldPrice: 44.90, popular: true },
+                { id: 'ig4', type: 'Seguidores', quantity: '5.000', desc: 'Crescimento rápido', price: 69.90, oldPrice: 149.90, popular: false },
+                { id: 'ig5', type: 'Seguidores', quantity: '10.000', desc: 'Pacote premium', price: 119.90, oldPrice: 249.90, popular: false },
+                { id: 'ig6', type: 'Curtidas', quantity: '500', desc: 'Likes reais', price: 4.90, oldPrice: 14.90, popular: false },
+                { id: 'ig7', type: 'Curtidas', quantity: '1.000', desc: 'Likes reais', price: 7.90, oldPrice: 19.90, popular: false },
+                { id: 'ig8', type: 'Curtidas', quantity: '5.000', desc: 'Likes reais', price: 19.90, oldPrice: 49.90, popular: true },
+                { id: 'ig9', type: 'Visualizações', quantity: '1.000', desc: 'Views stories/reels', price: 3.90, oldPrice: 12.90, popular: false },
+                { id: 'ig10', type: 'Visualizações', quantity: '5.000', desc: 'Views stories/reels', price: 9.90, oldPrice: 24.90, popular: false },
+                { id: 'ig11', type: 'Visualizações', quantity: '10.000', desc: 'Views stories/reels', price: 14.90, oldPrice: 39.90, popular: true },
+                { id: 'ig12', type: 'Visualizações', quantity: '50.000', desc: 'Views stories/reels', price: 39.90, oldPrice: 99.90, popular: false },
             ],
             tiktok: [
-                { id: 'tt1', icon: '👤', type: 'Seguidores', quantity: '100', desc: 'Alta qualidade', price: 9.90, oldPrice: 19.90, delivery: '24h', popular: false },
-                { id: 'tt2', icon: '👥', type: 'Seguidores', quantity: '500', desc: 'Alta qualidade', price: 22.90, oldPrice: 45.90, delivery: '48h', popular: false },
-                { id: 'tt3', icon: '👑', type: 'Seguidores', quantity: '1.000', desc: 'Mais vendido', price: 34.90, oldPrice: 69.90, delivery: '72h', popular: true },
-                { id: 'tt4', icon: '🚀', type: 'Seguidores', quantity: '5.000', desc: 'Crescimento rápido', price: 119.90, oldPrice: 239.90, delivery: '5 dias', popular: false },
-                { id: 'tt5', icon: '❤️', type: 'Curtidas', quantity: '500', desc: 'Likes reais', price: 12.90, oldPrice: 25.90, delivery: '12h', popular: false },
-                { id: 'tt6', icon: '🔥', type: 'Curtidas', quantity: '1.000', desc: 'Likes reais', price: 19.90, oldPrice: 39.90, delivery: '24h', popular: false },
-                { id: 'tt7', icon: '👁️', type: 'Visualizações', quantity: '5.000', desc: 'Views vídeos', price: 16.90, oldPrice: 33.90, delivery: '24h', popular: false },
-                { id: 'tt8', icon: '📈', type: 'Visualizações', quantity: '10.000', desc: 'Views vídeos', price: 27.90, oldPrice: 55.90, delivery: '48h', popular: true },
+                { id: 'tt1', type: 'Seguidores', quantity: '100', desc: 'Alta qualidade', price: 6.90, oldPrice: 16.90, popular: false },
+                { id: 'tt2', type: 'Seguidores', quantity: '500', desc: 'Alta qualidade', price: 14.90, oldPrice: 34.90, popular: false },
+                { id: 'tt3', type: 'Seguidores', quantity: '1.000', desc: 'Mais vendido', price: 22.90, oldPrice: 49.90, popular: true },
+                { id: 'tt4', type: 'Seguidores', quantity: '5.000', desc: 'Crescimento rápido', price: 79.90, oldPrice: 179.90, popular: false },
+                { id: 'tt5', type: 'Curtidas', quantity: '500', desc: 'Likes reais', price: 5.90, oldPrice: 15.90, popular: false },
+                { id: 'tt6', type: 'Curtidas', quantity: '1.000', desc: 'Likes reais', price: 8.90, oldPrice: 21.90, popular: false },
+                { id: 'tt7', type: 'Visualizações', quantity: '5.000', desc: 'Views vídeos', price: 11.90, oldPrice: 29.90, popular: false },
+                { id: 'tt8', type: 'Visualizações', quantity: '10.000', desc: 'Views vídeos', price: 16.90, oldPrice: 39.90, popular: true },
             ],
             spotify: [
-                { id: 'sp1', icon: '👤', type: 'Seguidores', quantity: '100', desc: 'Alta qualidade', price: 12.90, oldPrice: 25.90, delivery: '24h', popular: false },
-                { id: 'sp2', icon: '👥', type: 'Seguidores', quantity: '500', desc: 'Alta qualidade', price: 29.90, oldPrice: 59.90, delivery: '48h', popular: false },
-                { id: 'sp3', icon: '👑', type: 'Seguidores', quantity: '1.000', desc: 'Mais vendido', price: 44.90, oldPrice: 89.90, delivery: '72h', popular: true },
-                { id: 'sp4', icon: '🎵', type: 'Plays', quantity: '1.000', desc: 'Reproduções', price: 14.90, oldPrice: 29.90, delivery: '24h', popular: false },
-                { id: 'sp5', icon: '🎶', type: 'Plays', quantity: '5.000', desc: 'Reproduções', price: 34.90, oldPrice: 69.90, delivery: '48h', popular: false },
-                { id: 'sp6', icon: '💚', type: 'Plays', quantity: '10.000', desc: 'Reproduções premium', price: 59.90, oldPrice: 119.90, delivery: '72h', popular: true },
-                { id: 'sp7', icon: '📈', type: 'Ouvintes', quantity: '500', desc: 'Monthly listeners', price: 24.90, oldPrice: 49.90, delivery: '48h', popular: false },
-                { id: 'sp8', icon: '🚀', type: 'Ouvintes', quantity: '1.000', desc: 'Monthly listeners', price: 39.90, oldPrice: 79.90, delivery: '72h', popular: false },
+                { id: 'sp1', type: 'Seguidores', quantity: '100', desc: 'Alta qualidade', price: 8.90, oldPrice: 19.90, popular: false },
+                { id: 'sp2', type: 'Seguidores', quantity: '500', desc: 'Alta qualidade', price: 19.90, oldPrice: 44.90, popular: false },
+                { id: 'sp3', type: 'Seguidores', quantity: '1.000', desc: 'Mais vendido', price: 29.90, oldPrice: 64.90, popular: true },
+                { id: 'sp4', type: 'Plays', quantity: '1.000', desc: 'Reproduções', price: 9.90, oldPrice: 24.90, popular: false },
+                { id: 'sp5', type: 'Plays', quantity: '5.000', desc: 'Reproduções', price: 24.90, oldPrice: 54.90, popular: false },
+                { id: 'sp6', type: 'Plays', quantity: '10.000', desc: 'Reproduções', price: 39.90, oldPrice: 89.90, popular: true },
+                { id: 'sp7', type: 'Ouvintes Mensais', quantity: '500', desc: 'Monthly listeners', price: 17.90, oldPrice: 39.90, popular: false },
+                { id: 'sp8', type: 'Ouvintes Mensais', quantity: '1.000', desc: 'Monthly listeners', price: 27.90, oldPrice: 59.90, popular: false },
+            ],
+            twitch: [
+                { id: 'tw1', type: 'Seguidores', quantity: '100', desc: 'Alta qualidade', price: 7.90, oldPrice: 17.90, popular: false },
+                { id: 'tw2', type: 'Seguidores', quantity: '500', desc: 'Alta qualidade', price: 16.90, oldPrice: 39.90, popular: false },
+                { id: 'tw3', type: 'Seguidores', quantity: '1.000', desc: 'Mais vendido', price: 24.90, oldPrice: 54.90, popular: true },
+                { id: 'tw4', type: 'Seguidores', quantity: '5.000', desc: 'Crescimento', price: 89.90, oldPrice: 199.90, popular: false },
+                { id: 'tw5', type: 'Visualizações', quantity: '1.000', desc: 'Views live/vod', price: 6.90, oldPrice: 16.90, popular: false },
+                { id: 'tw6', type: 'Visualizações', quantity: '5.000', desc: 'Views live/vod', price: 14.90, oldPrice: 34.90, popular: false },
+                { id: 'tw7', type: 'Visualizações', quantity: '10.000', desc: 'Views live/vod', price: 22.90, oldPrice: 49.90, popular: true },
             ]
         };
 
-        const platformNames = {
-            instagram: 'Instagram',
-            tiktok: 'TikTok',
-            spotify: 'Spotify'
-        };
+        const platformNames = { instagram: 'Instagram', tiktok: 'TikTok', spotify: 'Spotify', twitch: 'Twitch' };
 
-        // ============ RENDER ============
         function renderServices() {
             const grid = document.getElementById('servicesGrid');
             const data = services[currentPlatform];
+            const iconUrl = platformIcons[currentPlatform];
 
             grid.innerHTML = data.map(s => `
                 <div class="service-card ${s.popular ? 'popular' : ''}">
                     ${s.popular ? '<div class="popular-badge">🔥 MAIS VENDIDO</div>' : ''}
-                    <div class="service-icon">${s.icon}</div>
+                    <img class="service-icon" src="${iconUrl}" alt="${currentPlatform}" style="filter:invert(1);background:#1a1a1a;padding:8px;">
                     <div class="service-type">${s.type}</div>
                     <div class="service-quantity">${s.quantity}</div>
                     <div class="service-desc">${s.desc}</div>
@@ -743,8 +1033,8 @@
                         <span class="old">R$${s.oldPrice.toFixed(2)}</span>
                         R$${s.price.toFixed(2)}
                     </div>
-                    <div class="service-delivery">⏱️ ${s.delivery}</div>
-                    <div class="service-warning">⚠️ Perfil precisa ser PÚBLICO</div>
+                    <div class="service-delivery">⏱️ Entrega em ~10 min</div>
+                    <div class="service-warning">⚠️ Perfil PÚBLICO</div>
                     <button class="btn-buy" onclick="buyService('${s.id}')">COMPRAR</button>
                 </div>
             `).join('');
@@ -752,23 +1042,24 @@
             document.getElementById('platformTitle').textContent = 'Serviços ' + platformNames[currentPlatform];
         }
 
-        // ============ PLATFORM TABS ============
         document.getElementById('platformTabs').addEventListener('click', function(e) {
-            if (e.target.classList.contains('platform-tab')) {
-                document.querySelectorAll('.platform-tab').forEach(t => t.classList.remove('active'));
-                e.target.classList.add('active');
-                currentPlatform = e.target.dataset.platform;
-                renderServices();
-            }
+            const tab = e.target.closest('.platform-tab');
+            if (!tab) return;
+            document.querySelectorAll('.platform-tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            currentPlatform = tab.dataset.platform;
+            renderServices();
         });
 
-        // ============ BUY ============
         function buyService(id) {
             const allServices = Object.values(services).flat();
             currentService = allServices.find(s => s.id === id);
             orderServices = [currentService];
 
-            document.getElementById('modalIcon').textContent = currentService.icon;
+            document.getElementById('modalIcon').src = platformIcons[currentPlatform];
+            document.getElementById('modalIcon').style.filter = 'invert(1)';
+            document.getElementById('modalIcon').style.background = '#1a1a1a';
+            document.getElementById('modalIcon').style.padding = '8px';
             document.getElementById('modalName').textContent = currentService.type + ' ' + platformNames[currentPlatform];
             document.getElementById('modalQuantity').textContent = currentService.quantity;
             document.getElementById('modalPrice').innerHTML = 'R$' + currentService.price.toFixed(2);
@@ -781,61 +1072,25 @@
             currentService = null;
         }
 
-        // ============ PAYMENT ============
-        function processPayment() {
+        function copyPix() {
+            navigator.clipboard.writeText(PIX_KEY).then(() => {
+                const msg = document.getElementById('copiedMsg');
+                msg.classList.add('show');
+                setTimeout(() => msg.classList.remove('show'), 2000);
+            });
+        }
+
+        function confirmOrder() {
             const username = document.getElementById('modalUsername').value.trim();
             if (!username) {
                 alert('⚠️ Digite seu @ da rede social!');
                 return;
             }
             currentUsername = username;
-
-            // Enviar para EvoPay
-            const total = orderServices.reduce((sum, s) => sum + s.price, 0);
-            const description = orderServices.map(s => s.type + ' ' + s.quantity).join(' + ');
-
-            fetch(EVOPAY_API, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + EVOPAY_TOKEN
-                },
-                body: JSON.stringify({
-                    amount: total,
-                    currency: 'BRL',
-                    description: description + ' - @' + currentUsername,
-                    metadata: {
-                        username: currentUsername,
-                        platform: currentPlatform,
-                        services: orderServices.map(s => s.id)
-                    }
-                })
-            })
-            .then(r => r.json())
-            .then(data => {
-                if (data.paymentUrl || data.url) {
-                    window.open(data.paymentUrl || data.url, '_blank');
-                    closeModal();
-                    showUpsell();
-                } else if (data.id) {
-                    window.open('https://app.evopay.cash/pay/' + data.id, '_blank');
-                    closeModal();
-                    showUpsell();
-                } else {
-                    alert('✅ Pedido registrado! Você será redirecionado.');
-                    closeModal();
-                    showUpsell();
-                }
-            })
-            .catch(err => {
-                console.log('EvoPay:', err);
-                alert('✅ Pedido registrado! Entre em contato no Discord para finalizar.');
-                closeModal();
-                showUpsell();
-            });
+            closeModal();
+            showUpsell();
         }
 
-        // ============ UPSELL ============
         function showUpsell() {
             const allServices = services[currentPlatform];
             const otherServices = allServices.filter(s => !orderServices.find(o => o.id === s.id));
@@ -848,14 +1103,12 @@
 
             document.getElementById('upsellGrid').innerHTML = upsells.map(s => `
                 <div class="upsell-item" onclick="addUpsell('${s.id}')">
-                    <div style="font-size:30px;">${s.icon}</div>
-                    <div class="upsell-name">${s.type}</div>
+                    <div class="upsell-type">${s.type}</div>
                     <div class="upsell-qty">${s.quantity}</div>
                     <div class="upsell-price">R$${s.price.toFixed(2)}</div>
-                    <div style="font-size:10px;color:#4CAF50;">+ adicionar</div>
+                    <div class="upsell-tag">+ adicionar</div>
                 </div>
             `).join('');
-
             document.getElementById('upsellModal').classList.add('active');
         }
 
@@ -863,28 +1116,25 @@
             const allServices = Object.values(services).flat();
             const upsellService = allServices.find(s => s.id === id);
             orderServices.push(upsellService);
+            closeUpsell();
             finishOrder();
         }
 
         function closeUpsell() {
             document.getElementById('upsellModal').classList.remove('active');
-            finishOrder();
         }
 
         function finishOrder() {
             document.getElementById('upsellModal').classList.remove('active');
-            document.getElementById('paymentModal').classList.remove('active');
-
             const total = orderServices.reduce((sum, s) => sum + s.price, 0);
             const list = orderServices.map(s => '• ' + s.type + ' ' + s.quantity).join('\n');
 
-            alert('✅ PEDIDO REGISTRADO!\n\n' + list + '\n\nTotal: R$' + total.toFixed(2) + '\n@' + currentUsername + '\n\nAcompanhe no Discord: discord.gg/sixgrowup');
+            alert('✅ PEDIDO REGISTRADO!\n\n' + list + '\n\nTotal: R$' + total.toFixed(2) + '\n@' + currentUsername + '\n\n💠 Pague via Pix:\nChave: ' + PIX_KEY + '\nTitular: ' + PIX_NAME + '\n\n📩 Envie o comprovante no Discord: discord.gg/sixgrowup\n\n⏱️ Entrega em até 10 minutos!');
 
             orderServices = [];
             currentService = null;
         }
 
-        // ============ CHAT ============
         function toggleChat() {
             document.getElementById('chatBox').classList.toggle('active');
         }
@@ -895,21 +1145,22 @@
             if (!msg) return;
 
             const messages = document.getElementById('chatMessages');
-            messages.innerHTML += '<div class="chat-msg user">' + msg + '</div>';
+            const userMsg = document.createElement('div');
+            userMsg.className = 'chat-msg user';
+            userMsg.textContent = msg;
+            messages.appendChild(userMsg);
 
             let reply = '';
-            if (msg === '1') {
-                reply = '📋 Para verificar seu pedido, envie seu @ no Discord: <strong>discord.gg/sixgrowup</strong>';
-            } else if (msg === '2') {
-                reply = '❓ Dúvidas? Fale conosco no Discord ou Instagram @sixgrowup';
-            } else if (msg === '3') {
-                reply = '💬 Um atendente vai te responder em breve! Envie seu @ e o pedido.';
-            } else {
-                reply = '👋 Obrigado! Nossa equipe vai analisar e responder no Discord.';
-            }
+            if (msg === '1') reply = '📋 Envie seu @ no Discord: discord.gg/sixgrowup';
+            else if (msg === '2') reply = '❓ Fale conosco no Discord ou Instagram @sixgrowup';
+            else if (msg === '3') reply = '💬 Um atendente vai te responder! Envie @ e comprovante no Discord.';
+            else reply = '👋 Obrigado! Respondemos em breve no Discord.';
 
             setTimeout(() => {
-                messages.innerHTML += '<div class="chat-msg bot">' + reply + '</div>';
+                const botMsg = document.createElement('div');
+                botMsg.className = 'chat-msg bot';
+                botMsg.textContent = reply;
+                messages.appendChild(botMsg);
                 messages.scrollTop = messages.scrollHeight;
             }, 500);
 
@@ -917,39 +1168,23 @@
             messages.scrollTop = messages.scrollHeight;
         }
 
-        // ============ COUNTERS ============
         function animateCounter(id, target) {
             let current = 0;
             const el = document.getElementById(id);
             const increment = target / 80;
             const timer = setInterval(() => {
                 current += increment;
-                if (current >= target) {
-                    el.textContent = target.toLocaleString() + '+';
-                    clearInterval(timer);
-                } else {
-                    el.textContent = Math.floor(current).toLocaleString() + '+';
-                }
+                if (current >= target) { el.textContent = target.toLocaleString() + '+';
+                    clearInterval(timer); } else { el.textContent = Math.floor(current).toLocaleString() + '+'; }
             }, 25);
         }
 
-        // ============ CLOSE MODALS ============
-        document.getElementById('paymentModal').addEventListener('click', function(e) {
-            if (e.target === this) closeModal();
-        });
+        document.getElementById('paymentModal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+        document.getElementById('upsellModal').addEventListener('click', function(e) { if (e.target === this) closeUpsell(); });
 
-        document.getElementById('upsellModal').addEventListener('click', function(e) {
-            if (e.target === this) closeUpsell();
-        });
-
-        // ============ INIT ============
         renderServices();
         setTimeout(() => animateCounter('counterClients', 15420), 400);
         setTimeout(() => animateCounter('counterServices', 52380), 700);
-
-        console.log('👑 SixGrow pronto!');
-        console.log('📱 Instagram: @sixgrowup');
-        console.log('🎮 Discord: discord.gg/sixgrowup');
     </script>
 </body>
 </html>
