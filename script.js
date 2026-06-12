@@ -1,5 +1,5 @@
 // ============================================
-// JORNAL DO MINEZINHO - SISTEMA COMPLETO
+// JORNAL DO MINEZINHO - VERSÃO CORRETA
 // ============================================
 
 // CONFIGURAÇÃO DOS SERVIDORES
@@ -25,25 +25,21 @@ const SERVERS = {
 };
 
 // ============================================
-// ⚠️ IMPORTANTE: COLOQUE O NOME EXATO DAS SUAS IMAGENS AQUI!
-// ============================================
-// Olhe no GitHub o nome dos seus arquivos e coloque abaixo:
-// Exemplo: se sua imagem chama "capa-legacy.png" coloque legacy: "capa-legacy.png"
+// NOMES DAS IMAGENS (COM A PASTA imagens/)
 // ============================================
 
 const MINHAS_IMAGENS = {
-    global: "imagens/capa-global.png",   // ← ADICIONEI "imagens/" na frente
-    legacy: "imagens/capa-legacy.jpg",   // ← ADICIONEI "imagens/" na frente
-    magis: "imagens/capa-dia.jpg"        // ← ADICIONEI "imagens/" na frente
+    global: "imagens/capa-global.png",
+    legacy: "imagens/capa-legacy.jpg",
+    magis: "imagens/capa-dia.jpg"
 };
 
 // ============================================
-// NÃO MUDE NADA DAQUI PARA BAIXO
+// NÃO MUDE DAQUI PARA BAIXO
 // ============================================
 
 let servidorAtivo = "global";
 
-// Mostrar data atual
 function mostrarData() {
     const data = new Date();
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -54,14 +50,12 @@ function mostrarData() {
     }
 }
 
-// Atualizar contador de online
 function atualizarOnlineCount() {
     const total = Math.floor(Math.random() * 50) + 120;
     const onlineSpan = document.getElementById('onlineCount');
     if (onlineSpan) onlineSpan.innerHTML = `${total} online`;
 }
 
-// Mostrar o jornal
 async function mostrarJornal(server) {
     const card = document.getElementById('jornalCard');
     if (!card) return;
@@ -69,10 +63,8 @@ async function mostrarJornal(server) {
     servidorAtivo = server;
     const serverInfo = SERVERS[server];
     
-    // Atualizar UI
     atualizarUI(server);
     
-    // Mostrar loading
     card.innerHTML = `
         <div class="skeleton-loader">
             <div class="skeleton-header"></div>
@@ -87,7 +79,7 @@ async function mostrarJornal(server) {
             <div class="empty-state">
                 <div class="empty-icon">⚙️</div>
                 <h3>Configure o nome da imagem</h3>
-                <p>No arquivo <strong>script.js</strong>, encontre <code>MINHAS_IMAGENS</code> e coloque o nome do seu arquivo.</p>
+                <p>No arquivo <strong>script.js</strong>, coloque o nome correto da imagem.</p>
             </div>
         `;
         return;
@@ -115,13 +107,14 @@ async function mostrarJornal(server) {
             <div class="empty-state">
                 <div class="empty-icon">📭</div>
                 <h3>Imagem não encontrada</h3>
-                <p>Não consegui encontrar o arquivo: <code>${nomeImagem}</code></p>
-                <p>Verifique se o nome está correto no GitHub.</p>
+                <p>Não consegui encontrar: <code>${nomeImagem}</code></p>
+                <p>Verifique se o arquivo existe na pasta <strong>imagens/</strong></p>
                 <ul>
-                    <li>O arquivo existe no GitHub?</li>
-                    <li>O nome está escrito igual? (maiúsculas/minúsculas)</li>
-                    <li>Está na mesma pasta do site?</li>
+                    <li>📁 imagens/<strong>capa-global.png</strong> ✅ existe</li>
+                    <li>📁 imagens/<strong>capa-legacy.jpg</strong> ❓ existe?</li>
+                    <li>📁 imagens/<strong>capa-dia.jpg</strong> ✅ existe</li>
                 </ul>
+                <p style="margin-top: 20px;">Você precisa criar a imagem <strong>capa-legacy.jpg</strong> na pasta imagens/</p>
             </div>
         `;
     };
@@ -129,7 +122,6 @@ async function mostrarJornal(server) {
     img.src = nomeImagem;
 }
 
-// Atualizar interface
 function atualizarUI(server) {
     const serverInfo = SERVERS[server];
     
@@ -263,7 +255,6 @@ function adicionarHintZoom() {
     }
 }
 
-// Particles
 function criarParticles() {
     const particlesContainer = document.getElementById('particles');
     if (!particlesContainer) return;
