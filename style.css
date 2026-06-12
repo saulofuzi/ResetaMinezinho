@@ -38,10 +38,6 @@ body {
     transition: transform 0.2s, width 0.2s, height 0.2s;
 }
 
-body:hover .cursor {
-    transform: scale(1.2);
-}
-
 /* ============================================ */
 /* PARTICLE BACKGROUND */
 /* ============================================ */
@@ -110,13 +106,13 @@ body:hover .cursor {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 28px;
-    transform: rotate(5deg);
-    transition: transform 0.3s;
+    overflow: hidden;
 }
 
-.logo-3d:hover {
-    transform: rotate(0deg) scale(1.05);
+.logo-3d img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .logo-text {
@@ -197,14 +193,8 @@ body:hover .cursor {
 }
 
 @keyframes pulse-ring {
-    0% {
-        transform: scale(1);
-        opacity: 1;
-    }
-    100% {
-        transform: scale(3);
-        opacity: 0;
-    }
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(3); opacity: 0; }
 }
 
 /* ============================================ */
@@ -213,13 +203,13 @@ body:hover .cursor {
 
 .hero-premium {
     position: relative;
-    min-height: 80vh;
+    min-height: 70vh;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     overflow: hidden;
-    padding: 120px 24px 80px;
+    padding: 120px 24px 60px;
 }
 
 .hero-bg {
@@ -246,9 +236,20 @@ body:hover .cursor {
     border-radius: 40px;
     font-size: 12px;
     font-weight: 600;
-    color: #6aaf4e;
     margin-bottom: 30px;
     backdrop-filter: blur(4px);
+}
+
+.hero-badge.legacy {
+    background: rgba(72, 187, 72, 0.2);
+    color: #48bb48;
+    border: 1px solid #48bb48;
+}
+
+.hero-badge.magis {
+    background: rgba(160, 72, 187, 0.2);
+    color: #a048bb;
+    border: 1px solid #a048bb;
 }
 
 .hero-title {
@@ -319,15 +320,109 @@ body:hover .cursor {
 }
 
 /* ============================================ */
-/* JORNAL SECTION */
+/* SERVER SELECTOR CARDS */
+/* ============================================ */
+
+.server-selector {
+    padding: 40px 24px;
+}
+
+.selector-title {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.selector-title h3 {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.selector-title p {
+    color: #8b949e;
+    font-size: 14px;
+}
+
+.server-cards {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.server-card {
+    background: rgba(20, 25, 40, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(106, 175, 78, 0.2);
+    border-radius: 20px;
+    padding: 24px 32px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    min-width: 180px;
+}
+
+.server-card:hover {
+    transform: translateY(-5px);
+}
+
+.server-card.active {
+    border-width: 2px;
+}
+
+.legacy-card.active {
+    border-color: #48bb48;
+    box-shadow: 0 0 20px rgba(72, 187, 72, 0.3);
+}
+
+.magis-card.active {
+    border-color: #a048bb;
+    box-shadow: 0 0 20px rgba(160, 72, 187, 0.3);
+}
+
+.server-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+}
+
+.server-card h4 {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.server-card p {
+    font-size: 12px;
+    color: #8b949e;
+    margin-bottom: 12px;
+}
+
+.server-badge {
+    font-size: 10px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: rgba(106, 175, 78, 0.2);
+    color: #6aaf4e;
+}
+
+.server-badge.legacy {
+    background: rgba(72, 187, 72, 0.2);
+    color: #48bb48;
+}
+
+.server-badge.magis {
+    background: rgba(160, 72, 187, 0.2);
+    color: #a048bb;
+}
+
+/* ============================================ */
+/* JORNAL SECTION - MAIOR */
 /* ============================================ */
 
 .jornal-premium {
-    padding: 60px 24px;
+    padding: 40px 24px;
 }
 
-.container {
-    max-width: 1000px;
+.container-large {
+    max-width: 1400px;
     margin: 0 auto;
 }
 
@@ -346,7 +441,7 @@ body:hover .cursor {
 }
 
 .skeleton-header {
-    height: 80px;
+    height: 100px;
     background: linear-gradient(90deg, #1a1a2e 25%, #2a2a3e 50%, #1a1a2e 75%);
     background-size: 200% 100%;
     animation: skeleton-loading 1.5s infinite;
@@ -355,7 +450,7 @@ body:hover .cursor {
 }
 
 .skeleton-image {
-    height: 400px;
+    height: 600px;
     background: linear-gradient(90deg, #1a1a2e 25%, #2a2a3e 50%, #1a1a2e 75%);
     background-size: 200% 100%;
     animation: skeleton-loading 1.5s infinite;
@@ -373,7 +468,7 @@ body:hover .cursor {
 }
 
 .jornal-header h2 {
-    font-size: 28px;
+    font-size: 32px;
     display: flex;
     align-items: center;
     gap: 12px;
@@ -382,10 +477,11 @@ body:hover .cursor {
 .jornal-header p {
     color: #8b949e;
     margin-top: 8px;
+    font-size: 16px;
 }
 
 .jornal-imagem {
-    padding: 30px;
+    padding: 40px;
     text-align: center;
     position: relative;
 }
@@ -397,6 +493,8 @@ body:hover .cursor {
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
     cursor: pointer;
     transition: transform 0.3s;
+    max-height: 80vh;
+    object-fit: contain;
 }
 
 .jornal-imagem img:hover {
@@ -406,7 +504,7 @@ body:hover .cursor {
 /* Empty State */
 .empty-state {
     text-align: center;
-    padding: 60px 30px;
+    padding: 80px 40px;
 }
 
 .empty-icon {
@@ -415,7 +513,7 @@ body:hover .cursor {
 }
 
 .empty-state h3 {
-    font-size: 24px;
+    font-size: 28px;
     margin-bottom: 16px;
 }
 
@@ -468,10 +566,6 @@ body:hover .cursor {
     color: transparent;
 }
 
-.section-header p {
-    color: #8b949e;
-}
-
 .features-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -491,7 +585,6 @@ body:hover .cursor {
 .feature-card:hover {
     transform: translateY(-10px);
     border-color: #6aaf4e;
-    box-shadow: 0 20px 40px rgba(106, 175, 78, 0.1);
 }
 
 .feature-icon {
@@ -526,15 +619,7 @@ body:hover .cursor {
 }
 
 .feature-link:hover {
-    gap: 8px;
     letter-spacing: 1px;
-}
-
-.code-tag {
-    background: #1a1a2e;
-    padding: 2px 8px;
-    border-radius: 20px;
-    font-family: monospace;
 }
 
 /* ============================================ */
@@ -590,7 +675,6 @@ body:hover .cursor {
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 14px;
 }
 
 .btn-copy:hover {
@@ -631,6 +715,12 @@ body:hover .cursor {
     margin-bottom: 16px;
 }
 
+.footer-logo-img {
+    width: 35px;
+    height: 35px;
+    border-radius: 8px;
+}
+
 .social-icons {
     display: flex;
     gap: 12px;
@@ -655,10 +745,6 @@ body:hover .cursor {
 
 .social-icon.discord {
     background: #5865f2;
-}
-
-.social-icon.twitter {
-    background: #1da1f2;
 }
 
 .social-icon:hover {
@@ -737,7 +823,6 @@ body:hover .cursor {
 
 .lupa-flutuante:hover {
     transform: scale(1.1);
-    box-shadow: 0 6px 30px rgba(106, 175, 78, 0.6);
 }
 
 .lupa-flutuante i {
@@ -763,7 +848,6 @@ body:hover .cursor {
     z-index: 2000;
     justify-content: center;
     align-items: center;
-    animation: fadeIn 0.3s ease;
 }
 
 .zoom-modal.active {
@@ -777,25 +861,7 @@ body:hover .cursor {
     max-width: 1200px;
     max-height: 90vh;
     overflow: hidden;
-    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
     border: 1px solid rgba(106, 175, 78, 0.3);
-    animation: slideUp 0.3s ease;
-}
-
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(50px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
 }
 
 .zoom-header {
@@ -826,7 +892,6 @@ body:hover .cursor {
 
 .zoom-close:hover {
     color: #ff4444;
-    transform: scale(1.1);
 }
 
 .zoom-body {
@@ -841,7 +906,6 @@ body:hover .cursor {
     display: flex;
     justify-content: center;
     gap: 20px;
-    align-items: center;
 }
 
 .zoom-level {
@@ -890,12 +954,10 @@ body:hover .cursor {
     align-items: center;
     gap: 8px;
     transition: all 0.2s;
-    font-weight: 500;
 }
 
 .zoom-btn:hover {
     background: #6aaf4e;
-    transform: translateY(-2px);
 }
 
 .toast-notification {
@@ -914,7 +976,6 @@ body:hover .cursor {
     transform: translateX(200%);
     transition: transform 0.3s ease;
     border: 1px solid #6aaf4e;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
 .toast-notification.show {
@@ -980,34 +1041,30 @@ body:hover .cursor {
         padding: 10px 16px;
     }
     
-    .lupa-flutuante {
-        width: 50px;
-        height: 50px;
-        bottom: 20px;
-        right: 20px;
+    .server-cards {
+        gap: 15px;
     }
     
-    .zoom-controls {
-        gap: 8px;
+    .server-card {
+        padding: 16px 20px;
+        min-width: 140px;
     }
     
-    .zoom-btn {
-        padding: 6px 12px;
-        font-size: 12px;
+    .server-icon {
+        font-size: 36px;
+    }
+    
+    .jornal-header h2 {
+        font-size: 22px;
+    }
+    
+    .jornal-imagem {
+        padding: 20px;
     }
     
     .footer-bottom {
         flex-direction: column;
         text-align: center;
-    }
-    
-    .banner-content {
-        flex-direction: column;
-        text-align: center;
-    }
-    
-    .jornal-header h2 {
-        font-size: 20px;
     }
 }
 
@@ -1022,11 +1079,7 @@ body:hover .cursor {
         gap: 20px;
     }
     
-    .feature-card {
-        padding: 24px;
-    }
-    
-    .container {
-        padding: 0 16px;
+    .skeleton-image {
+        height: 350px;
     }
 }
