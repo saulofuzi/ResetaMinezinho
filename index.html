@@ -58,7 +58,7 @@
         <div class="nav-container">
             <div class="logo">
                 <div class="logo-3d">
-                    <span>📰</span>
+                    <img src="imagens/logo-minezinho.png" alt="Logo Minezinho" id="logoMinezinho" onerror="this.src='https://via.placeholder.com/45?text=📰'">
                 </div>
                 <div class="logo-text">
                     <span class="logo-small">JORNAL DO</span>
@@ -66,34 +66,34 @@
                 </div>
             </div>
             <div class="nav-menu">
-                <a href="#" class="nav-item active" data-tab="dia">
-                    <i class="fas fa-newspaper"></i>
-                    <span>Edição Hoje</span>
+                <a href="#" class="nav-item active" data-tab="global">
+                    <i class="fas fa-globe"></i>
+                    <span>Global</span>
                 </a>
-                <a href="#" class="nav-item" data-tab="semana">
-                    <i class="fas fa-calendar-week"></i>
-                    <span>Edição Semana</span>
+                <a href="#" class="nav-item" data-tab="legacy">
+                    <i class="fas fa-tree"></i>
+                    <span>Legacy</span>
                 </a>
-                <a href="#" class="nav-item" id="btnArquivo">
-                    <i class="fas fa-archive"></i>
-                    <span>Arquivo</span>
+                <a href="#" class="nav-item" data-tab="magis">
+                    <i class="fas fa-magic"></i>
+                    <span>Magis</span>
                 </a>
             </div>
             <div class="online-badge">
                 <div class="pulse-ring"></div>
                 <i class="fas fa-circle"></i>
-                <span>49 online</span>
+                <span id="onlineCount">128 online</span>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section com efeito parallax -->
+    <!-- Hero Section -->
     <section class="hero-premium">
         <div class="hero-bg"></div>
         <div class="hero-content">
-            <div class="hero-badge">
-                <i class="fas fa-volume-up"></i>
-                ÚLTIMAS NOTÍCIAS
+            <div class="hero-badge" id="serverBadge">
+                <i class="fas fa-globe"></i>
+                SERVIDOR GLOBAL
             </div>
             <h1 class="hero-title">
                 <span class="title-line">JORNAL DO</span>
@@ -106,8 +106,8 @@
                     <span id="dataAtual">Carregando...</span>
                 </div>
                 <div class="stat">
-                    <i class="fas fa-pen-fancy"></i>
-                    <span>Edição #01</span>
+                    <i class="fas fa-newspaper"></i>
+                    <span id="edicaoAtual">Edição Global</span>
                 </div>
             </div>
         </div>
@@ -120,9 +120,39 @@
         </div>
     </section>
 
-    <!-- Jornal Principal -->
-    <section class="jornal-premium">
+    <!-- Selector de Servidores (cards) -->
+    <section class="server-selector">
         <div class="container">
+            <div class="selector-title">
+                <h3>📌 Selecione o servidor</h3>
+                <p>Cada servidor tem seu próprio jornal exclusivo</p>
+            </div>
+            <div class="server-cards">
+                <div class="server-card" data-server="global">
+                    <div class="server-icon global-icon">🌍</div>
+                    <h4>Global</h4>
+                    <p>Jornal oficial do servidor</p>
+                    <span class="server-badge">Principal</span>
+                </div>
+                <div class="server-card legacy-card" data-server="legacy">
+                    <div class="server-icon legacy-icon">🟢🌲</div>
+                    <h4>Survival Legacy</h4>
+                    <p>Modo clássico e tradicional</p>
+                    <span class="server-badge legacy">Verde</span>
+                </div>
+                <div class="server-card magis-card" data-server="magis">
+                    <div class="server-icon magis-icon">🟣✨</div>
+                    <h4>Survival Magis</h4>
+                    <p>Magia e aventura</p>
+                    <span class="server-badge magis">Roxo</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Jornal Principal (MAIOR) -->
+    <section class="jornal-premium">
+        <div class="container-large">
             <div class="jornal-wrapper glass-card" id="jornalCard">
                 <div class="skeleton-loader">
                     <div class="skeleton-header"></div>
@@ -152,8 +182,8 @@
                     <div class="feature-icon">
                         <i class="fas fa-trophy"></i>
                     </div>
-                    <h3>Destaques</h3>
-                    <p>Eventos, construções e jogadores em destaque na semana</p>
+                    <h3>Destaques da Semana</h3>
+                    <p>Eventos, construções e jogadores em destaque</p>
                     <a href="#" class="feature-link" id="btnDestaques">Ver Destaques →</a>
                 </div>
                 <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
@@ -192,7 +222,7 @@
             <div class="footer-grid">
                 <div class="footer-brand">
                     <div class="footer-logo">
-                        <i class="fas fa-newspaper"></i>
+                        <img src="imagens/logo-minezinho.png" alt="Logo" class="footer-logo-img" onerror="this.style.display='none'">
                         <span>Jornal do Minezinho</span>
                     </div>
                     <p>Notícias com credibilidade e diversão desde 2024</p>
@@ -211,10 +241,10 @@
                 <div class="footer-links">
                     <h4>Links Rápidos</h4>
                     <ul>
-                        <li><a href="#" data-tab="dia">Jornal do Dia</a></li>
-                        <li><a href="#" data-tab="semana">Jornal da Semana</a></li>
+                        <li><a href="#" data-tab="global">Global</a></li>
+                        <li><a href="#" data-tab="legacy">Survival Legacy 🟢</a></li>
+                        <li><a href="#" data-tab="magis">Survival Magis 🟣</a></li>
                         <li><a href="https://discord.gg/minezinho" target="_blank">Discord</a></li>
-                        <li><a href="https://www.instagram.com/minezinhoservidor" target="_blank">Instagram</a></li>
                     </ul>
                 </div>
                 <div class="footer-links">
