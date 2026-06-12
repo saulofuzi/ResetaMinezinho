@@ -9,13 +9,9 @@ body {
     background: #0a0a0a;
     color: #ffffff;
     overflow-x: hidden;
-    cursor: none;
 }
 
-/* ============================================ */
-/* CUSTOM CURSOR */
-/* ============================================ */
-
+/* Cursor personalizado */
 .cursor {
     width: 8px;
     height: 8px;
@@ -24,7 +20,6 @@ body {
     position: fixed;
     pointer-events: none;
     z-index: 9999;
-    transition: transform 0.1s;
 }
 
 .cursor-follower {
@@ -35,13 +30,9 @@ body {
     position: fixed;
     pointer-events: none;
     z-index: 9998;
-    transition: transform 0.2s, width 0.2s, height 0.2s;
 }
 
-/* ============================================ */
-/* PARTICLE BACKGROUND */
-/* ============================================ */
-
+/* Particles */
 .particles {
     position: fixed;
     top: 0;
@@ -52,10 +43,7 @@ body {
     pointer-events: none;
 }
 
-/* ============================================ */
-/* GLASS MORPHISM */
-/* ============================================ */
-
+/* Glassmorphism */
 .glass {
     background: rgba(15, 20, 30, 0.8);
     backdrop-filter: blur(10px);
@@ -69,10 +57,7 @@ body {
     border-radius: 24px;
 }
 
-/* ============================================ */
-/* NAVBAR */
-/* ============================================ */
-
+/* Navbar */
 .navbar {
     position: fixed;
     top: 0;
@@ -106,13 +91,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
-}
-
-.logo-3d img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    font-size: 28px;
 }
 
 .logo-text {
@@ -189,18 +168,15 @@ body {
     height: 100%;
     background: #3fb950;
     border-radius: 50%;
-    animation: pulse-ring 1.5s infinite;
+    animation: pulse 1.5s infinite;
 }
 
-@keyframes pulse-ring {
+@keyframes pulse {
     0% { transform: scale(1); opacity: 1; }
     100% { transform: scale(3); opacity: 0; }
 }
 
-/* ============================================ */
-/* HERO SECTION */
-/* ============================================ */
-
+/* Hero */
 .hero-premium {
     position: relative;
     min-height: 70vh;
@@ -208,7 +184,6 @@ body {
     align-items: center;
     justify-content: center;
     text-align: center;
-    overflow: hidden;
     padding: 120px 24px 60px;
 }
 
@@ -237,26 +212,12 @@ body {
     font-size: 12px;
     font-weight: 600;
     margin-bottom: 30px;
-    backdrop-filter: blur(4px);
-}
-
-.hero-badge.legacy {
-    background: rgba(72, 187, 72, 0.2);
-    color: #48bb48;
-    border: 1px solid #48bb48;
-}
-
-.hero-badge.magis {
-    background: rgba(160, 72, 187, 0.2);
-    color: #a048bb;
-    border: 1px solid #a048bb;
 }
 
 .hero-title {
     font-size: 64px;
     font-weight: 800;
     margin-bottom: 20px;
-    line-height: 1.2;
 }
 
 .title-line {
@@ -319,10 +280,7 @@ body {
     fill: #0a0a0a;
 }
 
-/* ============================================ */
-/* SERVER SELECTOR CARDS */
-/* ============================================ */
-
+/* Server Selector */
 .server-selector {
     padding: 40px 24px;
 }
@@ -339,7 +297,6 @@ body {
 
 .selector-title p {
     color: #8b949e;
-    font-size: 14px;
 }
 
 .server-cards {
@@ -413,10 +370,7 @@ body {
     color: #a048bb;
 }
 
-/* ============================================ */
-/* JORNAL SECTION - MAIOR */
-/* ============================================ */
-
+/* Jornal */
 .jornal-premium {
     padding: 40px 24px;
 }
@@ -444,7 +398,7 @@ body {
     height: 100px;
     background: linear-gradient(90deg, #1a1a2e 25%, #2a2a3e 50%, #1a1a2e 75%);
     background-size: 200% 100%;
-    animation: skeleton-loading 1.5s infinite;
+    animation: skeleton 1.5s infinite;
     border-radius: 16px;
     margin-bottom: 20px;
 }
@@ -453,11 +407,11 @@ body {
     height: 600px;
     background: linear-gradient(90deg, #1a1a2e 25%, #2a2a3e 50%, #1a1a2e 75%);
     background-size: 200% 100%;
-    animation: skeleton-loading 1.5s infinite;
+    animation: skeleton 1.5s infinite;
     border-radius: 16px;
 }
 
-@keyframes skeleton-loading {
+@keyframes skeleton {
     0% { background-position: 200% 0; }
     100% { background-position: -200% 0; }
 }
@@ -477,7 +431,6 @@ body {
 .jornal-header p {
     color: #8b949e;
     margin-top: 8px;
-    font-size: 16px;
 }
 
 .jornal-imagem {
@@ -501,7 +454,6 @@ body {
     transform: scale(1.02);
 }
 
-/* Empty State */
 .empty-state {
     text-align: center;
     padding: 80px 40px;
@@ -537,13 +489,9 @@ body {
     background: #1a1a2e;
     padding: 4px 12px;
     border-radius: 20px;
-    font-family: monospace;
 }
 
-/* ============================================ */
-/* FEATURES SECTION */
-/* ============================================ */
-
+/* Features */
 .features-section {
     padding: 60px 24px;
     background: linear-gradient(180deg, #0a0a0a 0%, #0f0f1a 100%);
@@ -607,7 +555,6 @@ body {
 .feature-card p {
     color: #8b949e;
     font-size: 14px;
-    line-height: 1.5;
     margin-bottom: 20px;
 }
 
@@ -615,17 +562,13 @@ body {
     color: #6aaf4e;
     text-decoration: none;
     font-weight: 600;
-    transition: all 0.3s;
 }
 
 .feature-link:hover {
     letter-spacing: 1px;
 }
 
-/* ============================================ */
-/* SERVER INFO */
-/* ============================================ */
-
+/* Server Info */
 .server-info {
     padding: 40px 24px;
 }
@@ -653,10 +596,6 @@ body {
     margin-bottom: 4px;
 }
 
-.banner-text p {
-    color: #8b949e;
-}
-
 .ip-code {
     font-family: monospace;
     color: #6aaf4e;
@@ -682,10 +621,7 @@ body {
     transform: scale(1.05);
 }
 
-/* ============================================ */
-/* FOOTER */
-/* ============================================ */
-
+/* Footer */
 .footer-premium {
     background: #050508;
     padding: 60px 24px 30px;
@@ -712,13 +648,6 @@ body {
     gap: 10px;
     font-size: 20px;
     font-weight: 700;
-    margin-bottom: 16px;
-}
-
-.footer-logo-img {
-    width: 35px;
-    height: 35px;
-    border-radius: 8px;
 }
 
 .social-icons {
@@ -798,10 +727,7 @@ body {
     color: #6aaf4e;
 }
 
-/* ============================================ */
-/* SISTEMA DE LUPA E ZOOM */
-/* ============================================ */
-
+/* Lupa e Zoom */
 .lupa-flutuante {
     position: fixed;
     bottom: 30px;
@@ -817,7 +743,7 @@ body {
     cursor: pointer;
     z-index: 1000;
     box-shadow: 0 4px 20px rgba(106, 175, 78, 0.4);
-    transition: all 0.3s ease;
+    transition: all 0.3s;
     border: 2px solid rgba(255,255,255,0.2);
 }
 
@@ -887,7 +813,6 @@ body {
     font-size: 32px;
     cursor: pointer;
     color: #888;
-    transition: all 0.2s;
 }
 
 .zoom-close:hover {
@@ -913,7 +838,6 @@ body {
     padding: 4px 12px;
     border-radius: 20px;
     color: white;
-    font-weight: bold;
 }
 
 .zoom-container {
@@ -929,8 +853,7 @@ body {
 
 #zoomImage {
     max-width: 100%;
-    transition: transform 0.2s ease;
-    cursor: zoom-in;
+    transition: transform 0.2s;
     border-radius: 12px;
 }
 
@@ -953,7 +876,6 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
-    transition: all 0.2s;
 }
 
 .zoom-btn:hover {
@@ -974,7 +896,7 @@ body {
     font-size: 14px;
     z-index: 1100;
     transform: translateX(200%);
-    transition: transform 0.3s ease;
+    transition: transform 0.3s;
     border: 1px solid #6aaf4e;
 }
 
@@ -995,20 +917,12 @@ body {
     gap: 6px;
     backdrop-filter: blur(4px);
     pointer-events: none;
-    z-index: 5;
 }
 
-/* ============================================ */
-/* RESPONSIVO */
-/* ============================================ */
-
+/* Responsivo */
 @media (max-width: 768px) {
     .cursor, .cursor-follower {
         display: none;
-    }
-    
-    body {
-        cursor: auto;
     }
     
     .hero-title {
@@ -1033,16 +947,8 @@ body {
         display: none;
     }
     
-    .nav-item i {
-        font-size: 20px;
-    }
-    
     .nav-item {
         padding: 10px 16px;
-    }
-    
-    .server-cards {
-        gap: 15px;
     }
     
     .server-card {
@@ -1050,36 +956,12 @@ body {
         min-width: 140px;
     }
     
-    .server-icon {
-        font-size: 36px;
-    }
-    
     .jornal-header h2 {
         font-size: 22px;
-    }
-    
-    .jornal-imagem {
-        padding: 20px;
     }
     
     .footer-bottom {
         flex-direction: column;
         text-align: center;
-    }
-}
-
-@media (max-width: 480px) {
-    .hero-stats {
-        flex-direction: column;
-        align-items: center;
-        gap: 15px;
-    }
-    
-    .features-grid {
-        gap: 20px;
-    }
-    
-    .skeleton-image {
-        height: 350px;
     }
 }
