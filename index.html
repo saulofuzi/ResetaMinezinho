@@ -1,397 +1,270 @@
-// ============================================
-// JORNAL DO MINEZINHO - SISTEMA AUTOMÁTICO
-// ============================================
-
-// Configuração dos servidores
-const SERVERS = {
-    global: {
-        nome: "Global",
-        icon: "🌍",
-        cor: "#6aaf4e",
-        corBg: "rgba(106, 175, 78, 0.2)"
-    },
-    legacy: {
-        nome: "Survival Legacy",
-        icon: "🟢🌲",
-        cor: "#48bb48",
-        corBg: "rgba(72, 187, 72, 0.2)"
-    },
-    magis: {
-        nome: "Survival Magis",
-        icon: "🟣✨",
-        cor: "#a048bb",
-        corBg: "rgba(160, 72, 187, 0.2)"
-    }
-};
-
-// ============================================
-// LISTA DE TODAS AS IMAGENS QUE VOCÊ TEM
-// COLOQUE AQUI O NOME EXATO DOS SEUS ARQUIVOS!
-// ============================================
-
-const MINHAS_IMAGENS = {
-    // Coloque aqui o nome exato dos seus arquivos como estão no GitHub
-    global: "capa-dia.jpg.png",      // ← MUDE para o nome da sua imagem GLOBAL
-    legacy: "legacy.jpg",             // ← MUDE para o nome da sua imagem LEGACY
-    magis: "magis.jpg"                // ← MUDE para o nome da sua imagem MAGIS
-};
-
-// ============================================
-// FUNÇÕES PRINCIPAIS
-// ============================================
-
-let servidorAtivo = "global";
-
-function mostrarData() {
-    const data = new Date();
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    const dataFormatada = data.toLocaleDateString('pt-BR', options);
-    const dataElement = document.getElementById('dataAtual');
-    if (dataElement) {
-        dataElement.innerHTML = `${dataFormatada.charAt(0).toUpperCase() + dataFormatada.slice(1)}`;
-    }
-}
-
-function atualizarOnlineCount() {
-    const total = Math.floor(Math.random() * 50) + 120;
-    const onlineSpan = document.getElementById('onlineCount');
-    if (onlineSpan) onlineSpan.innerHTML = `${total} online`;
-}
-
-async function mostrarJornal(server) {
-    const card = document.getElementById('jornalCard');
-    if (!card) return;
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jornal do Minezinho | Notícias do Servidor</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Particle Background -->
+    <div class="particles" id="particles"></div>
     
-    servidorAtivo = server;
-    const serverInfo = SERVERS[server];
-    
-    // Atualizar UI
-    atualizarUI(server);
-    
-    // Mostrar loading
-    card.innerHTML = `
-        <div class="skeleton-loader">
-            <div class="skeleton-header"></div>
-            <div class="skeleton-image"></div>
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <!-- Botão Lupa Flutuante -->
+    <div class="lupa-flutuante" id="btnLupa">
+        <i class="fas fa-search-plus"></i>
+        <span>Lupa</span>
+    </div>
+
+    <!-- Modal do Zoom -->
+    <div class="zoom-modal" id="zoomModal">
+        <div class="zoom-modal-content">
+            <div class="zoom-header">
+                <h3><i class="fas fa-search"></i> Visualizar Jornal</h3>
+                <button class="zoom-close" id="zoomClose">&times;</button>
+            </div>
+            <div class="zoom-body">
+                <div class="zoom-instructions">
+                    <i class="fas fa-mouse-pointer"></i> Passe o mouse para ampliar
+                    <span class="zoom-level" id="zoomLevel">200%</span>
+                </div>
+                <div class="zoom-container">
+                    <img id="zoomImage" src="" alt="Jornal ampliado">
+                </div>
+                <div class="zoom-controls">
+                    <button id="zoomInBtn" class="zoom-btn"><i class="fas fa-search-plus"></i> +</button>
+                    <button id="zoomOutBtn" class="zoom-btn"><i class="fas fa-search-minus"></i> -</button>
+                    <button id="zoomResetBtn" class="zoom-btn"><i class="fas fa-sync-alt"></i> Reset</button>
+                    <button id="zoomFullscreen" class="zoom-btn"><i class="fas fa-expand"></i> Tela Cheia</button>
+                </div>
+            </div>
         </div>
-    `;
-    
-    // PEGAR O NOME DA IMAGEM QUE VOCÊ CONFIGUROU
-    const nomeImagem = MINHAS_IMAGENS[server];
-    
-    if (nomeImagem) {
-        // Tenta carregar a imagem
-        const img = new Image();
-        
-        img.onload = function() {
-            card.innerHTML = `
-                <div class="jornal-header" style="border-bottom-color: ${serverInfo.cor}">
-                    <h2 style="color: ${serverInfo.cor}">
-                        ${serverInfo.icon} ${serverInfo.nome}
-                    </h2>
-                    <p>As últimas notícias do servidor - Fique por dentro de tudo!</p>
+    </div>
+
+    <!-- Toast de Notificação -->
+    <div class="toast-notification" id="toast">
+        <i class="fas fa-copy"></i>
+        <span>IP copiado!</span>
+    </div>
+
+    <!-- Navbar Premium -->
+    <nav class="navbar glass">
+        <div class="nav-container">
+            <div class="logo">
+                <div class="logo-3d">
+                    <span>📰</span>
                 </div>
-                <div class="jornal-imagem">
-                    <img src="${nomeImagem}" alt="Jornal do Minezinho - ${serverInfo.nome}">
+                <div class="logo-text">
+                    <span class="logo-small">JORNAL DO</span>
+                    <span class="logo-large">MINEZINHO</span>
                 </div>
-            `;
-            adicionarHintZoom();
-        };
-        
-        img.onerror = function() {
-            card.innerHTML = `
-                <div class="jornal-header" style="background: rgba(90, 58, 42, 0.5);">
-                    <h2>📭 Imagem não encontrada</h2>
-                    <p>Não consegui encontrar o arquivo: <strong>${nomeImagem}</strong></p>
+            </div>
+            <div class="nav-menu">
+                <a href="#" class="nav-item active" data-tab="global">
+                    <i class="fas fa-globe"></i>
+                    <span>Global</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="legacy">
+                    <i class="fas fa-tree"></i>
+                    <span>Legacy</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="magis">
+                    <i class="fas fa-magic"></i>
+                    <span>Magis</span>
+                </a>
+            </div>
+            <div class="online-badge">
+                <div class="pulse-ring"></div>
+                <i class="fas fa-circle"></i>
+                <span id="onlineCount">128 online</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-premium">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <div class="hero-badge" id="serverBadge">
+                <i class="fas fa-globe"></i>
+                SERVIDOR GLOBAL
+            </div>
+            <h1 class="hero-title">
+                <span class="title-line">JORNAL DO</span>
+                <span class="title-highlight">MINEZINHO</span>
+            </h1>
+            <p class="hero-description">Sua fonte oficial de notícias do melhor servidor Minecraft</p>
+            <div class="hero-stats">
+                <div class="stat">
+                    <i class="fas fa-calendar"></i>
+                    <span id="dataAtual">Carregando...</span>
                 </div>
-                <div class="empty-state">
-                    <div class="empty-icon">🔍</div>
-                    <h3>Verifique o nome do arquivo</h3>
-                    <p>No arquivo <strong>script.js</strong>, procure por <code>MINHAS_IMAGENS</code> e coloque o nome EXATO da sua imagem:</p>
+                <div class="stat">
+                    <i class="fas fa-newspaper"></i>
+                    <span id="edicaoAtual">Edição Global</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-wave">
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28 70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08 36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25"></path>
+                <path d="M0,0V15.81C13,21.25,27.93,25.67,44.24,28.45c69.76,13.44,139.31,17,209.23,8.06 69.92-8.95,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08 36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".5"></path>
+                <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46 59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Selector de Servidores (cards) -->
+    <section class="server-selector">
+        <div class="container">
+            <div class="selector-title">
+                <h3>📌 Selecione o servidor</h3>
+                <p>Cada servidor tem seu próprio jornal exclusivo</p>
+            </div>
+            <div class="server-cards">
+                <div class="server-card" data-server="global">
+                    <div class="server-icon global-icon">🌍</div>
+                    <h4>Global</h4>
+                    <p>Jornal oficial do servidor</p>
+                    <span class="server-badge">Principal</span>
+                </div>
+                <div class="server-card legacy-card" data-server="legacy">
+                    <div class="server-icon legacy-icon">🟢🌲</div>
+                    <h4>Survival Legacy</h4>
+                    <p>Modo clássico e tradicional</p>
+                    <span class="server-badge legacy">Verde</span>
+                </div>
+                <div class="server-card magis-card" data-server="magis">
+                    <div class="server-icon magis-icon">🟣✨</div>
+                    <h4>Survival Magis</h4>
+                    <p>Magia e aventura</p>
+                    <span class="server-badge magis">Roxo</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Jornal Principal -->
+    <section class="jornal-premium">
+        <div class="container-large">
+            <div class="jornal-wrapper glass-card" id="jornalCard">
+                <div class="skeleton-loader">
+                    <div class="skeleton-header"></div>
+                    <div class="skeleton-image"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Informações -->
+    <section class="features-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>⚡ Informações <span class="gradient-text">Rápidas</span></h2>
+                <p>Tudo que você precisa saber sobre o servidor</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tag"></i>
+                    </div>
+                    <h3>Envie sua Notícia</h3>
+                    <p>Use o Discord com a tag <span class="code-tag">#jornal</span> para sugerir pautas</p>
+                    <a href="https://discord.gg/minezinho" target="_blank" class="feature-link">Discord →</a>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3>Destaques da Semana</h3>
+                    <p>Eventos, construções e jogadores em destaque</p>
+                    <a href="#" class="feature-link" id="btnDestaques">Ver Destaques →</a>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <h3>Edições Anteriores</h3>
+                    <p>Arquivo completo de todos os jornais já publicados</p>
+                    <a href="#" class="feature-link" id="btnArquivoFooter">Ver Arquivo →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Servidor Info -->
+    <section class="server-info">
+        <div class="container">
+            <div class="info-banner glass">
+                <div class="banner-content">
+                    <i class="fas fa-server"></i>
+                    <div class="banner-text">
+                        <h3>Jogue Agora no Minezinho</h3>
+                        <p>IP: <span class="ip-code">play.minezinho.com</span></p>
+                    </div>
+                    <button class="btn-copy" onclick="copiarIP()">
+                        <i class="fas fa-copy"></i> Copiar IP
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-premium">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <span>📰</span>
+                        <span>Jornal do Minezinho</span>
+                    </div>
+                    <p>Notícias com credibilidade e diversão desde 2024</p>
+                    <div class="social-icons">
+                        <a href="https://www.instagram.com/minezinhoservidor" target="_blank" class="social-icon insta">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://discord.gg/minezinho" target="_blank" class="social-icon discord">
+                            <i class="fab fa-discord"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Links Rápidos</h4>
                     <ul>
-                        <li>Sua imagem se chama: <code>${nomeImagem}</code></li>
-                        <li>Verifique se o nome está correto (maiúsculas/minúsculas)</li>
-                        <li>Verifique se a imagem está na mesma pasta do site</li>
+                        <li><a href="#" data-tab="global">Global</a></li>
+                        <li><a href="#" data-tab="legacy">Survival Legacy 🟢</a></li>
+                        <li><a href="#" data-tab="magis">Survival Magis 🟣</a></li>
+                        <li><a href="https://discord.gg/minezinho" target="_blank">Discord</a></li>
                     </ul>
-                    <p style="margin-top: 24px;">
-                        📌 <strong>Exemplo:</strong> Se sua imagem se chama <code>jornal-global.png</code>, coloque:<br>
-                        <code>global: "jornal-global.png"</code>
-                    </p>
                 </div>
-            `;
-        };
-        
-        img.src = nomeImagem;
-    } else {
-        card.innerHTML = `
-            <div class="jornal-header" style="background: rgba(90, 58, 42, 0.5);">
-                <h2>⚙️ Configuração necessária</h2>
-                <p>Você precisa configurar os nomes das imagens no arquivo script.js</p>
+                <div class="footer-links">
+                    <h4>Servidor</h4>
+                    <ul>
+                        <li><a href="#">Regras</a></li>
+                        <li><a href="#">Loja</a></li>
+                        <li><a href="#">Suporte</a></li>
+                    </ul>
+                </div>
             </div>
-            <div class="empty-state">
-                <div class="empty-icon">📝</div>
-                <h3>Como configurar</h3>
-                <p>No arquivo <strong>script.js</strong>, encontre a seção <code>MINHAS_IMAGENS</code> e preencha:</p>
-                <ul>
-                    <li>📄 <code>global: "nome-da-sua-imagem-global.jpg"</code></li>
-                    <li>📄 <code>legacy: "nome-da-sua-imagem-legacy.jpg"</code></li>
-                    <li>📄 <code>magis: "nome-da-sua-imagem-magis.jpg"</code></li>
-                </ul>
-                <p style="margin-top: 24px;">🌟 Depois de configurar, atualize a página!</p>
+            <div class="footer-bottom">
+                <div class="copyright">
+                    <p>© 2026 Jornal do Minezinho - Todos os direitos reservados</p>
+                </div>
+                <div class="developer">
+                    <i class="fas fa-code"></i>
+                    <span>Desenvolvido por <strong>saulofuzi</strong></span>
+                </div>
             </div>
-        `;
-    }
-}
+        </div>
+    </footer>
 
-function atualizarUI(server) {
-    const serverInfo = SERVERS[server];
-    
-    const badge = document.getElementById('serverBadge');
-    if (badge) {
-        badge.innerHTML = `<i class="fas ${server === 'global' ? 'fa-globe' : (server === 'legacy' ? 'fa-tree' : 'fa-magic')}"></i> SERVIDOR ${serverInfo.nome.toUpperCase()}`;
-        badge.style.background = serverInfo.corBg;
-        badge.style.color = serverInfo.cor;
-        badge.style.border = `1px solid ${serverInfo.cor}`;
-    }
-    
-    const edicao = document.getElementById('edicaoAtual');
-    if (edicao) {
-        edicao.innerHTML = `${serverInfo.icon} ${serverInfo.nome}`;
-    }
-    
-    document.querySelectorAll('.nav-item').forEach(item => {
-        item.classList.remove('active');
-        if (item.dataset.tab === server) {
-            item.classList.add('active');
-        }
-    });
-    
-    document.querySelectorAll('.server-card').forEach(card => {
-        card.classList.remove('active');
-        if (card.dataset.server === server) {
-            card.classList.add('active');
-        }
-    });
-}
-
-// ============================================
-// SISTEMA DE LUPA E ZOOM
-// ============================================
-
-let zoomLevel = 2;
-
-const btnLupa = document.getElementById('btnLupa');
-const zoomModal = document.getElementById('zoomModal');
-const zoomClose = document.getElementById('zoomClose');
-const zoomImage = document.getElementById('zoomImage');
-const zoomInBtn = document.getElementById('zoomInBtn');
-const zoomOutBtn = document.getElementById('zoomOutBtn');
-const zoomResetBtn = document.getElementById('zoomResetBtn');
-const zoomFullscreen = document.getElementById('zoomFullscreen');
-const zoomLevelSpan = document.getElementById('zoomLevel');
-
-function abrirLupa() {
-    const imagemAtual = document.querySelector('.jornal-imagem img');
-    
-    if (!imagemAtual) {
-        mostrarToast('Nenhum jornal aberto para visualizar!');
-        return;
-    }
-    
-    zoomImage.src = imagemAtual.src;
-    zoomLevel = 2;
-    atualizarZoom();
-    zoomModal.classList.add('active');
-}
-
-function atualizarZoom() {
-    const percentual = Math.round(zoomLevel * 100);
-    zoomImage.style.transform = `scale(${zoomLevel})`;
-    if (zoomLevelSpan) zoomLevelSpan.textContent = `${percentual}%`;
-}
-
-function zoomIn() {
-    if (zoomLevel < 4) {
-        zoomLevel += 0.25;
-        atualizarZoom();
-    } else {
-        mostrarToast('Zoom máximo! (400%)');
-    }
-}
-
-function zoomOut() {
-    if (zoomLevel > 0.5) {
-        zoomLevel -= 0.25;
-        atualizarZoom();
-    } else {
-        mostrarToast('Zoom mínimo! (50%)');
-    }
-}
-
-function resetZoom() {
-    zoomLevel = 2;
-    atualizarZoom();
-    mostrarToast('Zoom resetado para 200%');
-}
-
-function toggleFullscreen() {
-    const modalContent = document.querySelector('.zoom-modal-content');
-    if (!document.fullscreenElement) {
-        modalContent.requestFullscreen();
-        if (zoomFullscreen) zoomFullscreen.innerHTML = '<i class="fas fa-compress"></i> Sair';
-    } else {
-        document.exitFullscreen();
-        if (zoomFullscreen) zoomFullscreen.innerHTML = '<i class="fas fa-expand"></i> Tela Cheia';
-    }
-}
-
-function fecharLupa() {
-    zoomModal.classList.remove('active');
-}
-
-function mostrarToast(mensagem) {
-    const toast = document.getElementById('toast');
-    if (!toast) return;
-    
-    toast.innerHTML = `<i class="fas fa-info-circle"></i><span>${mensagem}</span>`;
-    toast.classList.add('show');
-    setTimeout(() => {
-        toast.classList.remove('show');
-    }, 2000);
-}
-
-function copiarIP() {
-    navigator.clipboard.writeText('play.minezinho.com');
-    mostrarToast('IP copiado! play.minezinho.com');
-}
-
-function adicionarHintZoom() {
-    const jornalImagem = document.querySelector('.jornal-imagem');
-    if (jornalImagem && !document.querySelector('.zoom-hint')) {
-        const hint = document.createElement('div');
-        hint.className = 'zoom-hint';
-        hint.innerHTML = '<i class="fas fa-search-plus"></i> Clique na lupa para ampliar';
-        jornalImagem.style.position = 'relative';
-        jornalImagem.appendChild(hint);
-        setTimeout(() => {
-            hint.style.opacity = '0';
-            setTimeout(() => hint.remove(), 500);
-        }, 5000);
-    }
-}
-
-// ============================================
-// PARTICLES
-// ============================================
-
-function criarParticles() {
-    const particlesContainer = document.getElementById('particles');
-    if (!particlesContainer) return;
-    
-    for (let i = 0; i < 50; i++) {
-        const particle = document.createElement('div');
-        particle.style.position = 'absolute';
-        particle.style.width = Math.random() * 3 + 'px';
-        particle.style.height = particle.style.width;
-        particle.style.background = '#6aaf4e';
-        particle.style.borderRadius = '50%';
-        particle.style.opacity = Math.random() * 0.3;
-        particle.style.left = Math.random() * 100 + '%';
-        particle.style.top = Math.random() * 100 + '%';
-        particle.style.animation = `floatParticle ${Math.random() * 10 + 10}s linear infinite`;
-        particle.style.pointerEvents = 'none';
-        particlesContainer.appendChild(particle);
-    }
-}
-
-// ============================================
-// CUSTOM CURSOR
-// ============================================
-
-const cursor = document.querySelector('.cursor');
-const cursorFollower = document.querySelector('.cursor-follower');
-
-if (cursor && cursorFollower) {
-    document.addEventListener('mousemove', (e) => {
-        cursor.style.transform = `translate(${e.clientX - 4}px, ${e.clientY - 4}px)`;
-        cursorFollower.style.transform = `translate(${e.clientX - 20}px, ${e.clientY - 20}px)`;
-    });
-}
-
-// ============================================
-// EVENTOS
-// ============================================
-
-document.querySelectorAll('.nav-item[data-tab]').forEach(link => {
-    link.addEventListener('click', (e) => {
-        e.preventDefault();
-        mostrarJornal(link.dataset.tab);
-    });
-});
-
-document.querySelectorAll('.server-card').forEach(card => {
-    card.addEventListener('click', () => {
-        mostrarJornal(card.dataset.server);
-    });
-});
-
-const btnDestaques = document.getElementById('btnDestaques');
-if (btnDestaques) {
-    btnDestaques.addEventListener('click', (e) => {
-        e.preventDefault();
-        mostrarJornal('global');
-    });
-}
-
-document.querySelectorAll('#btnArquivo, #btnArquivoFooter').forEach(btn => {
-    if (btn) {
-        btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            mostrarToast('📚 Arquivo em breve!');
-        });
-    }
-});
-
-if (btnLupa) btnLupa.addEventListener('click', abrirLupa);
-if (zoomClose) zoomClose.addEventListener('click', fecharLupa);
-if (zoomInBtn) zoomInBtn.addEventListener('click', zoomIn);
-if (zoomOutBtn) zoomOutBtn.addEventListener('click', zoomOut);
-if (zoomResetBtn) zoomResetBtn.addEventListener('click', resetZoom);
-if (zoomFullscreen) zoomFullscreen.addEventListener('click', toggleFullscreen);
-
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && zoomModal && zoomModal.classList.contains('active')) {
-        fecharLupa();
-    }
-});
-
-if (zoomModal) {
-    zoomModal.addEventListener('click', (e) => {
-        if (e.target === zoomModal) fecharLupa();
-    });
-}
-
-const observer = new MutationObserver(() => adicionarHintZoom());
-const jornalCard = document.getElementById('jornalCard');
-if (jornalCard) {
-    observer.observe(jornalCard, { childList: true, subtree: true });
-}
-
-// ============================================
-// INICIALIZAÇÃO
-// ============================================
-
-document.addEventListener('DOMContentLoaded', () => {
-    mostrarData();
-    atualizarOnlineCount();
-    mostrarJornal('global');
-    criarParticles();
-    
-    const style = document.createElement('style');
-    style.textContent = `@keyframes floatParticle { 0% { transform: translateY(0px); } 50% { transform: translateY(-100px); } 100% { transform: translateY(0px); } }`;
-    document.head.appendChild(style);
-    
-    setInterval(atualizarOnlineCount, 30000);
-});
-
-console.log('✅ Jornal do Minezinho carregado!');
+    <script src="script.js"></script>
+</body>
+</html>
