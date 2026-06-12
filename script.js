@@ -1,100 +1,67 @@
 // ============================================
-// JORNAL DO MINEZINHO - 3 SERVIDORES
+// JORNAL DO MINEZINHO - SISTEMA COMPLETO
 // ============================================
 
-// Configuração dos servidores e suas imagens
+// CONFIGURAÇÃO DOS SERVIDORES
 const SERVERS = {
     global: {
         nome: "Global",
         icon: "🌍",
         cor: "#6aaf4e",
-        corBg: "rgba(106, 175, 78, 0.2)",
-        imagens: [
-            "imagens/global.jpg",
-            "imagens/global.png",
-            "global.jpg",
-            "jornal-global.jpg",
-            "capa-global.jpg"
-        ]
+        corBg: "rgba(106, 175, 78, 0.2)"
     },
     legacy: {
         nome: "Survival Legacy",
         icon: "🟢🌲",
         cor: "#48bb48",
-        corBg: "rgba(72, 187, 72, 0.2)",
-        imagens: [
-            "imagens/legacy.jpg",
-            "imagens/legacy.png",
-            "legacy.jpg",
-            "jornal-legacy.jpg",
-            "capa-legacy.jpg",
-            "imagens/survival-legacy.jpg"
-        ]
+        corBg: "rgba(72, 187, 72, 0.2)"
     },
     magis: {
         nome: "Survival Magis",
         icon: "🟣✨",
         cor: "#a048bb",
-        corBg: "rgba(160, 72, 187, 0.2)",
-        imagens: [
-            "imagens/magis.jpg",
-            "imagens/magis.png",
-            "magis.jpg",
-            "jornal-magis.jpg",
-            "capa-magis.jpg",
-            "imagens/survival-magis.jpg"
-        ]
+        corBg: "rgba(160, 72, 187, 0.2)"
     }
 };
 
-// Servidor ativo atual
+// ============================================
+// ⚠️ IMPORTANTE: COLOQUE O NOME EXATO DAS SUAS IMAGENS AQUI!
+// ============================================
+// Olhe no GitHub o nome dos seus arquivos e coloque abaixo:
+// Exemplo: se sua imagem chama "capa-legacy.png" coloque legacy: "capa-legacy.png"
+// ============================================
+
+const MINHAS_IMAGENS = {
+    global: "global.jpg",      // ← MUDE para o nome da sua imagem GLOBAL
+    legacy: "legacy.jpg",      // ← MUDE para o nome da sua imagem LEGACY
+    magis: "magis.jpg"         // ← MUDE para o nome da sua imagem MAGIS
+};
+
+// ============================================
+// NÃO MUDE NADA DAQUI PARA BAIXO
+// ============================================
+
 let servidorAtivo = "global";
 
-// ============================================
-// FUNÇÕES PRINCIPAIS
-// ============================================
-
+// Mostrar data atual
 function mostrarData() {
     const data = new Date();
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     const dataFormatada = data.toLocaleDateString('pt-BR', options);
     const dataElement = document.getElementById('dataAtual');
     if (dataElement) {
-        dataElement.innerHTML = `${dataFormatada.charAt(0).toUpperCase() + dataFormatada.slice(1)}`;
+        dataElement.innerHTML = dataFormatada.charAt(0).toUpperCase() + dataFormatada.slice(1);
     }
 }
 
+// Atualizar contador de online
 function atualizarOnlineCount() {
-    const counts = {
-        global: Math.floor(Math.random() * 50) + 100,
-        legacy: Math.floor(Math.random() * 30) + 40,
-        magis: Math.floor(Math.random() * 30) + 35
-    };
-    const total = counts.global + counts.legacy + counts.magis;
+    const total = Math.floor(Math.random() * 50) + 120;
     const onlineSpan = document.getElementById('onlineCount');
     if (onlineSpan) onlineSpan.innerHTML = `${total} online`;
 }
 
-function encontrarImagem(server, tentativa = 0) {
-    return new Promise((resolve) => {
-        const imagensLista = SERVERS[server].imagens;
-        if (tentativa >= imagensLista.length) {
-            resolve(null);
-            return;
-        }
-        
-        const nomeArquivo = imagensLista[tentativa];
-        const img = new Image();
-        
-        img.onload = () => resolve(nomeArquivo);
-        img.onerror = () => {
-            encontrarImagem(server, tentativa + 1).then(resolve);
-        };
-        
-        img.src = nomeArquivo;
-    });
-}
-
+// Mostrar o jornal
 async function mostrarJornal(server) {
     const card = document.getElementById('jornalCard');
     if (!card) return;
@@ -113,9 +80,22 @@ async function mostrarJornal(server) {
         </div>
     `;
     
-    const imagemEncontrada = await encontrarImagem(server);
+    const nomeImagem = MINHAS_IMAGENS[server];
     
-    if (imagemEncontrada) {
+    if (!nomeImagem) {
+        card.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-icon">⚙️</div>
+                <h3>Configure o nome da imagem</h3>
+                <p>No arquivo <strong>script.js</strong>, encontre <code>MINHAS_IMAGENS</code> e coloque o nome do seu arquivo.</p>
+            </div>
+        `;
+        return;
+    }
+    
+    const img = new Image();
+    
+    img.onload = function() {
         card.innerHTML = `
             <div class="jornal-header" style="border-bottom-color: ${serverInfo.cor}">
                 <h2 style="color: ${serverInfo.cor}">
@@ -124,55 +104,48 @@ async function mostrarJornal(server) {
                 <p>As últimas notícias do servidor - Fique por dentro de tudo!</p>
             </div>
             <div class="jornal-imagem">
-                <img src="${imagemEncontrada}" alt="Jornal do Minezinho - ${serverInfo.nome}">
+                <img src="${nomeImagem}" alt="Jornal do Minezinho - ${serverInfo.nome}">
             </div>
         `;
         adicionarHintZoom();
-    } else {
-        // Mostrar instruções específicas para cada servidor
+    };
+    
+    img.onerror = function() {
         card.innerHTML = `
-            <div class="jornal-header" style="background: rgba(90, 58, 42, 0.5);">
-                <h2>📭 Nenhum jornal encontrado para ${serverInfo.nome}</h2>
-                <p>Vamos resolver isso rapidinho!</p>
-            </div>
             <div class="empty-state">
-                <div class="empty-icon">📸</div>
-                <h3>Como colocar o jornal do ${serverInfo.nome}?</h3>
-                <p>No GitHub, faça upload da sua imagem com UM destes nomes:</p>
+                <div class="empty-icon">📭</div>
+                <h3>Imagem não encontrada</h3>
+                <p>Não consegui encontrar o arquivo: <code>${nomeImagem}</code></p>
+                <p>Verifique se o nome está correto no GitHub.</p>
                 <ul>
-                    <li>📄 <code>${server}.jpg</code> ou <code>${server}.png</code></li>
-                    <li>📄 <code>jornal-${server}.jpg</code> ou <code>capa-${server}.jpg</code></li>
-                    <li>📄 <code>imagens/${server}.jpg</code> dentro da pasta imagens/</li>
+                    <li>O arquivo existe no GitHub?</li>
+                    <li>O nome está escrito igual? (maiúsculas/minúsculas)</li>
+                    <li>Está na mesma pasta do site?</li>
                 </ul>
-                <p style="margin-top: 24px;">
-                    🌟 <strong>Dica:</strong> O servidor ${serverInfo.nome} usa a cor ${serverInfo.cor}<br>
-                    Aguarde 1 minuto após o upload e atualize a página!
-                </p>
             </div>
         `;
-    }
+    };
+    
+    img.src = nomeImagem;
 }
 
+// Atualizar interface
 function atualizarUI(server) {
     const serverInfo = SERVERS[server];
     
-    // Atualizar badge do hero
     const badge = document.getElementById('serverBadge');
     if (badge) {
         badge.innerHTML = `<i class="fas ${server === 'global' ? 'fa-globe' : (server === 'legacy' ? 'fa-tree' : 'fa-magic')}"></i> SERVIDOR ${serverInfo.nome.toUpperCase()}`;
-        badge.className = `hero-badge ${server}`;
         badge.style.background = serverInfo.corBg;
         badge.style.color = serverInfo.cor;
         badge.style.border = `1px solid ${serverInfo.cor}`;
     }
     
-    // Atualizar texto da edição
     const edicao = document.getElementById('edicaoAtual');
     if (edicao) {
         edicao.innerHTML = `${serverInfo.icon} ${serverInfo.nome}`;
     }
     
-    // Atualizar abas ativas
     document.querySelectorAll('.nav-item').forEach(item => {
         item.classList.remove('active');
         if (item.dataset.tab === server) {
@@ -180,7 +153,6 @@ function atualizarUI(server) {
         }
     });
     
-    // Atualizar cards dos servidores
     document.querySelectorAll('.server-card').forEach(card => {
         card.classList.remove('active');
         if (card.dataset.server === server) {
@@ -190,12 +162,10 @@ function atualizarUI(server) {
 }
 
 // ============================================
-// SISTEMA DE LUPA E ZOOM
+// SISTEMA DE LUPA
 // ============================================
 
-let zoomImagemAtual = null;
 let zoomLevel = 2;
-
 const btnLupa = document.getElementById('btnLupa');
 const zoomModal = document.getElementById('zoomModal');
 const zoomClose = document.getElementById('zoomClose');
@@ -208,14 +178,11 @@ const zoomLevelSpan = document.getElementById('zoomLevel');
 
 function abrirLupa() {
     const imagemAtual = document.querySelector('.jornal-imagem img');
-    
     if (!imagemAtual) {
-        mostrarToast('Nenhum jornal aberto para visualizar!', 'warning');
+        mostrarToast('Nenhum jornal aberto!');
         return;
     }
-    
-    zoomImagemAtual = imagemAtual.src;
-    zoomImage.src = zoomImagemAtual;
+    zoomImage.src = imagemAtual.src;
     zoomLevel = 2;
     atualizarZoom();
     zoomModal.classList.add('active');
@@ -232,7 +199,7 @@ function zoomIn() {
         zoomLevel += 0.25;
         atualizarZoom();
     } else {
-        mostrarToast('Zoom máximo atingido! (400%)', 'info');
+        mostrarToast('Zoom máximo! (400%)');
     }
 }
 
@@ -241,14 +208,14 @@ function zoomOut() {
         zoomLevel -= 0.25;
         atualizarZoom();
     } else {
-        mostrarToast('Zoom mínimo atingido! (50%)', 'info');
+        mostrarToast('Zoom mínimo! (50%)');
     }
 }
 
 function resetZoom() {
     zoomLevel = 2;
     atualizarZoom();
-    mostrarToast('Zoom resetado para 200%', 'info');
+    mostrarToast('Zoom resetado para 200%');
 }
 
 function toggleFullscreen() {
@@ -266,11 +233,10 @@ function fecharLupa() {
     zoomModal.classList.remove('active');
 }
 
-function mostrarToast(mensagem, tipo = 'success') {
+function mostrarToast(mensagem) {
     const toast = document.getElementById('toast');
     if (!toast) return;
-    
-    toast.innerHTML = `<i class="fas ${tipo === 'success' ? 'fa-check-circle' : 'fa-info-circle'}"></i><span>${mensagem}</span>`;
+    toast.innerHTML = `<i class="fas fa-info-circle"></i><span>${mensagem}</span>`;
     toast.classList.add('show');
     setTimeout(() => {
         toast.classList.remove('show');
@@ -278,8 +244,7 @@ function mostrarToast(mensagem, tipo = 'success') {
 }
 
 function copiarIP() {
-    const ip = 'play.minezinho.com';
-    navigator.clipboard.writeText(ip);
+    navigator.clipboard.writeText('play.minezinho.com');
     mostrarToast('IP copiado! play.minezinho.com');
 }
 
@@ -291,7 +256,6 @@ function adicionarHintZoom() {
         hint.innerHTML = '<i class="fas fa-search-plus"></i> Clique na lupa para ampliar';
         jornalImagem.style.position = 'relative';
         jornalImagem.appendChild(hint);
-        
         setTimeout(() => {
             hint.style.opacity = '0';
             setTimeout(() => hint.remove(), 500);
@@ -299,14 +263,10 @@ function adicionarHintZoom() {
     }
 }
 
-// ============================================
-// PARTICLES BACKGROUND
-// ============================================
-
+// Particles
 function criarParticles() {
     const particlesContainer = document.getElementById('particles');
     if (!particlesContainer) return;
-    
     for (let i = 0; i < 50; i++) {
         const particle = document.createElement('div');
         particle.style.position = 'absolute';
@@ -323,13 +283,9 @@ function criarParticles() {
     }
 }
 
-// ============================================
-// CUSTOM CURSOR
-// ============================================
-
+// Custom cursor
 const cursor = document.querySelector('.cursor');
 const cursorFollower = document.querySelector('.cursor-follower');
-
 if (cursor && cursorFollower) {
     document.addEventListener('mousemove', (e) => {
         cursor.style.transform = `translate(${e.clientX - 4}px, ${e.clientY - 4}px)`;
@@ -337,48 +293,37 @@ if (cursor && cursorFollower) {
     });
 }
 
-// ============================================
-// EVENTOS
-// ============================================
-
-// Navegação das abas
+// Eventos
 document.querySelectorAll('.nav-item[data-tab]').forEach(link => {
     link.addEventListener('click', (e) => {
         e.preventDefault();
-        const tab = link.dataset.tab;
-        mostrarJornal(tab);
+        mostrarJornal(link.dataset.tab);
     });
 });
 
-// Cards dos servidores
 document.querySelectorAll('.server-card').forEach(card => {
     card.addEventListener('click', () => {
-        const server = card.dataset.server;
-        mostrarJornal(server);
+        mostrarJornal(card.dataset.server);
     });
 });
 
-// Botão Destaques
 const btnDestaques = document.getElementById('btnDestaques');
 if (btnDestaques) {
     btnDestaques.addEventListener('click', (e) => {
         e.preventDefault();
         mostrarJornal('global');
-        mostrarToast('📰 Exibindo destaques do servidor Global', 'info');
     });
 }
 
-// Botão Arquivo
 document.querySelectorAll('#btnArquivo, #btnArquivoFooter').forEach(btn => {
     if (btn) {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
-            mostrarToast('📚 Arquivo em breve! Em breve você verá todas as edições antigas.', 'info');
+            mostrarToast('📚 Arquivo em breve!');
         });
     }
 });
 
-// Eventos da Lupa
 if (btnLupa) btnLupa.addEventListener('click', abrirLupa);
 if (zoomClose) zoomClose.addEventListener('click', fecharLupa);
 if (zoomInBtn) zoomInBtn.addEventListener('click', zoomIn);
@@ -386,36 +331,25 @@ if (zoomOutBtn) zoomOutBtn.addEventListener('click', zoomOut);
 if (zoomResetBtn) zoomResetBtn.addEventListener('click', resetZoom);
 if (zoomFullscreen) zoomFullscreen.addEventListener('click', toggleFullscreen);
 
-// Fechar modal com ESC
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && zoomModal && zoomModal.classList.contains('active')) {
         fecharLupa();
     }
 });
 
-// Fechar clicando fora
 if (zoomModal) {
     zoomModal.addEventListener('click', (e) => {
-        if (e.target === zoomModal) {
-            fecharLupa();
-        }
+        if (e.target === zoomModal) fecharLupa();
     });
 }
 
-// Observer para adicionar hint
-const observer = new MutationObserver(() => {
-    adicionarHintZoom();
-});
-
+const observer = new MutationObserver(() => adicionarHintZoom());
 const jornalCard = document.getElementById('jornalCard');
 if (jornalCard) {
     observer.observe(jornalCard, { childList: true, subtree: true });
 }
 
-// ============================================
-// INICIALIZAÇÃO
-// ============================================
-
+// Inicialização
 document.addEventListener('DOMContentLoaded', () => {
     mostrarData();
     atualizarOnlineCount();
@@ -423,18 +357,10 @@ document.addEventListener('DOMContentLoaded', () => {
     criarParticles();
     
     const style = document.createElement('style');
-    style.textContent = `
-        @keyframes floatParticle {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-100px); }
-            100% { transform: translateY(0px); }
-        }
-    `;
+    style.textContent = `@keyframes floatParticle { 0% { transform: translateY(0px); } 50% { transform: translateY(-100px); } 100% { transform: translateY(0px); } }`;
     document.head.appendChild(style);
     
     setInterval(atualizarOnlineCount, 30000);
 });
 
 console.log('✅ Jornal do Minezinho carregado!');
-console.log('🎮 Servidores: Global 🌍 | Legacy 🟢 | Magis 🟣');
-console.log('🔍 Clique no botão verde com lupa para ampliar o jornal');
