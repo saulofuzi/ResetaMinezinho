@@ -3,41 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📰 Jornal do Minezinho - Minecraft News</title>
+    <title>Jornal do Minezinho</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="logo-area">
-                <img src="imagens/logo-minezinho.png" alt="Logo do Minezinho" class="logo" onerror="this.style.display='none'">
-                <h1>📰 JORNAL DO MINEZINHO</h1>
+
+    <!-- Header / Navbar igual da loja -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">📰</span>
+                <span class="logo-text">JORNAL DO <strong>MINEZINHO</strong></span>
             </div>
-            <p>As notícias mais quentes do servidor!</p>
-            <div class="data-atual" id="dataAtual"></div>
-        </header>
-
-        <div class="botoes">
-            <button class="ativo" onclick="mostrarJornal('dia')">📅 JORNAL DO DIA</button>
-            <button onclick="mostrarJornal('semana')">📆 JORNAL DA SEMANA</button>
-        </div>
-
-        <div id="conteudoJornal" class="jornal-container">
-            <!-- Aqui vai aparecer o jornal -->
-        </div>
-
-        <footer>
-            <div class="redes-sociais">
-                <a href="https://www.instagram.com/minezinhoservidor" target="_blank" class="social-link instagram">
-                    📷 Instagram: @minezinhoservidor
-                </a>
-                <a href="https://discord.gg/minezinho" target="_blank" class="social-link discord">
-                    💬 Discord: discord.gg/minezinho
-                </a>
+            <div class="nav-links">
+                <a href="#" class="nav-link active" data-tab="dia">JORNAL DO DIA</a>
+                <a href="#" class="nav-link" data-tab="semana">JORNAL DA SEMANA</a>
             </div>
-            <p class="footer-text">🗳️ Envie sua notícia no Discord | Use #jornal</p>
-        </footer>
-    </div>
+            <div class="online-status">
+                <span class="online-dot"></span>
+                <span>Online agora</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section igual da loja -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>📰 <span class="highlight">JORNAL</span> DO MINEZINHO</h1>
+            <p>Fique por dentro de tudo que acontece no servidor</p>
+            <div class="date-badge" id="dataAtual"></div>
+        </div>
+    </section>
+
+    <!-- Jornal Principal - aparece logo de cara -->
+    <section class="jornal-section">
+        <div class="container">
+            <div class="jornal-card" id="jornalCard">
+                <!-- Conteúdo dinâmico via JS -->
+                <div class="jornal-loading">
+                    <div class="loading-spinner"></div>
+                    <p>Carregando jornal...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Informações extras (igual a loja tem) -->
+    <section class="info-section">
+        <div class="container">
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">📢</div>
+                    <h3>Envie sua notícia</h3>
+                    <p>Use o Discord e a tag <strong>#jornal</strong> para sugerir pautas</p>
+                    <a href="https://discord.gg/minezinho" class="info-btn">Enviar notícia →</a>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🏆</div>
+                    <h3>Destaques da Semana</h3>
+                    <p>Os melhores momentos, construções e eventos</p>
+                    <a href="#" class="info-btn" onclick="mostrarJornal('semana')">Ver destaques →</a>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">📅</div>
+                    <h3>Edições Anteriores</h3>
+                    <p>Arquivo completo de todas as edições do jornal</p>
+                    <a href="#" class="info-btn">Ver arquivo →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Redes Sociais igual da loja -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <span class="logo-icon">📰</span>
+                    <span>Jornal do Minezinho</span>
+                </div>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/minezinhoservidor" target="_blank" class="social-link instagram">
+                        📷 Instagram
+                    </a>
+                    <a href="https://discord.gg/minezinho" target="_blank" class="social-link discord">
+                        💬 Discord
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Jornal do Minezinho - Todos os direitos reservados</p>
+                <p class="minecraft-ip">Servidor Minezinho - play.minezinho.com</p>
+            </div>
+        </div>
+    </footer>
 
     <script src="script.js"></script>
 </body>
