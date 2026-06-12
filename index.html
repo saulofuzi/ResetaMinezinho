@@ -3,98 +3,238 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jornal do Minezinho</title>
+    <title>Jornal do Minezinho | Notícias do Servidor</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+    <!-- Particle Background -->
+    <div class="particles" id="particles"></div>
+    
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
 
-    <!-- Header / Navbar igual da loja -->
-    <nav class="navbar">
+    <!-- Botão Lupa Flutuante -->
+    <div class="lupa-flutuante" id="btnLupa">
+        <i class="fas fa-search-plus"></i>
+        <span>Lupa</span>
+    </div>
+
+    <!-- Modal do Zoom -->
+    <div class="zoom-modal" id="zoomModal">
+        <div class="zoom-modal-content">
+            <div class="zoom-header">
+                <h3><i class="fas fa-search"></i> Visualizar Jornal</h3>
+                <button class="zoom-close" id="zoomClose">&times;</button>
+            </div>
+            <div class="zoom-body">
+                <div class="zoom-instructions">
+                    <i class="fas fa-mouse-pointer"></i> Passe o mouse para ampliar
+                    <span class="zoom-level" id="zoomLevel">200%</span>
+                </div>
+                <div class="zoom-container">
+                    <img id="zoomImage" src="" alt="Jornal ampliado">
+                </div>
+                <div class="zoom-controls">
+                    <button id="zoomInBtn" class="zoom-btn"><i class="fas fa-search-plus"></i> +</button>
+                    <button id="zoomOutBtn" class="zoom-btn"><i class="fas fa-search-minus"></i> -</button>
+                    <button id="zoomResetBtn" class="zoom-btn"><i class="fas fa-sync-alt"></i> Reset</button>
+                    <button id="zoomFullscreen" class="zoom-btn"><i class="fas fa-expand"></i> Tela Cheia</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast de Notificação -->
+    <div class="toast-notification" id="toast">
+        <i class="fas fa-copy"></i>
+        <span>IP copiado!</span>
+    </div>
+
+    <!-- Navbar Premium -->
+    <nav class="navbar glass">
         <div class="nav-container">
             <div class="logo">
-                <span class="logo-icon">📰</span>
-                <span class="logo-text">JORNAL DO <strong>MINEZINHO</strong></span>
+                <div class="logo-3d">
+                    <span>📰</span>
+                </div>
+                <div class="logo-text">
+                    <span class="logo-small">JORNAL DO</span>
+                    <span class="logo-large">MINEZINHO</span>
+                </div>
             </div>
-            <div class="nav-links">
-                <a href="#" class="nav-link active" data-tab="dia">JORNAL DO DIA</a>
-                <a href="#" class="nav-link" data-tab="semana">JORNAL DA SEMANA</a>
+            <div class="nav-menu">
+                <a href="#" class="nav-item active" data-tab="dia">
+                    <i class="fas fa-newspaper"></i>
+                    <span>Edição Hoje</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="semana">
+                    <i class="fas fa-calendar-week"></i>
+                    <span>Edição Semana</span>
+                </a>
+                <a href="#" class="nav-item" id="btnArquivo">
+                    <i class="fas fa-archive"></i>
+                    <span>Arquivo</span>
+                </a>
             </div>
-            <div class="online-status">
-                <span class="online-dot"></span>
-                <span>Online agora</span>
+            <div class="online-badge">
+                <div class="pulse-ring"></div>
+                <i class="fas fa-circle"></i>
+                <span>49 online</span>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section igual da loja -->
-    <section class="hero">
+    <!-- Hero Section com efeito parallax -->
+    <section class="hero-premium">
+        <div class="hero-bg"></div>
         <div class="hero-content">
-            <h1>📰 <span class="highlight">JORNAL</span> DO MINEZINHO</h1>
-            <p>Fique por dentro de tudo que acontece no servidor</p>
-            <div class="date-badge" id="dataAtual"></div>
+            <div class="hero-badge">
+                <i class="fas fa-volume-up"></i>
+                ÚLTIMAS NOTÍCIAS
+            </div>
+            <h1 class="hero-title">
+                <span class="title-line">JORNAL DO</span>
+                <span class="title-highlight">MINEZINHO</span>
+            </h1>
+            <p class="hero-description">Sua fonte oficial de notícias do melhor servidor Minecraft</p>
+            <div class="hero-stats">
+                <div class="stat">
+                    <i class="fas fa-calendar"></i>
+                    <span id="dataAtual">Carregando...</span>
+                </div>
+                <div class="stat">
+                    <i class="fas fa-pen-fancy"></i>
+                    <span>Edição #01</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-wave">
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28 70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08 36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25"></path>
+                <path d="M0,0V15.81C13,21.25,27.93,25.67,44.24,28.45c69.76,13.44,139.31,17,209.23,8.06 69.92-8.95,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08 36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".5"></path>
+                <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46 59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z"></path>
+            </svg>
         </div>
     </section>
 
-    <!-- Jornal Principal - aparece logo de cara -->
-    <section class="jornal-section">
+    <!-- Jornal Principal -->
+    <section class="jornal-premium">
         <div class="container">
-            <div class="jornal-card" id="jornalCard">
-                <!-- Conteúdo dinâmico via JS -->
-                <div class="jornal-loading">
-                    <div class="loading-spinner"></div>
-                    <p>Carregando jornal...</p>
+            <div class="jornal-wrapper glass-card" id="jornalCard">
+                <div class="skeleton-loader">
+                    <div class="skeleton-header"></div>
+                    <div class="skeleton-image"></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Informações extras (igual a loja tem) -->
-    <section class="info-section">
+    <!-- Seção de Informações Grid Premium -->
+    <section class="features-section">
         <div class="container">
-            <div class="info-grid">
-                <div class="info-card">
-                    <div class="info-icon">📢</div>
-                    <h3>Envie sua notícia</h3>
-                    <p>Use o Discord e a tag <strong>#jornal</strong> para sugerir pautas</p>
-                    <a href="https://discord.gg/minezinho" class="info-btn">Enviar notícia →</a>
+            <div class="section-header">
+                <h2>⚡ Informações <span class="gradient-text">Rápidas</span></h2>
+                <p>Tudo que você precisa saber sobre o servidor</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card" data-aos="fade-up">
+                    <div class="feature-icon">
+                        <i class="fas fa-tag"></i>
+                    </div>
+                    <h3>Envie sua Notícia</h3>
+                    <p>Use o Discord com a tag <span class="code-tag">#jornal</span> para sugerir pautas e acontecimentos</p>
+                    <a href="https://discord.gg/minezinho" target="_blank" class="feature-link">Discord →</a>
                 </div>
-                <div class="info-card">
-                    <div class="info-icon">🏆</div>
-                    <h3>Destaques da Semana</h3>
-                    <p>Os melhores momentos, construções e eventos</p>
-                    <a href="#" class="info-btn" onclick="mostrarJornal('semana')">Ver destaques →</a>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3>Destaques</h3>
+                    <p>Eventos, construções e jogadores em destaque na semana</p>
+                    <a href="#" class="feature-link" id="btnDestaques">Ver Destaques →</a>
                 </div>
-                <div class="info-card">
-                    <div class="info-icon">📅</div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
                     <h3>Edições Anteriores</h3>
-                    <p>Arquivo completo de todas as edições do jornal</p>
-                    <a href="#" class="info-btn">Ver arquivo →</a>
+                    <p>Arquivo completo de todos os jornais já publicados</p>
+                    <a href="#" class="feature-link" id="btnArquivoFooter">Ver Arquivo →</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Redes Sociais igual da loja -->
-    <footer class="footer">
+    <!-- Seção de Servidor Info -->
+    <section class="server-info">
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <span class="logo-icon">📰</span>
-                    <span>Jornal do Minezinho</span>
+            <div class="info-banner glass">
+                <div class="banner-content">
+                    <i class="fas fa-server"></i>
+                    <div class="banner-text">
+                        <h3>Jogue Agora no Minezinho</h3>
+                        <p>IP: <span class="ip-code">play.minezinho.com</span></p>
+                    </div>
+                    <button class="btn-copy" onclick="copiarIP()">
+                        <i class="fas fa-copy"></i> Copiar IP
+                    </button>
                 </div>
-                <div class="social-links">
-                    <a href="https://www.instagram.com/minezinhoservidor" target="_blank" class="social-link instagram">
-                        📷 Instagram
-                    </a>
-                    <a href="https://discord.gg/minezinho" target="_blank" class="social-link discord">
-                        💬 Discord
-                    </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Premium -->
+    <footer class="footer-premium">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <i class="fas fa-newspaper"></i>
+                        <span>Jornal do Minezinho</span>
+                    </div>
+                    <p>Notícias com credibilidade e diversão desde 2024</p>
+                    <div class="social-icons">
+                        <a href="https://www.instagram.com/minezinhoservidor" target="_blank" class="social-icon insta">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://discord.gg/minezinho" target="_blank" class="social-icon discord">
+                            <i class="fab fa-discord"></i>
+                        </a>
+                        <a href="#" class="social-icon twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="#" data-tab="dia">Jornal do Dia</a></li>
+                        <li><a href="#" data-tab="semana">Jornal da Semana</a></li>
+                        <li><a href="https://discord.gg/minezinho" target="_blank">Discord</a></li>
+                        <li><a href="https://www.instagram.com/minezinhoservidor" target="_blank">Instagram</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Servidor</h4>
+                    <ul>
+                        <li><a href="#">Regras</a></li>
+                        <li><a href="#">Loja</a></li>
+                        <li><a href="#">Suporte</a></li>
+                        <li><a href="#">Staff</a></li>
+                    </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>© 2026 Jornal do Minezinho - Todos os direitos reservados</p>
-                <p class="minecraft-ip">Servidor Minezinho - play.minezinho.com</p>
+                <div class="copyright">
+                    <p>© 2026 Jornal do Minezinho - Todos os direitos reservados</p>
+                </div>
+                <div class="developer">
+                    <i class="fas fa-code"></i>
+                    <span>Desenvolvido por <strong>saulofuzi</strong></span>
+                </div>
             </div>
         </div>
     </footer>
