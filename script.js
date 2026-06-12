@@ -32,9 +32,9 @@ const SERVERS = {
 // ============================================
 
 const MINHAS_IMAGENS = {
-    global: "global.jpg",      // ← MUDE para o nome da sua imagem GLOBAL
-    legacy: "legacy.jpg",      // ← MUDE para o nome da sua imagem LEGACY
-    magis: "magis.jpg"         // ← MUDE para o nome da sua imagem MAGIS
+    global: "capa-global.jpg",      // ← MUDE para o nome da sua imagem GLOBAL
+    legacy: "capa-legacy.jpg",      // ← MUDE para o nome da sua imagem LEGACY
+    magis: "capa-magis.jpg"         // ← MUDE para o nome da sua imagem MAGIS
 };
 
 // ============================================
