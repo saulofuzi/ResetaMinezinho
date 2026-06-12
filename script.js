@@ -1,40 +1,54 @@
 // ============================================
-// SISTEMA DE JORNAL DO MINEZINHO
+// JORNAL DO MINEZINHO - 3 SERVIDORES
 // ============================================
 
-// Lista de possíveis nomes de arquivo (adicione quantos quiser)
-const POSSIVEIS_NOMES = {
-    dia: [
-        "capa-dia.jpg",
-        "capa-dia.png",
-        "capa-dia.jpeg",
-        "capa-dia.jpg.png",
-        "jornal-dia.jpg",
-        "edicao-hoje.jpg",
-        "dia.jpg",
-        "capa.jpg"
-    ],
-    semana: [
-        "capa-semana.jpg",
-        "capa-semana.png",
-        "capa-semana.jpeg",
-        "jornal-semana.jpg",
-        "edicao-semana.jpg",
-        "semana.jpg"
-    ]
-};
-
-// Títulos bonitos
-const TITULOS = {
-    dia: { 
-        titulo: "📰 Edição de Hoje", 
-        descricao: "As últimas notícias do servidor - Fique por dentro de tudo!" 
+// Configuração dos servidores e suas imagens
+const SERVERS = {
+    global: {
+        nome: "Global",
+        icon: "🌍",
+        cor: "#6aaf4e",
+        corBg: "rgba(106, 175, 78, 0.2)",
+        imagens: [
+            "imagens/global.jpg",
+            "imagens/global.png",
+            "global.jpg",
+            "jornal-global.jpg",
+            "capa-global.jpg"
+        ]
     },
-    semana: { 
-        titulo: "📆 Edição da Semana", 
-        descricao: "Os melhores momentos da semana - Resumo completo" 
+    legacy: {
+        nome: "Survival Legacy",
+        icon: "🟢🌲",
+        cor: "#48bb48",
+        corBg: "rgba(72, 187, 72, 0.2)",
+        imagens: [
+            "imagens/legacy.jpg",
+            "imagens/legacy.png",
+            "legacy.jpg",
+            "jornal-legacy.jpg",
+            "capa-legacy.jpg",
+            "imagens/survival-legacy.jpg"
+        ]
+    },
+    magis: {
+        nome: "Survival Magis",
+        icon: "🟣✨",
+        cor: "#a048bb",
+        corBg: "rgba(160, 72, 187, 0.2)",
+        imagens: [
+            "imagens/magis.jpg",
+            "imagens/magis.png",
+            "magis.jpg",
+            "jornal-magis.jpg",
+            "capa-magis.jpg",
+            "imagens/survival-magis.jpg"
+        ]
     }
 };
+
+// Servidor ativo atual
+let servidorAtivo = "global";
 
 // ============================================
 // FUNÇÕES PRINCIPAIS
@@ -50,28 +64,46 @@ function mostrarData() {
     }
 }
 
-function encontrarImagem(tipo, tentativa = 0) {
+function atualizarOnlineCount() {
+    const counts = {
+        global: Math.floor(Math.random() * 50) + 100,
+        legacy: Math.floor(Math.random() * 30) + 40,
+        magis: Math.floor(Math.random() * 30) + 35
+    };
+    const total = counts.global + counts.legacy + counts.magis;
+    const onlineSpan = document.getElementById('onlineCount');
+    if (onlineSpan) onlineSpan.innerHTML = `${total} online`;
+}
+
+function encontrarImagem(server, tentativa = 0) {
     return new Promise((resolve) => {
-        if (tentativa >= POSSIVEIS_NOMES[tipo].length) {
+        const imagensLista = SERVERS[server].imagens;
+        if (tentativa >= imagensLista.length) {
             resolve(null);
             return;
         }
         
-        const nomeArquivo = POSSIVEIS_NOMES[tipo][tentativa];
+        const nomeArquivo = imagensLista[tentativa];
         const img = new Image();
         
         img.onload = () => resolve(nomeArquivo);
         img.onerror = () => {
-            encontrarImagem(tipo, tentativa + 1).then(resolve);
+            encontrarImagem(server, tentativa + 1).then(resolve);
         };
         
         img.src = nomeArquivo;
     });
 }
 
-async function mostrarJornal(tipo) {
+async function mostrarJornal(server) {
     const card = document.getElementById('jornalCard');
     if (!card) return;
+    
+    servidorAtivo = server;
+    const serverInfo = SERVERS[server];
+    
+    // Atualizar UI
+    atualizarUI(server);
     
     // Mostrar loading
     card.innerHTML = `
@@ -81,42 +113,80 @@ async function mostrarJornal(tipo) {
         </div>
     `;
     
-    const imagemEncontrada = await encontrarImagem(tipo);
-    const titulos = TITULOS[tipo];
+    const imagemEncontrada = await encontrarImagem(server);
     
     if (imagemEncontrada) {
         card.innerHTML = `
-            <div class="jornal-header">
-                <h2>${titulos.titulo}</h2>
-                <p>${titulos.descricao}</p>
+            <div class="jornal-header" style="border-bottom-color: ${serverInfo.cor}">
+                <h2 style="color: ${serverInfo.cor}">
+                    ${serverInfo.icon} ${serverInfo.nome}
+                </h2>
+                <p>As últimas notícias do servidor - Fique por dentro de tudo!</p>
             </div>
             <div class="jornal-imagem">
-                <img src="${imagemEncontrada}" alt="Jornal do Minezinho - ${titulos.titulo}">
+                <img src="${imagemEncontrada}" alt="Jornal do Minezinho - ${serverInfo.nome}">
             </div>
         `;
         adicionarHintZoom();
     } else {
+        // Mostrar instruções específicas para cada servidor
         card.innerHTML = `
             <div class="jornal-header" style="background: rgba(90, 58, 42, 0.5);">
-                <h2>📭 Nenhum jornal encontrado</h2>
+                <h2>📭 Nenhum jornal encontrado para ${serverInfo.nome}</h2>
                 <p>Vamos resolver isso rapidinho!</p>
             </div>
             <div class="empty-state">
                 <div class="empty-icon">📸</div>
-                <h3>Como colocar seu jornal?</h3>
+                <h3>Como colocar o jornal do ${serverInfo.nome}?</h3>
                 <p>No GitHub, faça upload da sua imagem com UM destes nomes:</p>
                 <ul>
-                    <li>📄 <code>capa-dia.jpg</code> ou <code>capa-dia.png</code></li>
-                    <li>📄 <code>jornal-dia.jpg</code> ou <code>edicao-hoje.jpg</code></li>
-                    <li>📄 <code>capa-semana.jpg</code> ou <code>jornal-semana.jpg</code></li>
+                    <li>📄 <code>${server}.jpg</code> ou <code>${server}.png</code></li>
+                    <li>📄 <code>jornal-${server}.jpg</code> ou <code>capa-${server}.jpg</code></li>
+                    <li>📄 <code>imagens/${server}.jpg</code> dentro da pasta imagens/</li>
                 </ul>
                 <p style="margin-top: 24px;">
-                    🌟 <strong>Já fez upload?</strong> Aguarde 1 minuto e atualize a página!<br>
-                    O sistema procura automaticamente por vários nomes diferentes.
+                    🌟 <strong>Dica:</strong> O servidor ${serverInfo.nome} usa a cor ${serverInfo.cor}<br>
+                    Aguarde 1 minuto após o upload e atualize a página!
                 </p>
             </div>
         `;
     }
+}
+
+function atualizarUI(server) {
+    const serverInfo = SERVERS[server];
+    
+    // Atualizar badge do hero
+    const badge = document.getElementById('serverBadge');
+    if (badge) {
+        badge.innerHTML = `<i class="fas ${server === 'global' ? 'fa-globe' : (server === 'legacy' ? 'fa-tree' : 'fa-magic')}"></i> SERVIDOR ${serverInfo.nome.toUpperCase()}`;
+        badge.className = `hero-badge ${server}`;
+        badge.style.background = serverInfo.corBg;
+        badge.style.color = serverInfo.cor;
+        badge.style.border = `1px solid ${serverInfo.cor}`;
+    }
+    
+    // Atualizar texto da edição
+    const edicao = document.getElementById('edicaoAtual');
+    if (edicao) {
+        edicao.innerHTML = `${serverInfo.icon} ${serverInfo.nome}`;
+    }
+    
+    // Atualizar abas ativas
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+        if (item.dataset.tab === server) {
+            item.classList.add('active');
+        }
+    });
+    
+    // Atualizar cards dos servidores
+    document.querySelectorAll('.server-card').forEach(card => {
+        card.classList.remove('active');
+        if (card.dataset.server === server) {
+            card.classList.add('active');
+        }
+    });
 }
 
 // ============================================
@@ -247,7 +317,7 @@ function criarParticles() {
         particle.style.opacity = Math.random() * 0.3;
         particle.style.left = Math.random() * 100 + '%';
         particle.style.top = Math.random() * 100 + '%';
-        particle.style.animation = `float ${Math.random() * 10 + 10}s linear infinite`;
+        particle.style.animation = `floatParticle ${Math.random() * 10 + 10}s linear infinite`;
         particle.style.pointerEvents = 'none';
         particlesContainer.appendChild(particle);
     }
@@ -265,16 +335,6 @@ if (cursor && cursorFollower) {
         cursor.style.transform = `translate(${e.clientX - 4}px, ${e.clientY - 4}px)`;
         cursorFollower.style.transform = `translate(${e.clientX - 20}px, ${e.clientY - 20}px)`;
     });
-    
-    document.addEventListener('mouseleave', () => {
-        cursor.style.opacity = '0';
-        cursorFollower.style.opacity = '0';
-    });
-    
-    document.addEventListener('mouseenter', () => {
-        cursor.style.opacity = '1';
-        cursorFollower.style.opacity = '1';
-    });
 }
 
 // ============================================
@@ -286,11 +346,15 @@ document.querySelectorAll('.nav-item[data-tab]').forEach(link => {
     link.addEventListener('click', (e) => {
         e.preventDefault();
         const tab = link.dataset.tab;
-        
-        document.querySelectorAll('.nav-item').forEach(l => l.classList.remove('active'));
-        link.classList.add('active');
-        
         mostrarJornal(tab);
+    });
+});
+
+// Cards dos servidores
+document.querySelectorAll('.server-card').forEach(card => {
+    card.addEventListener('click', () => {
+        const server = card.dataset.server;
+        mostrarJornal(server);
     });
 });
 
@@ -299,7 +363,8 @@ const btnDestaques = document.getElementById('btnDestaques');
 if (btnDestaques) {
     btnDestaques.addEventListener('click', (e) => {
         e.preventDefault();
-        document.querySelector('.nav-item[data-tab="semana"]').click();
+        mostrarJornal('global');
+        mostrarToast('📰 Exibindo destaques do servidor Global', 'info');
     });
 }
 
@@ -337,7 +402,7 @@ if (zoomModal) {
     });
 }
 
-// Observer para adicionar hint quando o jornal mudar
+// Observer para adicionar hint
 const observer = new MutationObserver(() => {
     adicionarHintZoom();
 });
@@ -353,20 +418,23 @@ if (jornalCard) {
 
 document.addEventListener('DOMContentLoaded', () => {
     mostrarData();
-    mostrarJornal('dia');
+    atualizarOnlineCount();
+    mostrarJornal('global');
     criarParticles();
     
-    // Estilo para animação das partículas
     const style = document.createElement('style');
     style.textContent = `
-        @keyframes float {
+        @keyframes floatParticle {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-100px); }
             100% { transform: translateY(0px); }
         }
     `;
     document.head.appendChild(style);
+    
+    setInterval(atualizarOnlineCount, 30000);
 });
 
 console.log('✅ Jornal do Minezinho carregado!');
+console.log('🎮 Servidores: Global 🌍 | Legacy 🟢 | Magis 🟣');
 console.log('🔍 Clique no botão verde com lupa para ampliar o jornal');
