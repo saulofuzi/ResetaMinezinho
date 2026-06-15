@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Minezinho - Reclamações & Ideias</title>
-    <!-- Fontes e estilo base igual ao minezinho.com (replicação visual) -->
+    <title>Minhas Ideias para o Minezinho</title>
+    <!-- Fontes e ícones -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -16,18 +16,18 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #0a0c12;
-            color: #eef2ff;
+            background: #0a2f1f;  /* verde escuro fundo */
+            color: #e8f5e9;
             line-height: 1.5;
         }
 
-        /* Container principal estilo minezinho - fundo escuro com grid sutil */
-        .bg-dark-gradient {
-            background: radial-gradient(circle at 10% 20%, rgba(30, 35, 48, 0.6), #0a0c12);
+        /* fundo com gradiente verde */
+        .bg-green-gradient {
+            background: linear-gradient(135deg, #0a2f1f 0%, #1a4a2a 100%);
             min-height: 100vh;
         }
 
-        /* Header com logo e navegação - inspirado no site oficial */
+        /* Header com logo - copiado do instagram @minezinhoservidor */
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -37,7 +37,7 @@
             margin: 0 auto;
             flex-wrap: wrap;
             gap: 1rem;
-            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+            border-bottom: 1px solid rgba(100, 200, 100, 0.3);
         }
 
         .logo-area {
@@ -46,38 +46,37 @@
             gap: 12px;
         }
 
-        /* Logo copiada visualmente (estilo pixel/cubo minecraft + gold) */
+        /* Logo inspirada no perfil do instagram (creeper + coroa) */
         .logo-mine {
-            background: linear-gradient(135deg, #f5b042 0%, #e08e1a 100%);
-            width: 48px;
-            height: 48px;
-            border-radius: 16px;
+            background: linear-gradient(145deg, #2e7d32, #1b5e20);
+            width: 52px;
+            height: 52px;
+            border-radius: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.2);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
+            border: 1px solid #66bb6a;
         }
         .logo-mine i {
-            font-size: 28px;
-            color: #2d1b0c;
-            text-shadow: 0 0 2px #ffdd99;
+            font-size: 30px;
+            color: #c8e6c9;
+            text-shadow: 0 2px 3px rgba(0,0,0,0.3);
         }
         .logo-text {
-            font-size: 1.9rem;
+            font-size: 2rem;
             font-weight: 800;
             letter-spacing: -0.5px;
-            background: linear-gradient(135deg, #FFD966, #FFB347);
+            background: linear-gradient(135deg, #a5d6a7, #66bb6a);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
         }
         .logo-text span {
             font-weight: 500;
-            color: #ffcd7e;
+            color: #81c784;
             background: none;
-            -webkit-background-clip: unset;
-            background-clip: unset;
         }
 
         .nav-links {
@@ -86,67 +85,63 @@
             align-items: center;
         }
         .nav-links a {
-            color: #cdd9ff;
+            color: #c8e6c9;
             text-decoration: none;
             font-weight: 500;
             transition: 0.2s;
-            font-size: 1rem;
         }
         .nav-links a:hover {
-            color: #ffcd7e;
-        }
-        .btn-discord {
-            background: #2c2f3a;
-            padding: 8px 18px;
-            border-radius: 40px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 600;
-            border: 1px solid #ffb34730;
-        }
-        .btn-discord i {
-            color: #7289da;
+            color: #a5d6a7;
         }
 
-        /* Hero section com frase de impacto */
+        /* Hero section - deixando claro que é UM JOGADOR */
         .hero {
             text-align: center;
-            padding: 3rem 1.5rem 2rem;
+            padding: 2.5rem 1.5rem 1.5rem;
             max-width: 900px;
             margin: 0 auto;
         }
         .hero h1 {
-            font-size: 2.6rem;
+            font-size: 2.5rem;
             font-weight: 800;
-            background: linear-gradient(to right, #fff3e0, #ffdca8);
+            background: linear-gradient(to right, #c8e6c9, #81c784);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             margin-bottom: 1rem;
         }
+        .hero .player-badge {
+            display: inline-block;
+            background: #1b5e20;
+            padding: 5px 16px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #a5d6a7;
+        }
         .hero p {
-            font-size: 1.2rem;
-            color: #a7b5d9;
-            max-width: 700px;
+            font-size: 1.1rem;
+            color: #c8e6c9;
+            max-width: 650px;
             margin: 0 auto;
         }
 
-        /* Grid de cards (caixas de texto editáveis) */
+        /* Grid de cards */
         .cards-grid {
-            max-width: 1300px;
+            max-width: 1400px;
             margin: 2rem auto;
             padding: 0 1.5rem 3rem;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
             gap: 2rem;
         }
 
-        /* Cada card é uma caixa de texto editável estilo 'minezinho' */
-        .feedback-card {
-            background: #13161f;
+        /* Card estiloso versão verde */
+        .idea-card {
+            background: #0f3b24;
             border-radius: 28px;
-            border: 1px solid rgba(255, 180, 70, 0.25);
+            border: 1px solid #2e7d32;
             backdrop-filter: blur(2px);
             box-shadow: 0 20px 35px -12px rgba(0,0,0,0.5);
             transition: transform 0.2s ease, border-color 0.2s;
@@ -154,101 +149,161 @@
             display: flex;
             flex-direction: column;
         }
-        .feedback-card:hover {
+        .idea-card:hover {
             transform: translateY(-6px);
-            border-color: #ffb34770;
+            border-color: #66bb6a;
             box-shadow: 0 25px 40px -14px black;
         }
 
         .card-header {
-            padding: 1.2rem 1.5rem 0.6rem;
+            padding: 1rem 1.5rem 0.5rem;
             display: flex;
             align-items: center;
             gap: 12px;
-            border-bottom: 1px solid #232838;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #2e6b3a;
         }
         .card-icon {
-            background: #2a2f3e;
+            background: #1b5e20;
             width: 44px;
             height: 44px;
             border-radius: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.6rem;
-            color: #ffbc5e;
+            font-size: 1.5rem;
+            color: #a5d6a7;
         }
         .card-header h3 {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             font-weight: 700;
-            color: #ffe1aa;
+            color: #c8e6c9;
+            background: none;
+            border: none;
+            padding: 4px 0;
+            outline: none;
+            min-width: 120px;
+        }
+        .card-header h3[contenteditable="true"] {
+            border-bottom: 1px dashed #66bb6a;
+            cursor: text;
         }
         .card-badge {
             margin-left: auto;
-            background: #1f232e;
+            background: #1b5e20;
             padding: 4px 12px;
             border-radius: 40px;
             font-size: 0.7rem;
             font-weight: 600;
-            color: #f0bc6e;
+            color: #a5d6a7;
         }
 
-        /* Área de texto editável central (contenteditable) */
+        /* Área de texto editável + imagens */
         .editable-content {
-            padding: 1.5rem;
+            padding: 1.2rem;
             flex-grow: 1;
-            min-height: 180px;
+            min-height: 200px;
             outline: none;
-            font-size: 1rem;
-            line-height: 1.5;
-            color: #eef2ff;
-            background: #0e1119;
+            font-size: 0.95rem;
+            line-height: 1.55;
+            color: #e8f5e9;
+            background: #0a2a1a;
             margin: 0.8rem;
             border-radius: 20px;
-            border: 1px dashed #ffb34740;
+            border: 1px dashed #388e3c;
             transition: background 0.1s ease;
             cursor: text;
-            font-weight: 450;
         }
         .editable-content[contenteditable="true"]:focus {
-            background: #181e2c;
-            border-color: #ffb347;
-            box-shadow: 0 0 0 2px #ffb34730;
+            background: #0f331f;
+            border-color: #66bb6a;
+            box-shadow: 0 0 0 2px #2e7d3240;
         }
-        .editable-content p {
-            margin-bottom: 0.6rem;
+        .editable-content img {
+            max-width: 100%;
+            border-radius: 12px;
+            margin: 8px 0;
+            display: block;
+            cursor: pointer;
+            border: 1px solid #388e3c;
+        }
+        .editable-content img:hover {
+            opacity: 0.9;
+            border-color: #81c784;
         }
         .editable-content:empty:before {
-            content: "✏️ Clique aqui e edite seu texto... (reclamação ou ideia)";
-            color: #6e7c9e;
+            content: "✏️ Clique aqui e escreva sua ideia ou reclamação... (pode adicionar imagens!)";
+            color: #7cb342;
             font-style: italic;
         }
 
-        /* Rodapé com dica de edição */
+        /* Footer do card com botões */
         .card-footer {
-            padding: 0.8rem 1.5rem 1.3rem;
-            font-size: 0.75rem;
-            color: #7982a0;
+            padding: 0.6rem 1.2rem 1rem;
+            font-size: 0.7rem;
+            color: #7cb342;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-top: 1px solid #1f2535;
+            flex-wrap: wrap;
+            gap: 8px;
+            border-top: 1px solid #2a6230;
         }
         .edit-hint i {
             font-size: 0.7rem;
-            margin-right: 5px;
+            margin-right: 4px;
+        }
+        .image-upload-btn {
+            background: #1b5e20;
+            border: none;
+            color: #c8e6c9;
+            padding: 5px 12px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .image-upload-btn:hover {
+            background: #2e7d32;
+            color: white;
+        }
+        .delete-img-btn {
+            background: #2c2e2a;
+            border: 1px solid #5d4037;
+            color: #ef9a9a;
+            padding: 5px 12px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            cursor: pointer;
+        }
+        .delete-img-btn:hover {
+            background: #422b2b;
+        }
+        .trash-card {
+            cursor: pointer;
+            opacity: 0.6;
+            transition: 0.2s;
+            color: #ef9a9a;
+        }
+        .trash-card:hover {
+            opacity: 1;
+            color: #ff8a80;
         }
 
-        /* Botão para adicionar nova caixa de texto */
+        /* Botão adicionar nova caixa */
         .add-section {
             text-align: center;
-            margin: 1rem auto 3rem;
+            margin: 0rem auto 3rem;
         }
         .btn-add-card {
-            background: #202433;
-            border: 1px solid #ffb34760;
-            color: #ffdeae;
-            padding: 12px 28px;
+            background: #1b5e20;
+            border: 1px solid #66bb6a;
+            color: #e8f5e9;
+            padding: 14px 32px;
             border-radius: 60px;
             font-weight: 700;
             font-size: 1rem;
@@ -260,22 +315,20 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
         .btn-add-card:hover {
-            background: #2f3548;
-            border-color: #ffbc5e;
-            color: white;
+            background: #2e7d32;
+            border-color: #81c784;
             transform: scale(1.02);
         }
 
-        /* Aviso / dica de edição global */
         .info-bar {
-            background: #181d28b3;
+            background: #0a2a1a;
             margin: 0 1.5rem 1rem;
             padding: 10px 18px;
             border-radius: 60px;
             text-align: center;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             backdrop-filter: blur(4px);
-            color: #cbd5ff;
+            color: #a5d6a7;
             display: inline-block;
             width: auto;
         }
@@ -283,373 +336,339 @@
         footer {
             text-align: center;
             padding: 2rem;
-            color: #5b688b;
-            border-top: 1px solid #1f2535;
-            margin-top: 2rem;
+            color: #558b2f;
+            border-top: 1px solid #2e6b3a;
+            margin-top: 1rem;
             font-size: 0.8rem;
         }
-
+        .inline-icon {
+            margin-right: 5px;
+        }
         @media (max-width: 760px) {
             .navbar {
                 flex-direction: column;
                 text-align: center;
             }
             .hero h1 {
-                font-size: 1.9rem;
+                font-size: 1.8rem;
             }
             .cards-grid {
                 grid-template-columns: 1fr;
+            }
+            .card-header h3 {
+                font-size: 1.1rem;
             }
         }
     </style>
 </head>
 <body>
-<div class="bg-dark-gradient">
-    <!-- Barra de navegação igual ao estilo minezinho.com -->
+<div class="bg-green-gradient">
+    <!-- Header com logo igual ao perfil instagram -->
     <div class="navbar">
         <div class="logo-area">
             <div class="logo-mine">
-                <i class="fas fa-crown"></i>
+                <i class="fas fa-pagelines"></i> <!-- folha/trevo representando minecraft creeper vibe -->
             </div>
-            <div class="logo-text">minezinho<span>.com</span></div>
+            <div class="logo-text">minezinhoservidor</div>
         </div>
         <div class="nav-links">
             <a href="#"><i class="fas fa-home"></i> Início</a>
-            <a href="#"><i class="fas fa-server"></i> Servidor</a>
-            <a href="#"><i class="fas fa-comment-dots"></i> Reclame Aqui</a>
-            <a href="#" class="btn-discord"><i class="fab fa-discord"></i> Discord</a>
+            <a href="#"><i class="fas fa-comment-dots"></i> Minhas Ideias</a>
+            <a href="#"><i class="fab fa-discord"></i> Discord do server</a>
         </div>
     </div>
 
-    <!-- Hero com chamada para ideias e reclamações -->
+    <!-- Hero deixando claro: sou player, não dono -->
     <div class="hero">
-        <h1>📢 Reclamações & Ideias — Minezinho</h1>
-        <p>Queremos ouvir você! Abaixo, edite cada caixa de texto livremente: reclame de algo, sugira melhorias, ou compartilhe ideias épicas para o servidor.</p>
+        <div class="player-badge"><i class="fas fa-user-astronaut"></i> Eu sou apenas um jogador</div>
+        <h1>💡 ideias & sugestões para o servidor <span style="color:#81c784;">Minezinho</span></h1>
+        <p>Olá, pessoal! Sou um player que ama o servidor e criei esse espaço para organizar minhas sugestões, reclamações e ideias. <strong>Você pode editar tudo:</strong> textos, títulos e adicionar imagens nos cards. Tudo fica salvo no seu navegador.</p>
     </div>
 
-    <!-- Container grid das caixas de texto (cards editáveis) -->
+    <!-- Container grid das caixas de texto + imagem -->
     <div class="cards-grid" id="cardsContainer">
-        <!-- Cada card é uma caixa de texto editável. O conteúdo fica em contenteditable="true" -->
-        <!-- Card 1 - exemplo de reclamação -->
-        <div class="feedback-card" data-card-id="1">
+        <!-- Card 1 - exemplo de ideia construtiva (jogador) -->
+        <div class="idea-card" data-card-id="1">
             <div class="card-header">
-                <div class="card-icon"><i class="fas fa-frown"></i></div>
-                <h3>Reclamação #1</h3>
-                <div class="card-badge">editável</div>
-            </div>
-            <div class="editable-content" contenteditable="true" role="textbox" aria-multiline="true">
-                <p>🔹 <strong>Ping muito alto</strong> — ultimamente estou tendo lag acima de 200ms, mesmo com internet boa. Poderiam revisar a rota do servidor?</p>
-                <p>🔸 Além disso, o anti-xray está muito sensível, derrubando mineradores legítimos.</p>
-            </div>
-            <div class="card-footer">
-                <span class="edit-hint"><i class="fas fa-pen-alt"></i> Clique no texto e edite à vontade</span>
-                <i class="fas fa-trash-alt" style="cursor:pointer; opacity:0.7" onclick="removeCard(this)" title="Remover caixa"></i>
-            </div>
-        </div>
-
-        <!-- Card 2 - ideia para servidor -->
-        <div class="feedback-card" data-card-id="2">
-            <div class="card-header">
-                <div class="card-icon"><i class="fas fa-lightbulb"></i></div>
-                <h3>Ideia para servidor</h3>
+                <div class="card-icon"><i class="fas fa-tree"></i></div>
+                <h3 contenteditable="true" class="editable-title">🌿 Evento Semanal de Sobrevivência</h3>
                 <div class="card-badge">editável</div>
             </div>
             <div class="editable-content" contenteditable="true">
-                <p>✨ <strong>Sugestão:</strong> Implementar eventos semanais de "Caça ao Tesouro" no mundo survival, com itens exclusivos como recompensa.</p>
-                <p>📦 Também seria incrível ter uma warp de troca de itens entre players (leilão).</p>
+                <p>📌 Minha ideia: criar um evento toda sexta-feira chamado "Desafio da Selva", onde os players precisam coletar itens raros em um bioma personalizado. O vencedor ganha um rank temporário ou itens exclusivos.</p>
+                <p>🏆 Acho que isso aumentaria a interação entre os jogadores!</p>
             </div>
             <div class="card-footer">
-                <span class="edit-hint"><i class="fas fa-pen-alt"></i> Edite seu texto</span>
-                <i class="fas fa-trash-alt" style="cursor:pointer; opacity:0.7" onclick="removeCard(this)" title="Remover caixa"></i>
+                <span class="edit-hint"><i class="fas fa-pen-alt"></i> Texto editável</span>
+                <button class="image-upload-btn" onclick="uploadImageToCard(this)"><i class="fas fa-image"></i> Adicionar imagem</button>
+                <button class="delete-img-btn" onclick="removeImagesFromCard(this)"><i class="fas fa-trash-alt"></i> Remover imagens</button>
+                <i class="fas fa-trash-alt trash-card" onclick="removeCard(this)" title="Remover caixa"></i>
             </div>
         </div>
 
-        <!-- Card 3 - reclamação sobre staff -->
-        <div class="feedback-card" data-card-id="3">
+        <!-- Card 2 - reclamação construtiva -->
+        <div class="idea-card" data-card-id="2">
             <div class="card-header">
-                <div class="card-icon"><i class="fas fa-shield-alt"></i></div>
-                <h3>Feedback staff</h3>
+                <div class="card-icon"><i class="fas fa-tachometer-alt"></i></div>
+                <h3 contenteditable="true" class="editable-title">⚠️ Lag em horários de pico</h3>
                 <div class="card-badge">editável</div>
             </div>
             <div class="editable-content" contenteditable="true">
-                <p>👥 Gostaria de relatar demora nas respostas de ticket no discord. Algumas reclamações levam mais de 2 dias para resposta. Melhorar isso daria mais confiança.</p>
+                <p>🔸 Gostaria de relatar que entre 20h e 22h o servidor apresenta muito lag, principalmente no nether. Sei que a equipe está de olho, mas fica aqui minha observação como player.</p>
+                <p>🔹 Talvez otimizar plugins de chunk loader ajudaria.</p>
             </div>
             <div class="card-footer">
-                <span class="edit-hint"><i class="fas fa-pen-alt"></i> Clique para editar</span>
-                <i class="fas fa-trash-alt" style="cursor:pointer; opacity:0.7" onclick="removeCard(this)" title="Remover caixa"></i>
+                <span class="edit-hint"><i class="fas fa-pen-alt"></i> Edite texto/imagem</span>
+                <button class="image-upload-btn" onclick="uploadImageToCard(this)"><i class="fas fa-image"></i> Adicionar imagem</button>
+                <button class="delete-img-btn" onclick="removeImagesFromCard(this)"><i class="fas fa-trash-alt"></i> Remover imagens</button>
+                <i class="fas fa-trash-alt trash-card" onclick="removeCard(this)"></i>
             </div>
         </div>
 
-        <!-- Card 4 - ideias balanceamento -->
-        <div class="feedback-card" data-card-id="4">
+        <!-- Card 3 - ideia + feature -->
+        <div class="idea-card" data-card-id="3">
             <div class="card-header">
-                <div class="card-icon"><i class="fas fa-gavel"></i></div>
-                <h3>Balanceamento</h3>
+                <div class="card-icon"><i class="fas fa-store"></i></div>
+                <h3 contenteditable="true" class="editable-title">💰 Sugestão: Leilão entre players</h3>
                 <div class="card-badge">editável</div>
             </div>
             <div class="editable-content" contenteditable="true">
-                <p>⚖️ O kit default está muito fraco comparado com ranks pagos. Sugiro adicionar missões diárias que deem itens decentes para players não-rank.</p>
+                <p>⚡ Implementar um sistema de leilão no /ah seria incrível! Players poderiam colocar itens raros para leilão por 30 minutos. Isso movimentaria a economia.</p>
+                <p>Já vi em outros servers e funciona bem.</p>
             </div>
             <div class="card-footer">
-                <span class="edit-hint"><i class="fas fa-pen-alt"></i> Edite livremente</span>
-                <i class="fas fa-trash-alt" style="cursor:pointer; opacity:0.7" onclick="removeCard(this)" title="Remover caixa"></i>
+                <span class="edit-hint"><i class="fas fa-pen-alt"></i> Clique e edite</span>
+                <button class="image-upload-btn" onclick="uploadImageToCard(this)"><i class="fas fa-image"></i> Adicionar imagem</button>
+                <button class="delete-img-btn" onclick="removeImagesFromCard(this)"><i class="fas fa-trash-alt"></i> Remover imagens</button>
+                <i class="fas fa-trash-alt trash-card" onclick="removeCard(this)"></i>
             </div>
         </div>
     </div>
 
-    <!-- Botão para adicionar nova caixa de texto (ideia/reclamação) -->
+    <!-- Botão adicionar novo card -->
     <div class="add-section">
-        <button class="btn-add-card" id="addNewCardBtn"><i class="fas fa-plus-circle"></i> Nova caixa de texto (ideia/reclamação)</button>
+        <button class="btn-add-card" id="addNewCardBtn"><i class="fas fa-plus-circle"></i> + Nova caixa (ideia/reclamação)</button>
     </div>
 
-    <!-- info extra: dica de persistência -->
-    <div style="text-align: center; margin-top: -0.5rem;">
+    <div style="text-align: center;">
         <div class="info-bar">
-            <i class="fas fa-save"></i>  Dica: todos os textos são editáveis diretamente no navegador. Você pode clicar em qualquer caixa e modificar! 
-            As alterações ficam salvas enquanto a página estiver aberta. Para levar adiante, copie o HTML ou exporte.
+            <i class="fas fa-save"></i>  IMPORTANTE: Todo texto e imagem que você adicionar fica SALVO automaticamente no seu navegador. 
+            Ao recarregar a página, suas alterações continuam. Apenas você pode editar.
         </div>
     </div>
 
     <footer>
-        <p>© 2025 Minezinho — Reclamações e ideias da comunidade. Este site é independente e apenas para fins de sugestões.</p>
-        <p style="margin-top: 10px;">⚡ servidor oficial: <strong>minezinho.com</strong> | versão 1.20+</p>
+        <p>💚 Site criado por um jogador do servidor <strong>Minezinho</strong> (minezinho.com) — Não sou o dono, apenas um fã compartilhando ideias.</p>
+        <p style="margin-top: 8px;">📸 Logo inspirada no perfil oficial @minezinhoservidor (Instagram) | Versão 1.20+</p>
     </footer>
 </div>
 
 <script>
-    // Função para remover o card (caixa de texto) com confirmação simples
-    window.removeCard = function(trashIcon) {
-        const card = trashIcon.closest('.feedback-card');
-        if (card && confirm('Tem certeza que deseja remover esta caixa de texto? As alterações não poderão ser desfeitas (apenas recarregando a página).')) {
-            card.remove();
-            // Opcional: exibir toaster ou apenas remove
-        }
-    };
-
-    // Função para criar um novo card / caixa de texto totalmente editável
-    function createNewCard() {
+    // ------------------- FUNÇÕES DE PERSISTÊNCIA (localStorage) ------------------
+    function saveAllCards() {
         const container = document.getElementById('cardsContainer');
         if (!container) return;
-
-        // Gerar um id simbólico e um contador para título diferenciado
-        const now = Date.now();
-        const cardCount = container.children.length + 1;
-        
-        // Cria novo elemento card
-        const newCard = document.createElement('div');
-        newCard.className = 'feedback-card';
-        newCard.setAttribute('data-card-id', 'new-' + now);
-
-        // Header do card com ícone padrão "mensagem"
-        newCard.innerHTML = `
-            <div class="card-header">
-                <div class="card-icon"><i class="fas fa-comment"></i></div>
-                <h3>Ideia / Reclamação #${cardCount}</h3>
-                <div class="card-badge">editável</div>
-            </div>
-            <div class="editable-content" contenteditable="true" role="textbox">
-                <p>✏️ Escreva aqui sua reclamação ou ideia para o servidor minezinho. Exemplo: "Melhorar o sistema de proteção de terrenos" ou "Adicionar eventos diários"...</p>
-            </div>
-            <div class="card-footer">
-                <span class="edit-hint"><i class="fas fa-pen-alt"></i> Clique e edite o texto livremente</span>
-                <i class="fas fa-trash-alt" style="cursor:pointer; opacity:0.7" onclick="removeCard(this)" title="Remover caixa"></i>
-            </div>
-        `;
-        
-        // Adicionar ao container
-        container.appendChild(newCard);
-        
-        // Foco automático na nova área de texto editável para facilitar edição
-        const editableDiv = newCard.querySelector('.editable-content');
-        if (editableDiv) {
-            editableDiv.focus();
-            // Coloca o cursor no final do conteúdo
-            const range = document.createRange();
-            const sel = window.getSelection();
-            range.selectNodeContents(editableDiv);
-            range.collapse(false); // final
-            sel.removeAllRanges();
-            sel.addRange(range);
-        }
-    }
-
-    // Event listener para o botão "nova caixa de texto"
-    const addBtn = document.getElementById('addNewCardBtn');
-    if (addBtn) {
-        addBtn.addEventListener('click', createNewCard);
-    }
-
-    // Além disso, garantir que quando uma caixa de texto for editada não haja conflitos.
-    // Tornar o comportamento robusto: delegar eventos de edição não necessário, apenas contenteditable já é nativo.
-    // Persistência opcional: caso queira salvar as alterações no localStorage, podemos implementar, mas o pedido é apenas "várias caixas de texto para editar o texto depois".
-    // Porém adicionamos recurso extra de salvar automaticamente no localStorage e restaurar ao recarregar, para manter as edições mesmo após refresh.
-    // Isso oferece melhor UX, mas sem atrapalhar o conceito simples: as caixas são editáveis.
-    
-    // FUNÇÃO DE SALVAR O ESTADO ATUAL DOS CARDS NO localStorage
-    function saveCardsState() {
-        const container = document.getElementById('cardsContainer');
-        if (!container) return;
-        const cards = container.querySelectorAll('.feedback-card');
-        const state = [];
+        const cards = container.querySelectorAll('.idea-card');
+        const cardsData = [];
         cards.forEach(card => {
             const titleElem = card.querySelector('.card-header h3');
             const contentElem = card.querySelector('.editable-content');
-            const title = titleElem ? titleElem.innerText : 'Ideia';
+            const title = titleElem ? titleElem.innerHTML : 'Ideia';
             const contentHTML = contentElem ? contentElem.innerHTML : '';
-            state.push({ title, contentHTML });
+            cardsData.push({ title, contentHTML });
         });
-        localStorage.setItem('minezinho_feedback_cards', JSON.stringify(state));
+        localStorage.setItem('minezinho_player_ideas', JSON.stringify(cardsData));
     }
 
-    // Função para restaurar cards salvos (persistência)
-    function restoreCardsState() {
-        const saved = localStorage.getItem('minezinho_feedback_cards');
+    function restoreCards() {
+        const saved = localStorage.getItem('minezinho_player_ideas');
         if (!saved) return false;
         try {
             const cardsData = JSON.parse(saved);
             if (!cardsData.length) return false;
             const container = document.getElementById('cardsContainer');
             if (!container) return false;
-            // Limpar container atual (exceto o que temos, mas substituímos)
-            // Mantém a referência mas substitui todo o conteúdo
             container.innerHTML = '';
             for (let i = 0; i < cardsData.length; i++) {
                 const data = cardsData[i];
-                const newCard = document.createElement('div');
-                newCard.className = 'feedback-card';
-                newCard.setAttribute('data-card-id', 'restored-' + i);
-                // ícone alternado baseado no tipo ou padrão comentário
-                const iconClass = (data.title && data.title.toLowerCase().includes('reclama')) ? 'fa-frown' : 'fa-comment';
-                newCard.innerHTML = `
-                    <div class="card-header">
-                        <div class="card-icon"><i class="fas ${iconClass}"></i></div>
-                        <h3>${escapeHtml(data.title) || 'Ideia/Reclamação'}</h3>
-                        <div class="card-badge">editável</div>
-                    </div>
-                    <div class="editable-content" contenteditable="true">${data.contentHTML || '<p>Clique para editar seu texto.</p>'}</div>
-                    <div class="card-footer">
-                        <span class="edit-hint"><i class="fas fa-pen-alt"></i> Clique e edite o texto livremente</span>
-                        <i class="fas fa-trash-alt" style="cursor:pointer; opacity:0.7" onclick="removeCard(this)" title="Remover caixa"></i>
-                    </div>
-                `;
+                const newCard = createCardElement(data.title || 'Minha ideia', data.contentHTML || '<p>Clique para editar sua ideia...</p>', i);
                 container.appendChild(newCard);
             }
             return true;
         } catch(e) { console.warn(e); return false; }
     }
 
-    // helper para evitar XSS básico
-    function escapeHtml(str) {
-        if (!str) return 'Caixa de texto';
-        return str.replace(/[&<>]/g, function(m) {
-            if (m === '&') return '&amp;';
-            if (m === '<') return '&lt;';
-            if (m === '>') return '&gt;';
-            return m;
-        }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
-            return c;
-        });
+    function createCardElement(titleHtml, contentHtml, idx) {
+        const card = document.createElement('div');
+        card.className = 'idea-card';
+        card.setAttribute('data-card-id', 'player-' + Date.now() + '-' + idx);
+        const randomIcon = Math.random() > 0.5 ? 'fa-lightbulb' : 'fa-comment';
+        card.innerHTML = `
+            <div class="card-header">
+                <div class="card-icon"><i class="fas ${randomIcon}"></i></div>
+                <h3 contenteditable="true" class="editable-title">${titleHtml || '📝 Nova ideia'}</h3>
+                <div class="card-badge">editável</div>
+            </div>
+            <div class="editable-content" contenteditable="true">${contentHtml || '<p>Escreva sua sugestão ou reclamação aqui. Use o botão de imagem abaixo para adicionar screenshots.</p>'}</div>
+            <div class="card-footer">
+                <span class="edit-hint"><i class="fas fa-pen-alt"></i> Texto editável</span>
+                <button class="image-upload-btn" onclick="uploadImageToCard(this)"><i class="fas fa-image"></i> Adicionar imagem</button>
+                <button class="delete-img-btn" onclick="removeImagesFromCard(this)"><i class="fas fa-trash-alt"></i> Remover imagens</button>
+                <i class="fas fa-trash-alt trash-card" onclick="removeCard(this)"></i>
+            </div>
+        `;
+        return card;
     }
 
-    // Observador para salvar automaticamente sempre que houver alteração no DOM (adição, remoção, edição)
-    // Usamos MutationObserver para detectar mudanças estruturais e também salvamos após edição com input event nos contenteditables
+    // adicionar nova caixa
+    function addNewCard() {
+        const container = document.getElementById('cardsContainer');
+        if (!container) return;
+        const newCard = createCardElement('💡 Nova ideia', '<p>Clique e edite seu texto. Adicione prints e sugestões!</p>', container.children.length);
+        container.appendChild(newCard);
+        autoSaveAfterChange();
+        // dar foco ao conteúdo
+        const editableDiv = newCard.querySelector('.editable-content');
+        if (editableDiv) editableDiv.focus();
+    }
+
+    // remover card
+    window.removeCard = function(trashIcon) {
+        const card = trashIcon.closest('.idea-card');
+        if (card && confirm('Remover esta caixa de ideias?')) {
+            card.remove();
+            autoSaveAfterChange();
+        }
+    };
+
+    // Função para adicionar imagem no contenteditable (na posição do cursor)
+    window.uploadImageToCard = function(btn) {
+        const card = btn.closest('.idea-card');
+        const contentDiv = card.querySelector('.editable-content');
+        if (!contentDiv) return;
+        // Criar input file escondido
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = 'image/*';
+        fileInput.onchange = function(e) {
+            const file = e.target.files[0];
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(ev) {
+                    const imgSrc = ev.target.result;
+                    // Inserir imagem no local do cursor (dentro do contenteditable)
+                    insertImageAtCursor(contentDiv, imgSrc);
+                    autoSaveAfterChange();
+                };
+                reader.readAsDataURL(file);
+            } else {
+                alert('Por favor, selecione um arquivo de imagem válido.');
+            }
+        };
+        fileInput.click();
+    };
+
+    // Inserir imagem na posição atual do cursor dentro do elemento contenteditable
+    function insertImageAtCursor(editableDiv, imageUrl) {
+        editableDiv.focus();
+        const selection = window.getSelection();
+        if (!selection.rangeCount) {
+            // se não houver seleção, adiciona no final
+            const img = document.createElement('img');
+            img.src = imageUrl;
+            img.style.maxWidth = '100%';
+            img.style.borderRadius = '12px';
+            img.style.margin = '8px 0';
+            editableDiv.appendChild(img);
+            autoSaveAfterChange();
+            return;
+        }
+        const range = selection.getRangeAt(0);
+        const imgNode = document.createElement('img');
+        imgNode.src = imageUrl;
+        imgNode.style.maxWidth = '100%';
+        imgNode.style.borderRadius = '12px';
+        imgNode.style.margin = '8px 0';
+        range.insertNode(imgNode);
+        // mover cursor para depois da imagem
+        range.setStartAfter(imgNode);
+        range.collapse(true);
+        selection.removeAllRanges();
+        selection.addRange(range);
+        autoSaveAfterChange();
+    }
+
+    // Remover todas as imagens do card específico
+    window.removeImagesFromCard = function(btn) {
+        const card = btn.closest('.idea-card');
+        const contentDiv = card.querySelector('.editable-content');
+        if (!contentDiv) return;
+        const images = contentDiv.querySelectorAll('img');
+        if (images.length === 0) {
+            alert('Nenhuma imagem para remover neste card.');
+            return;
+        }
+        if (confirm(`Remover ${images.length} imagem(ns) deste card?`)) {
+            images.forEach(img => img.remove());
+            autoSaveAfterChange();
+        }
+    };
+
+    // Auto save após qualquer modificação
     let saveTimeout;
-    function autoSave() {
+    function autoSaveAfterChange() {
         if (saveTimeout) clearTimeout(saveTimeout);
         saveTimeout = setTimeout(() => {
-            saveCardsState();
-        }, 300);
+            saveAllCards();
+        }, 200);
     }
 
-    // Salvar quando qualquer conteúdo editável for modificado (evento 'input' em elementos com contenteditable)
-    function bindEditableSaveEvents() {
-        const editableDivs = document.querySelectorAll('.editable-content');
-        editableDivs.forEach(div => {
-            div.removeEventListener('input', autoSave);
-            div.addEventListener('input', autoSave);
-        });
+    // Observar mudanças de conteúdo (títulos e corpo editável)
+    function bindEventsToCards() {
+        const titles = document.querySelectorAll('.editable-title');
+        const contents = document.querySelectorAll('.editable-content');
+        const attachEvent = (el) => {
+            el.removeEventListener('input', autoSaveAfterChange);
+            el.addEventListener('input', autoSaveAfterChange);
+            el.removeEventListener('blur', autoSaveAfterChange);
+            el.addEventListener('blur', autoSaveAfterChange);
+        };
+        titles.forEach(attachEvent);
+        contents.forEach(attachEvent);
     }
 
-    // Observar adição de novos cards (para vincular eventos de salvamento) e também remoções
-    const observer = new MutationObserver((mutations) => {
-        let shouldRebind = false;
-        for (const mutation of mutations) {
-            if (mutation.type === 'childList' && mutation.addedNodes.length) {
-                shouldRebind = true;
-            }
-            if (mutation.type === 'childList' && mutation.removedNodes.length) {
-                autoSave(); // salvar após remover
-            }
-        }
-        if (shouldRebind) {
-            setTimeout(() => {
-                bindEditableSaveEvents();
-                autoSave();
-            }, 50);
-        }
+    // Observar alterações de DOM (adição/remoção de cards)
+    const observer = new MutationObserver(() => {
+        bindEventsToCards();
+        autoSaveAfterChange();
     });
-    
-    // Iniciar restauração de estado salvo ou manter os cards padrão caso não exista save.
-    // Para evitar apagar cards padrão só se houver salvamento prévio
+
     window.addEventListener('DOMContentLoaded', () => {
-        const hasSavedState = localStorage.getItem('minezinho_feedback_cards') !== null;
-        if (hasSavedState) {
-            const restored = restoreCardsState();
-            if (!restored) {
-                // se falhar restauração, mantém html original
-            }
+        // Restaurar dados salvos previamente (apenas se existir)
+        const hasSaved = localStorage.getItem('minezinho_player_ideas');
+        if (hasSaved) {
+            restoreCards();
         }
-        // Vincular eventos de salvamento em todos os elementos editáveis existentes
-        bindEditableSaveEvents();
-        
-        // Configurar MutationObserver para observar o container e futuras alterações
+        bindEventsToCards();
         const container = document.getElementById('cardsContainer');
         if (container) {
             observer.observe(container, { childList: true, subtree: true, attributes: false });
         }
-        // Adicionalmente capturar eventos de input em todo o container via delegação
-        document.getElementById('cardsContainer')?.addEventListener('input', (e) => {
-            if (e.target.classList && e.target.classList.contains('editable-content')) {
-                autoSave();
-            }
-        });
-        
-        // Salvar estado inicial após carregar tudo
-        setTimeout(autoSave, 500);
+        // Salvar ao iniciar também
+        setTimeout(saveAllCards, 300);
     });
-    
-    // Sobrescrever a função removeCard para também salvar após remoção
-    const originalRemoveCard = window.removeCard;
-    window.removeCard = function(trashIcon) {
-        const card = trashIcon.closest('.feedback-card');
-        if (card && confirm('Tem certeza que deseja remover esta caixa de texto?')) {
-            card.remove();
-            autoSave();
-        }
-    };
-    
-    // E o createNewCard também deve salvar e também vincular eventos
-    const originalCreate = createNewCard;
-    window.createNewCard = function() {
-        originalCreate();
-        setTimeout(() => {
-            bindEditableSaveEvents();
-            autoSave();
-        }, 20);
-    };
-    // substituir referência do botão
+
+    // Botão adicionar
+    const addBtn = document.getElementById('addNewCardBtn');
     if (addBtn) {
-        // remover listener anterior e adicionar novo que usa a versão wrapper
-        const newBtn = addBtn.cloneNode(true);
-        addBtn.parentNode.replaceChild(newBtn, addBtn);
-        newBtn.addEventListener('click', () => {
-            window.createNewCard();
+        addBtn.addEventListener('click', () => {
+            addNewCard();
+            setTimeout(() => {
+                bindEventsToCards();
+                autoSaveAfterChange();
+            }, 50);
         });
     }
-    // garantir que a função createNewCard esteja disponível globalmente também
-    window.createNewCard = createNewCard;
-    // reatribuir ao clique caso exista referência antiga
-    document.getElementById('addNewCardBtn')?.addEventListener('click', () => window.createNewCard());
 </script>
 </body>
 </html>
