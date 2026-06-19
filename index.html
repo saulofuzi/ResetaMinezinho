@@ -197,11 +197,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
-            font-weight: 700;
-            color: white;
-            flex-shrink: 0;
             overflow: hidden;
+            flex-shrink: 0;
             border: 2px solid rgba(255, 0, 0, 0.2);
         }
 
@@ -214,7 +211,7 @@
         .player-avatar .fallback {
             font-size: 16px;
             font-weight: 700;
-            color: white;
+            color: #666;
         }
 
         .player-info {
@@ -254,6 +251,9 @@
             font-size: 11px;
             font-weight: 700;
             letter-spacing: 0.3px;
+            display: flex;
+            align-items: center;
+            gap: 3px;
         }
 
         .tier-ht {
@@ -348,7 +348,6 @@
 </head>
 <body>
     <div class="container">
-        <!-- HEADER -->
         <header class="header">
             <a href="/" class="logo">
                 <div class="logo-icon">6</div>
@@ -365,7 +364,6 @@
             </div>
         </header>
 
-        <!-- CATEGORIAS -->
         <nav class="categories" id="categories">
             <button class="category-btn active" data-cat="overall">🏆 Overall</button>
             <button class="category-btn" data-cat="sword">⚔️ Sword</button>
@@ -377,7 +375,6 @@
             <button class="category-btn" data-cat="trident">🔱 Trident</button>
         </nav>
 
-        <!-- RANKING -->
         <div class="ranking-header">
             <div class="ranking-title">Ranking <small>— Top jogadores</small></div>
         </div>
@@ -398,6 +395,31 @@
         const SUPABASE_KEY = 'sb_publishable_AF-JxbMVdy5bxlDQcFdVaA_rmfuk8bj';
 
         let currentCategory = 'overall_tier';
+
+        // ============================================================
+        // 🔥 EMOJIS PARA CADA CATEGORIA 🔥
+        // ============================================================
+        const categoryEmojis = {
+            'overall_tier': '🏆',
+            'sword_tier': '⚔️',
+            'axe_tier': '🪓',
+            'crystal_tier': '💎',
+            'elytra_tier': '🦅',
+            'mace_tier': '🔨',
+            'ogv_tier': '⚡',
+            'trident_tier': '🔱'
+        };
+
+        const categoryLabels = {
+            'overall_tier': 'Overall',
+            'sword_tier': 'Sword',
+            'axe_tier': 'Axe',
+            'crystal_tier': 'Crystal',
+            'elytra_tier': 'Elytra',
+            'mace_tier': 'Mace',
+            'ogv_tier': 'OGV',
+            'trident_tier': 'Trident'
+        };
 
         function searchPlayer() {
             const username = document.getElementById('searchInput').value.trim();
@@ -458,7 +480,6 @@
                     return;
                 }
 
-                // Ordena: HT > LT, e dentro de cada, maior número primeiro
                 filtered.sort((a, b) => {
                     const tierA = a[category] || '';
                     const tierB = b[category] || '';
@@ -475,23 +496,27 @@
 
                 const top = filtered.slice(0, 20);
 
+                // Categorias para exibir nos badges (todas)
                 const allCats = [
-                    { key: 'overall_tier', label: 'Overall' },
-                    { key: 'sword_tier', label: 'Sword' },
-                    { key: 'axe_tier', label: 'Axe' },
-                    { key: 'crystal_tier', label: 'Crystal' },
-                    { key: 'elytra_tier', label: 'Elytra' },
-                    { key: 'mace_tier', label: 'Mace' },
-                    { key: 'ogv_tier', label: 'OGV' },
-                    { key: 'trident_tier', label: 'Trident' }
+                    'overall_tier',
+                    'sword_tier',
+                    'axe_tier',
+                    'crystal_tier',
+                    'elytra_tier',
+                    'mace_tier',
+                    'ogv_tier',
+                    'trident_tier'
                 ];
 
                 list.innerHTML = top.map((player, index) => {
-                    const tiersHTML = allCats.map(cat => {
-                        const tier = player[cat.key];
+                    // Gera badges com emoji e nome da categoria
+                    const tiersHTML = allCats.map(catKey => {
+                        const tier = player[catKey];
                         if (!tier) return '';
                         const cls = tier.startsWith('HT') ? 'tier-ht' : 'tier-lt';
-                        return `<span class="tier-badge ${cls}">${tier}</span>`;
+                        const emoji = categoryEmojis[catKey] || '';
+                        const label = categoryLabels[catKey] || catKey;
+                        return `<span class="tier-badge ${cls}">${emoji} ${tier}</span>`;
                     }).filter(Boolean).join('');
 
                     const timeAgo = player.updated_at ? timeSince(new Date(player.updated_at)) : 'Nunca';
@@ -528,7 +553,6 @@
             }
         }
 
-        // ===== EVENTOS DAS CATEGORIAS =====
         document.querySelectorAll('.category-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
@@ -549,7 +573,6 @@
             });
         });
 
-        // ===== INICIALIZA =====
         loadRanking('overall_tier');
     </script>
 </body>
