@@ -5,24 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SixTiers - Minecraft Tier List</title>
     <style>
+        /* ===== RESET ===== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
         }
 
         body {
             background: #0a0000;
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
             padding: 20px;
         }
 
         .container {
             max-width: 1200px;
-            width: 100%;
+            margin: 0 auto;
         }
 
         /* ===== HEADER ===== */
@@ -31,42 +30,40 @@
             justify-content: space-between;
             align-items: center;
             padding: 20px 0;
-            border-bottom: 1px solid rgba(255, 0, 0, 0.15);
+            border-bottom: 1px solid rgba(255, 0, 0, 0.1);
             margin-bottom: 30px;
             flex-wrap: wrap;
             gap: 15px;
         }
 
-        .logo-area {
+        .logo {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
+            text-decoration: none;
         }
 
-        .logo-circle {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, #ff0000, #cc0000);
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: #ff0000;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
+            font-size: 22px;
             font-weight: 900;
             color: white;
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
         }
 
         .logo-text {
-            font-size: 28px;
-            font-weight: 800;
-            color: #ff0000;
-            letter-spacing: 1px;
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
         }
 
         .logo-text span {
-            color: #882222;
-            font-weight: 400;
+            color: #ff0000;
         }
 
         .header-right {
@@ -75,65 +72,68 @@
             gap: 20px;
         }
 
-        .search-input {
-            background: rgba(255, 0, 0, 0.05);
-            border: 1px solid rgba(255, 0, 0, 0.15);
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 8px;
             padding: 10px 16px;
             color: white;
             font-size: 14px;
-            width: 220px;
+            width: 250px;
             outline: none;
             transition: all 0.3s;
         }
 
-        .search-input:focus {
+        .search-box input::placeholder {
+            color: #666;
+        }
+
+        .search-box input:focus {
             border-color: #ff0000;
             box-shadow: 0 0 20px rgba(255, 0, 0, 0.1);
         }
 
-        .search-input::placeholder {
-            color: #552222;
-        }
-
-        .status-online {
+        .status {
             display: flex;
             align-items: center;
             gap: 8px;
             color: #ff0000;
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 500;
         }
 
         .status-dot {
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             background: #ff0000;
             border-radius: 50%;
             animation: pulse 1.5s infinite;
         }
 
         @keyframes pulse {
-            0% { opacity: 1; transform: scale(1); }
+            0%, 100% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.5; transform: scale(0.8); }
-            100% { opacity: 1; transform: scale(1); }
         }
 
         /* ===== CATEGORIAS ===== */
         .categories {
             display: flex;
-            gap: 8px;
+            gap: 4px;
             flex-wrap: wrap;
             margin-bottom: 30px;
-            border-bottom: 1px solid rgba(255, 0, 0, 0.1);
             padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .category-btn {
             background: transparent;
             border: none;
-            color: #882222;
-            padding: 8px 18px;
+            color: #666;
+            padding: 8px 20px;
             border-radius: 20px;
             font-size: 14px;
             font-weight: 600;
@@ -142,119 +142,152 @@
         }
 
         .category-btn:hover {
-            color: #ff3333;
-            background: rgba(255, 0, 0, 0.05);
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .category-btn.active {
             color: #ff0000;
             background: rgba(255, 0, 0, 0.1);
-            box-shadow: inset 0 0 20px rgba(255, 0, 0, 0.05);
         }
 
         /* ===== RANKING ===== */
-        .ranking-title {
-            font-size: 24px;
-            font-weight: 700;
-            color: white;
+        .ranking-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 20px;
         }
 
-        .ranking-title small {
-            color: #882222;
-            font-weight: 400;
-            font-size: 16px;
+        .ranking-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
         }
 
+        .ranking-title small {
+            color: #666;
+            font-weight: 400;
+            font-size: 14px;
+        }
+
+        /* ===== PLAYER CARD ===== */
         .player-card {
-            background: rgba(20, 0, 0, 0.6);
-            border: 1px solid rgba(255, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 12px;
-            padding: 18px 24px;
+            padding: 16px 20px;
             display: flex;
             align-items: center;
-            gap: 20px;
-            margin-bottom: 10px;
+            gap: 16px;
+            margin-bottom: 8px;
             transition: all 0.3s;
             cursor: pointer;
         }
 
         .player-card:hover {
-            background: rgba(255, 0, 0, 0.05);
+            background: rgba(255, 255, 255, 0.06);
             border-color: rgba(255, 0, 0, 0.2);
-            transform: translateX(5px);
+            transform: translateX(4px);
         }
 
         .player-position {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 700;
-            color: #882222;
+            color: #444;
             min-width: 40px;
         }
 
         .player-avatar {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             background: linear-gradient(135deg, #ff0000, #cc0000);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
-            color: white;
+            font-size: 16px;
             font-weight: 700;
+            color: white;
+            flex-shrink: 0;
         }
 
         .player-info {
             flex: 1;
+            min-width: 0;
         }
 
         .player-name {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
             color: white;
         }
 
         .player-name small {
-            color: #882222;
+            color: #666;
             font-weight: 400;
-            font-size: 14px;
+            font-size: 13px;
+            margin-left: 8px;
         }
 
         .player-time {
-            color: #552222;
-            font-size: 13px;
+            color: #444;
+            font-size: 12px;
+            margin-top: 2px;
         }
 
         .player-tiers {
             display: flex;
             gap: 6px;
             flex-wrap: wrap;
+            flex-shrink: 0;
         }
 
         .tier-badge {
-            padding: 2px 12px;
+            padding: 2px 10px;
             border-radius: 4px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
         }
 
         .tier-ht {
-            background: rgba(255, 0, 0, 0.2);
+            background: rgba(255, 0, 0, 0.15);
             color: #ff0000;
-            border: 1px solid rgba(255, 0, 0, 0.2);
+            border: 1px solid rgba(255, 0, 0, 0.15);
         }
 
         .tier-lt {
-            background: rgba(255, 100, 100, 0.15);
+            background: rgba(255, 100, 100, 0.1);
             color: #ff6666;
-            border: 1px solid rgba(255, 100, 100, 0.15);
+            border: 1px solid rgba(255, 100, 100, 0.1);
         }
 
         .tier-empty {
-            color: #442222;
+            color: #333;
             font-size: 12px;
+        }
+
+        /* ===== LOADING ===== */
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+            color: #444;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 3px solid rgba(255, 0, 0, 0.1);
+            border-top: 3px solid #ff0000;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 15px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         /* ===== RESPONSIVO ===== */
@@ -262,14 +295,13 @@
             .header {
                 flex-direction: column;
                 align-items: stretch;
-                gap: 10px;
             }
 
             .header-right {
                 flex-wrap: wrap;
             }
 
-            .search-input {
+            .search-box input {
                 width: 100%;
             }
 
@@ -281,25 +313,27 @@
             .player-tiers {
                 width: 100%;
                 justify-content: flex-start;
-            }
-
-            .categories {
-                justify-content: center;
+                padding-left: 56px;
             }
         }
 
         @media (max-width: 480px) {
-            .logo-text {
-                font-size: 22px;
+            .categories {
+                justify-content: center;
+            }
+            
+            .category-btn {
+                font-size: 12px;
+                padding: 6px 14px;
             }
 
             .player-position {
                 min-width: 30px;
-                font-size: 16px;
+                font-size: 14px;
             }
 
             .player-name {
-                font-size: 15px;
+                font-size: 14px;
             }
         }
     </style>
@@ -308,13 +342,15 @@
     <div class="container">
         <!-- HEADER -->
         <header class="header">
-            <div class="logo-area">
-                <div class="logo-circle">6</div>
+            <a href="/" class="logo">
+                <div class="logo-icon">6</div>
                 <div class="logo-text">Six<span>Tiers</span></div>
-            </div>
+            </a>
             <div class="header-right">
-                <input class="search-input" id="searchInput" placeholder="Buscar jogador..." onkeypress="if(event.key==='Enter')searchPlayer()">
-                <div class="status-online">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Buscar jogador..." onkeypress="if(event.key==='Enter')searchPlayer()">
+                </div>
+                <div class="status">
                     <span class="status-dot"></span>
                     Online
                 </div>
@@ -322,7 +358,7 @@
         </header>
 
         <!-- CATEGORIAS -->
-        <nav class="categories">
+        <nav class="categories" id="categories">
             <button class="category-btn active" data-cat="overall">🏆 Overall</button>
             <button class="category-btn" data-cat="sword">⚔️ Sword</button>
             <button class="category-btn" data-cat="axe">🪓 Axe</button>
@@ -334,18 +370,22 @@
         </nav>
 
         <!-- RANKING -->
-        <div class="ranking-title">
-            Ranking <small>— Top jogadores</small>
+        <div class="ranking-header">
+            <div class="ranking-title">Ranking <small>— Top jogadores</small></div>
         </div>
+
         <div id="rankingList">
-            <div style="text-align:center;color:#552222;padding:40px;">Carregando ranking...</div>
+            <div class="loading">
+                <div class="loading-spinner"></div>
+                <div>Carregando ranking...</div>
+            </div>
         </div>
     </div>
 
     <script>
         // ===== CONFIGURAÇÕES =====
         const SUPABASE_URL = 'https://ucoqonyzmckwnktdtfrg.supabase.co';
-        const SUPABASE_KEY = 'sb_publishable_AF-JxbMWdy5bxLDQcFdVaA_rmfuk...';
+        const SUPABASE_KEY = 'sb_publishable_AF-JxbMWdy5bxLDQcFdVaA_rmfuk...'; // ← TROQUE PELA SUA CHAVE COMPLETA
 
         let currentCategory = 'overall_tier';
 
@@ -357,14 +397,32 @@
             }
         }
 
+        // ===== TEMPO DECORRIDO =====
+        function timeSince(date) {
+            const now = new Date();
+            const diff = Math.floor((now - date) / 1000);
+            
+            if (diff < 60) return 'agora mesmo';
+            if (diff < 3600) return `${Math.floor(diff / 60)}min atrás`;
+            if (diff < 86400) return `${Math.floor(diff / 3600)}h atrás`;
+            if (diff < 2592000) return `${Math.floor(diff / 86400)}d atrás`;
+            if (diff < 31536000) return `${Math.floor(diff / 2592000)}m atrás`;
+            return `${Math.floor(diff / 31536000)}a atrás`;
+        }
+
         // ===== CARREGAR RANKING =====
         async function loadRanking(category) {
             const list = document.getElementById('rankingList');
-            list.innerHTML = '<div style="text-align:center;color:#552222;padding:40px;">Carregando...</div>';
+            list.innerHTML = `
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    <div>Carregando ranking...</div>
+                </div>
+            `;
 
             try {
                 const response = await fetch(
-                    `${SUPABASE_URL}/rest/v1/players?select=*&order=${category}.desc.nullsfirst&limit=20`,
+                    `${SUPABASE_URL}/rest/v1/players?select=*&limit=100`,
                     {
                         headers: {
                             'apikey': SUPABASE_KEY,
@@ -377,36 +435,38 @@
 
                 const data = await response.json();
 
-                if (data.length === 0) {
-                    list.innerHTML = '<div style="text-align:center;color:#552222;padding:40px;">Nenhum jogador registrado ainda.</div>';
-                    return;
-                }
-
                 // Filtra quem tem tier na categoria
                 const filtered = data.filter(p => p[category] !== null && p[category] !== undefined);
                 
                 if (filtered.length === 0) {
-                    list.innerHTML = '<div style="text-align:center;color:#552222;padding:40px;">Nenhum tier registrado nesta categoria.</div>';
+                    list.innerHTML = `
+                        <div style="text-align:center;padding:60px 20px;color:#444;">
+                            <div style="font-size:48px;margin-bottom:15px;">📭</div>
+                            <p>Nenhum tier registrado nesta categoria ainda.</p>
+                        </div>
+                    `;
                     return;
                 }
 
-                // Ordena por tier (HT > LT)
+                // Ordena: HT > LT, e dentro de cada, maior número primeiro
                 filtered.sort((a, b) => {
                     const tierA = a[category] || '';
                     const tierB = b[category] || '';
-                    const order = { 'HT': 1, 'LT': 2 };
-                    const numA = parseInt(tierA.match(/\d+/)?.[0] || 0);
-                    const numB = parseInt(tierB.match(/\d+/)?.[0] || 0);
-                    const typeA = tierA.startsWith('HT') ? order.HT : (tierA.startsWith('LT') ? order.LT : 99);
-                    const typeB = tierB.startsWith('HT') ? order.HT : (tierB.startsWith('LT') ? order.LT : 99);
-                    if (typeA !== typeB) return typeA - typeB;
-                    return numB - numA;
+                    
+                    const getWeight = (tier) => {
+                        if (!tier) return 0;
+                        const num = parseInt(tier.match(/\d+/)?.[0] || 0);
+                        const isHT = tier.startsWith('HT');
+                        return isHT ? (100 + num) : num;
+                    };
+                    
+                    return getWeight(tierB) - getWeight(tierA);
                 });
 
-                // Pega o top 10
-                const top = filtered.slice(0, 10);
+                // Top 20
+                const top = filtered.slice(0, 20);
 
-                // Categorias para exibir nos badges
+                // Todas as categorias para exibir nos badges
                 const allCats = [
                     { key: 'overall_tier', label: 'Overall' },
                     { key: 'sword_tier', label: 'Sword' },
@@ -428,11 +488,12 @@
                     }).filter(Boolean).join('');
 
                     const timeAgo = player.updated_at ? timeSince(new Date(player.updated_at)) : 'Nunca';
+                    const initial = player.minecraft_username.charAt(0).toUpperCase();
 
                     return `
                         <div class="player-card" onclick="window.location.href='/player/${player.minecraft_username}'">
                             <div class="player-position">#${index + 1}</div>
-                            <div class="player-avatar">${player.minecraft_username.charAt(0).toUpperCase()}</div>
+                            <div class="player-avatar">${initial}</div>
                             <div class="player-info">
                                 <div class="player-name">${player.minecraft_username} <small>${player.discord_id}</small></div>
                                 <div class="player-time">🕐 ${timeAgo}</div>
@@ -446,30 +507,13 @@
 
             } catch (error) {
                 console.error('Erro:', error);
-                list.innerHTML = '<div style="text-align:center;color:#ff3333;padding:40px;">❌ Erro ao carregar ranking</div>';
+                list.innerHTML = `
+                    <div style="text-align:center;padding:60px 20px;color:#ff3333;">
+                        <div style="font-size:48px;margin-bottom:15px;">❌</div>
+                        <p>Erro ao carregar ranking. Tente novamente.</p>
+                    </div>
+                `;
             }
-        }
-
-        // ===== FUNÇÃO DE TEMPO =====
-        function timeSince(date) {
-            const now = new Date();
-            const diff = Math.floor((now - date) / 1000);
-            
-            const intervals = [
-                { label: 'ano', seconds: 31536000 },
-                { label: 'mês', seconds: 2592000 },
-                { label: 'dia', seconds: 86400 },
-                { label: 'hora', seconds: 3600 },
-                { label: 'min', seconds: 60 }
-            ];
-
-            for (const interval of intervals) {
-                const count = Math.floor(diff / interval.seconds);
-                if (count >= 1) {
-                    return `${count} ${interval.label}${count > 1 ? 's' : ''} atrás`;
-                }
-            }
-            return 'agora mesmo';
         }
 
         // ===== EVENTOS DAS CATEGORIAS =====
