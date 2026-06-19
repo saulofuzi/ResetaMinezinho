@@ -23,7 +23,6 @@
             margin: 0 auto;
         }
 
-        /* ===== HEADER ===== */
         .header {
             display: flex;
             justify-content: space-between;
@@ -81,7 +80,6 @@
             border-color: rgba(255, 0, 0, 0.3);
         }
 
-        /* ===== PERFIL ===== */
         .profile-card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.05);
@@ -129,7 +127,6 @@
             margin-top: 6px;
         }
 
-        /* ===== TIERS ===== */
         .tiers-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -180,7 +177,6 @@
             background: transparent;
         }
 
-        /* ===== NOT FOUND ===== */
         .not-found {
             text-align: center;
             padding: 80px 20px;
@@ -201,7 +197,6 @@
             color: #444;
         }
 
-        /* ===== LOADING ===== */
         .loading {
             text-align: center;
             padding: 80px 20px;
@@ -223,7 +218,6 @@
             to { transform: rotate(360deg); }
         }
 
-        /* ===== RESPONSIVO ===== */
         @media (max-width: 600px) {
             .profile-header {
                 flex-direction: column;
@@ -251,7 +245,6 @@
 </head>
 <body>
     <div class="container">
-        <!-- HEADER -->
         <header class="header">
             <a href="/" class="logo">
                 <div class="logo-icon">6</div>
@@ -260,7 +253,6 @@
             <a class="back-btn" href="/">← Voltar ao ranking</a>
         </header>
 
-        <!-- CONTEÚDO -->
         <div id="profileContent">
             <div class="loading">
                 <div class="loading-spinner"></div>
@@ -270,13 +262,14 @@
     </div>
 
     <script>
-        // ===== CONFIGURAÇÕES =====
+        // ============================================================
+        // ⚠️ CONFIGURAÇÕES DO SUPABASE ⚠️
+        // ============================================================
         const SUPABASE_URL = 'https://ucoqonyzmckwnktdtfrg.supabase.co';
-        const SUPABASE_KEY = 'sb_publishable_AF-JxbMWdy5bxLDQcFdVaA_rmfuk...'; // ← TROQUE PELA SUA CHAVE COMPLETA
+        const SUPABASE_KEY = 'sb_publishtable_AF-JxbMWdy5bxLDQcFdvVa_rmfuk_';
 
         const username = window.location.pathname.split('/').pop();
 
-        // ===== CATEGORIAS =====
         const categorias = [
             { key: 'overall_tier', label: '🏆 Overall' },
             { key: 'sword_tier', label: '⚔️ Sword' },
@@ -288,7 +281,6 @@
             { key: 'trident_tier', label: '🔱 Trident' }
         ];
 
-        // ===== CARREGAR PERFIL =====
         async function loadProfile() {
             const content = document.getElementById('profileContent');
 
