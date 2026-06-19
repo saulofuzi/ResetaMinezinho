@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SixTiers - Minecraft Tier List</title>
     <style>
+        /* ===== RESET E ESTILOS GLOBAIS ===== */
         * {
             margin: 0;
             padding: 0;
@@ -16,6 +17,7 @@
             background: #0a0000;
             min-height: 100vh;
             padding: 20px;
+            color: #fff;
         }
 
         .container {
@@ -23,12 +25,13 @@
             margin: 0 auto;
         }
 
+        /* ===== HEADER ===== */
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 20px 0;
-            border-bottom: 1px solid rgba(255, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(255, 0, 0, 0.15);
             margin-bottom: 30px;
             flex-wrap: wrap;
             gap: 15px;
@@ -51,13 +54,14 @@
             justify-content: center;
             font-size: 22px;
             font-weight: 900;
-            color: white;
+            color: #fff;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
         }
 
         .logo-text {
             font-size: 24px;
             font-weight: 700;
-            color: white;
+            color: #fff;
         }
 
         .logo-text span {
@@ -68,6 +72,7 @@
             display: flex;
             align-items: center;
             gap: 20px;
+            flex-wrap: wrap;
         }
 
         .search-box input {
@@ -75,11 +80,11 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 8px;
             padding: 10px 16px;
-            color: white;
+            color: #fff;
             font-size: 14px;
             width: 250px;
             outline: none;
-            transition: all 0.3s;
+            transition: 0.3s;
         }
 
         .search-box input::placeholder {
@@ -113,6 +118,7 @@
             50% { opacity: 0.5; transform: scale(0.8); }
         }
 
+        /* ===== CATEGORIAS ===== */
         .categories {
             display: flex;
             gap: 4px;
@@ -131,7 +137,7 @@
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: 0.3s;
         }
 
         .category-btn:hover {
@@ -144,6 +150,7 @@
             background: rgba(255, 0, 0, 0.1);
         }
 
+        /* ===== RANKING ===== */
         .ranking-header {
             display: flex;
             justify-content: space-between;
@@ -154,7 +161,7 @@
         .ranking-title {
             font-size: 20px;
             font-weight: 700;
-            color: white;
+            color: #fff;
         }
 
         .ranking-title small {
@@ -163,6 +170,7 @@
             font-size: 14px;
         }
 
+        /* ===== PLAYER CARD ===== */
         .player-card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.05);
@@ -172,7 +180,7 @@
             align-items: center;
             gap: 16px;
             margin-bottom: 8px;
-            transition: all 0.3s;
+            transition: 0.3s;
             cursor: pointer;
         }
 
@@ -194,9 +202,6 @@
             height: 36px;
             border-radius: 50%;
             background: linear-gradient(135deg, #1a1a2e, #16213e);
-            display: flex;
-            align-items: center;
-            justify-content: center;
             overflow: hidden;
             flex-shrink: 0;
             border: 2px solid rgba(255, 0, 0, 0.2);
@@ -209,6 +214,11 @@
         }
 
         .player-avatar .fallback {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
             font-size: 16px;
             font-weight: 700;
             color: #666;
@@ -222,16 +232,17 @@
         .player-name {
             font-size: 16px;
             font-weight: 600;
-            color: white;
+            color: #fff;
             display: flex;
             align-items: center;
             gap: 8px;
+            flex-wrap: wrap;
         }
 
         .player-name .points {
             color: #ff0000;
             font-weight: 700;
-            font-size: 14px;
+            font-size: 13px;
             background: rgba(255, 0, 0, 0.1);
             padding: 2px 10px;
             border-radius: 10px;
@@ -278,6 +289,7 @@
             font-size: 12px;
         }
 
+        /* ===== LOADING ===== */
         .loading {
             text-align: center;
             padding: 60px 20px;
@@ -299,6 +311,7 @@
             to { transform: rotate(360deg); }
         }
 
+        /* ===== RESPONSIVO ===== */
         @media (max-width: 768px) {
             .header {
                 flex-direction: column;
@@ -329,7 +342,7 @@
             .categories {
                 justify-content: center;
             }
-            
+
             .category-btn {
                 font-size: 12px;
                 padding: 6px 14px;
@@ -343,16 +356,12 @@
             .player-name {
                 font-size: 14px;
             }
-
-            .player-avatar {
-                width: 30px;
-                height: 30px;
-            }
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- HEADER -->
         <header class="header">
             <a href="/" class="logo">
                 <div class="logo-icon">6</div>
@@ -369,6 +378,7 @@
             </div>
         </header>
 
+        <!-- CATEGORIAS -->
         <nav class="categories" id="categories">
             <button class="category-btn active" data-cat="overall">🏆 Overall</button>
             <button class="category-btn" data-cat="sword">⚔️ Sword</button>
@@ -380,6 +390,7 @@
             <button class="category-btn" data-cat="trident">🔱 Trident</button>
         </nav>
 
+        <!-- RANKING -->
         <div class="ranking-header">
             <div class="ranking-title">Ranking <small>— Top jogadores</small></div>
         </div>
@@ -394,7 +405,7 @@
 
     <script>
         // ============================================================
-        // 🔥 CONFIGURAÇÕES 🔥
+        // 🔥 CONFIGURAÇÕES
         // ============================================================
         const SUPABASE_URL = 'https://ucoqonyzmckwnktdtfrg.supabase.co';
         const SUPABASE_KEY = 'sb_publishable_AF-JxbMVdy5bxlDQcFdVaA_rmfuk8bj';
@@ -402,7 +413,7 @@
         let currentCategory = 'overall';
 
         // ============================================================
-        // 🔥 SISTEMA DE PONTOS 🔥
+        // 🔥 SISTEMA DE PONTOS
         // ============================================================
         const TIER_POINTS = {
             'LT5': 1,
@@ -427,42 +438,17 @@
                 'overall_tier', 'sword_tier', 'axe_tier', 'crystal_tier',
                 'elytra_tier', 'mace_tier', 'ogv_tier', 'trident_tier'
             ];
-            
             let total = 0;
             categories.forEach(cat => {
                 const tier = player[cat];
-                if (tier) {
-                    total += getTierPoints(tier);
-                }
+                if (tier) total += getTierPoints(tier);
             });
             return total;
         }
 
         // ============================================================
-        // 🔥 EMOJIS E LABELS 🔥
+        // 🔥 MAPEAMENTO DE CATEGORIAS
         // ============================================================
-        const categoryEmojis = {
-            'overall': '🏆',
-            'sword': '⚔️',
-            'axe': '🪓',
-            'crystal': '💎',
-            'elytra': '🦅',
-            'mace': '🔨',
-            'ogv': '⚡',
-            'trident': '🔱'
-        };
-
-        const categoryLabels = {
-            'overall': 'Overall',
-            'sword': 'Sword',
-            'axe': 'Axe',
-            'crystal': 'Crystal',
-            'elytra': 'Elytra',
-            'mace': 'Mace',
-            'ogv': 'OGV',
-            'trident': 'Trident'
-        };
-
         const categoryDbMap = {
             'overall': 'overall_tier',
             'sword': 'sword_tier',
@@ -474,6 +460,20 @@
             'trident': 'trident_tier'
         };
 
+        const categoryEmojis = {
+            'overall_tier': '🏆',
+            'sword_tier': '⚔️',
+            'axe_tier': '🪓',
+            'crystal_tier': '💎',
+            'elytra_tier': '🦅',
+            'mace_tier': '🔨',
+            'ogv_tier': '⚡',
+            'trident_tier': '🔱'
+        };
+
+        // ============================================================
+        // 🔥 FUNÇÕES AUXILIARES
+        // ============================================================
         function searchPlayer() {
             const username = document.getElementById('searchInput').value.trim();
             if (username) {
@@ -484,7 +484,7 @@
         function timeSince(date) {
             const now = new Date();
             const diff = Math.floor((now - date) / 1000);
-            
+
             if (diff < 60) return 'agora mesmo';
             if (diff < 3600) return `${Math.floor(diff / 60)}min atrás`;
             if (diff < 86400) return `${Math.floor(diff / 3600)}h atrás`;
@@ -493,10 +493,13 @@
             return `${Math.floor(diff / 31536000)}a atrás`;
         }
 
-        function getAvatarUrl(username) {
+        function getSkinUrl(username) {
             return `https://crafatar.com/avatars/${username}?overlay&size=40`;
         }
 
+        // ============================================================
+        // 🔥 CARREGAR RANKING
+        // ============================================================
         async function loadRanking(category) {
             const list = document.getElementById('rankingList');
             list.innerHTML = `
@@ -508,7 +511,7 @@
 
             try {
                 const response = await fetch(
-                    `${SUPABASE_URL}/rest/v1/players?select=*&limit=100`,
+                    `${SUPABASE_URL}/rest/v1/players?select=*&limit=200`,
                     {
                         headers: {
                             'apikey': SUPABASE_KEY,
@@ -521,40 +524,31 @@
 
                 const data = await response.json();
 
-                // Se for Overall, calcula os pontos e ordena
                 let sorted = [];
+
                 if (category === 'overall') {
-                    // Calcula pontos para cada jogador
+                    // Calcula pontos e ordena
                     const withPoints = data.map(player => ({
                         ...player,
                         overall_points: calculateOverallPoints(player)
                     }));
-                    
-                    // Filtra quem tem pelo menos 1 ponto
                     const filtered = withPoints.filter(p => p.overall_points > 0);
-                    
-                    // Ordena por pontos (maior primeiro)
                     filtered.sort((a, b) => b.overall_points - a.overall_points);
-                    
                     sorted = filtered;
                 } else {
                     const dbField = categoryDbMap[category];
                     const filtered = data.filter(p => p[dbField] !== null && p[dbField] !== undefined);
-                    
                     filtered.sort((a, b) => {
                         const tierA = a[dbField] || '';
                         const tierB = b[dbField] || '';
-                        
                         const getWeight = (tier) => {
                             if (!tier) return 0;
                             const num = parseInt(tier.match(/\d+/)?.[0] || 0);
                             const isHT = tier.startsWith('HT');
                             return isHT ? (100 + num) : num;
                         };
-                        
                         return getWeight(tierB) - getWeight(tierA);
                     });
-                    
                     sorted = filtered;
                 }
 
@@ -570,38 +564,24 @@
 
                 const top = sorted.slice(0, 20);
 
-                // Categorias para exibir nos badges
                 const allCats = [
                     'overall_tier', 'sword_tier', 'axe_tier', 'crystal_tier',
                     'elytra_tier', 'mace_tier', 'ogv_tier', 'trident_tier'
                 ];
 
-                const catEmojis = {
-                    'overall_tier': '🏆',
-                    'sword_tier': '⚔️',
-                    'axe_tier': '🪓',
-                    'crystal_tier': '💎',
-                    'elytra_tier': '🦅',
-                    'mace_tier': '🔨',
-                    'ogv_tier': '⚡',
-                    'trident_tier': '🔱'
-                };
-
                 list.innerHTML = top.map((player, index) => {
-                    // Gera badges com emoji e tier
                     const tiersHTML = allCats.map(catKey => {
                         const tier = player[catKey];
                         if (!tier) return '';
                         const cls = tier.startsWith('HT') ? 'tier-ht' : 'tier-lt';
-                        const emoji = catEmojis[catKey] || '';
+                        const emoji = categoryEmojis[catKey] || '';
                         return `<span class="tier-badge ${cls}">${emoji} ${tier}</span>`;
                     }).filter(Boolean).join('');
 
                     const timeAgo = player.updated_at ? timeSince(new Date(player.updated_at)) : 'Nunca';
                     const initial = player.minecraft_username.charAt(0).toUpperCase();
-                    const avatarUrl = getAvatarUrl(player.minecraft_username);
+                    const skinUrl = player.skin_url || getSkinUrl(player.minecraft_username);
 
-                    // Mostra pontos se for Overall
                     let pointsDisplay = '';
                     if (category === 'overall' && player.overall_points) {
                         pointsDisplay = `<span class="points">${player.overall_points} pts</span>`;
@@ -611,7 +591,7 @@
                         <div class="player-card" onclick="window.location.href='/player/${player.minecraft_username}'">
                             <div class="player-position">#${index + 1}</div>
                             <div class="player-avatar">
-                                <img src="${avatarUrl}" 
+                                <img src="${skinUrl}" 
                                      alt="${player.minecraft_username}" 
                                      onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\\'fallback\\'>${initial}</span>'">
                             </div>
@@ -640,26 +620,21 @@
             }
         }
 
+        // ============================================================
+        // 🔥 EVENTOS DAS CATEGORIAS
+        // ============================================================
         document.querySelectorAll('.category-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
-                
-                const catMap = {
-                    'overall': 'overall',
-                    'sword': 'sword',
-                    'axe': 'axe',
-                    'crystal': 'crystal',
-                    'elytra': 'elytra',
-                    'mace': 'mace',
-                    'ogv': 'ogv',
-                    'trident': 'trident'
-                };
-                currentCategory = catMap[this.dataset.cat] || 'overall';
+                currentCategory = this.dataset.cat;
                 loadRanking(currentCategory);
             });
         });
 
+        // ============================================================
+        // 🔥 INICIALIZA
+        // ============================================================
         loadRanking('overall');
     </script>
 </body>
