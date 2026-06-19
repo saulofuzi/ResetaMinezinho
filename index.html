@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SixTiers - Minecraft Tier List</title>
     <style>
-        /* ===== RESET ===== */
         * {
             margin: 0;
             padding: 0;
@@ -24,7 +23,6 @@
             margin: 0 auto;
         }
 
-        /* ===== HEADER ===== */
         .header {
             display: flex;
             justify-content: space-between;
@@ -72,10 +70,6 @@
             gap: 20px;
         }
 
-        .search-box {
-            position: relative;
-        }
-
         .search-box input {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -119,7 +113,6 @@
             50% { opacity: 0.5; transform: scale(0.8); }
         }
 
-        /* ===== CATEGORIAS ===== */
         .categories {
             display: flex;
             gap: 4px;
@@ -151,7 +144,6 @@
             background: rgba(255, 0, 0, 0.1);
         }
 
-        /* ===== RANKING ===== */
         .ranking-header {
             display: flex;
             justify-content: space-between;
@@ -171,7 +163,6 @@
             font-size: 14px;
         }
 
-        /* ===== PLAYER CARD ===== */
         .player-card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.05);
@@ -268,7 +259,6 @@
             font-size: 12px;
         }
 
-        /* ===== LOADING ===== */
         .loading {
             text-align: center;
             padding: 60px 20px;
@@ -290,7 +280,6 @@
             to { transform: rotate(360deg); }
         }
 
-        /* ===== RESPONSIVO ===== */
         @media (max-width: 768px) {
             .header {
                 flex-direction: column;
@@ -340,7 +329,6 @@
 </head>
 <body>
     <div class="container">
-        <!-- HEADER -->
         <header class="header">
             <a href="/" class="logo">
                 <div class="logo-icon">6</div>
@@ -357,7 +345,6 @@
             </div>
         </header>
 
-        <!-- CATEGORIAS -->
         <nav class="categories" id="categories">
             <button class="category-btn active" data-cat="overall">🏆 Overall</button>
             <button class="category-btn" data-cat="sword">⚔️ Sword</button>
@@ -369,7 +356,6 @@
             <button class="category-btn" data-cat="trident">🔱 Trident</button>
         </nav>
 
-        <!-- RANKING -->
         <div class="ranking-header">
             <div class="ranking-title">Ranking <small>— Top jogadores</small></div>
         </div>
@@ -383,13 +369,14 @@
     </div>
 
     <script>
-        // ===== CONFIGURAÇÕES =====
+        // ============================================================
+        // ⚠️ CONFIGURAÇÕES DO SUPABASE ⚠️
+        // ============================================================
         const SUPABASE_URL = 'https://ucoqonyzmckwnktdtfrg.supabase.co';
-        const SUPABASE_KEY = 'sb_publishable_AF-JxbMWdy5bxLDQcFdVaA_rmfuk...'; // ← TROQUE PELA SUA CHAVE COMPLETA
+        const SUPABASE_KEY = 'sb_publishtable_AF-JxbMWdy5bxLDQcFdvVa_rmfuk_';
 
         let currentCategory = 'overall_tier';
 
-        // ===== BUSCAR JOGADOR =====
         function searchPlayer() {
             const username = document.getElementById('searchInput').value.trim();
             if (username) {
@@ -397,7 +384,6 @@
             }
         }
 
-        // ===== TEMPO DECORRIDO =====
         function timeSince(date) {
             const now = new Date();
             const diff = Math.floor((now - date) / 1000);
@@ -410,7 +396,6 @@
             return `${Math.floor(diff / 31536000)}a atrás`;
         }
 
-        // ===== CARREGAR RANKING =====
         async function loadRanking(category) {
             const list = document.getElementById('rankingList');
             list.innerHTML = `
@@ -435,7 +420,6 @@
 
                 const data = await response.json();
 
-                // Filtra quem tem tier na categoria
                 const filtered = data.filter(p => p[category] !== null && p[category] !== undefined);
                 
                 if (filtered.length === 0) {
@@ -448,7 +432,6 @@
                     return;
                 }
 
-                // Ordena: HT > LT, e dentro de cada, maior número primeiro
                 filtered.sort((a, b) => {
                     const tierA = a[category] || '';
                     const tierB = b[category] || '';
@@ -463,10 +446,8 @@
                     return getWeight(tierB) - getWeight(tierA);
                 });
 
-                // Top 20
                 const top = filtered.slice(0, 20);
 
-                // Todas as categorias para exibir nos badges
                 const allCats = [
                     { key: 'overall_tier', label: 'Overall' },
                     { key: 'sword_tier', label: 'Sword' },
@@ -479,7 +460,6 @@
                 ];
 
                 list.innerHTML = top.map((player, index) => {
-                    // Pega todos os tiers do jogador
                     const tiersHTML = allCats.map(cat => {
                         const tier = player[cat.key];
                         if (!tier) return '';
@@ -516,7 +496,6 @@
             }
         }
 
-        // ===== EVENTOS DAS CATEGORIAS =====
         document.querySelectorAll('.category-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
@@ -537,7 +516,6 @@
             });
         });
 
-        // ===== INICIALIZA =====
         loadRanking('overall_tier');
     </script>
 </body>
