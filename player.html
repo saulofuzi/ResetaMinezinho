@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SixTiers - Perfil do Jogador</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #0a0000;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 700px;
+            width: 100%;
+            padding: 20px;
+        }
+
+        .card {
+            background: rgba(20, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            border: 2px solid rgba(255, 0, 0, 0.3);
+            box-shadow: 0 25px 50px rgba(255, 0, 0, 0.1),
+                        inset 0 0 60px rgba(255, 0, 0, 0.05);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid rgba(255, 0, 0, 0.2);
+            padding-bottom: 20px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ff0000, #cc0000);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            font-weight: 900;
+            color: white;
+            text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
+            border: 2px solid rgba(255, 0, 0, 0.5);
+        }
+
+        .logo-text {
+            font-size: 28px;
+            font-weight: bold;
+            color: #ff0000;
+            text-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+            letter-spacing: 2px;
+        }
+
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff0000, #cc0000);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin: 15px auto;
+            border: 3px solid rgba(255, 0, 0, 0.5);
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.2);
+        }
+
+        .username {
+            font-size: 28px;
+            font-weight: bold;
+            color: #ff3333;
+            text-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+        }
+
+        .discord-tag {
+            color: #882222;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .tier-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .tier-item {
+            background: rgba(255, 0, 0, 0.05);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 0, 0, 0.1);
+        }
+
+        .tier-item:hover {
+            background: rgba(255, 0, 0, 0.1);
+            transform: translateY(-3px);
+            border-color: rgba(255, 0, 0, 0.3);
+            box-shadow: 0 5px 20px rgba(255, 0, 0, 0.1);
+        }
+
+        .tier-label {
+            color: #882222;
+            font-size: 12px;
+            display: block;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .tier-value {
+            font-weight: bold;
+            font-size: 22px;
+            padding: 2px 12px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        .tier-HT {
+            color: #ff0000;
+            text-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+        }
+
+        .tier-LT {
+            color: #ff6666;
+            text-shadow: 0 0 20px rgba(255, 100, 100, 0.3);
+        }
+
+        .tier-NA {
+            color: #442222;
+        }
+
+        .updated {
+            text-align: center;
+            margin-top: 25px;
+            color: #552222;
+            font-size: 12px;
+            border-top: 1px solid rgba(255, 0, 0, 0.1);
+            padding-top: 20px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #882222;
+        }
+
+        .not-found {
+            text-align: center;
+            padding: 40px;
+            color: #ff3333;
+        }
+
+        .status-online {
+            display: inline-block;
+            background: #ff0000;
+            color: white;
+            padding: 2px 12px;
+            border-radius: 10px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 600px) {
+            .tier-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div id="content">
+                <div class="loading">Carregando perfil SixTiers...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const username = window.location.pathname.split('/').pop();
+        const SUPABASE_URL = 'https://SEU_PROJETO.supabase.co';
+        const SUPABASE_KEY = 'SUA_API_KEY';
+
+        async function loadPlayer() {
+            try {
+                const response = await fetch(
+                    `${SUPABASE_URL}/rest/v1/players?minecraft_username=eq.${encodeURIComponent(username)}`,
+                    {
+                        headers: {
+                            'apikey': SUPABASE_KEY,
+                            'Authorization': `Bearer ${SUPABASE_KEY}`
+                        }
+                    }
+                );
+
+                if (!response.ok) throw new Error('Erro ao buscar dados');
+
+                const data = await response.json();
+
+                if (data.length === 0) {
+                    document.getElementById('content').innerHTML = `
+                        <div class="not-found">
+                            <div style="font-size: 48px; margin-bottom: 20px;">😕</div>
+                            <h2>Jogador não encontrado</h2>
+                            <p style="color: #882222; margin-top: 10px;">Verifique se o nome está correto</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                const player = data[0];
+                
+                const categorias = [
+                    { key: 'overall_tier', label: '🏆 Overall' },
+                    { key: 'sword_tier', label: '⚔️ Sword' },
+                    { key: 'axe_tier', label: '🪓 Axe' },
+                    { key: 'crystal_tier', label: '💎 Crystal' },
+                    { key: 'elytra_tier', label: '🦅 Elytra' },
+                    { key: 'mace_tier', label: '🔨 Mace' },
+                    { key: 'ogv_tier', label: '⚡ OGV' },
+                    { key: 'trident_tier', label: '🔱 Trident' }
+                ];
+
+                const getTierClass = (tier) => {
+                    if (!tier) return 'tier-NA';
+                    if (tier.startsWith('HT')) return 'tier-HT';
+                    if (tier.startsWith('LT')) return 'tier-LT';
+                    return 'tier-NA';
+                };
+
+                const getDisplayTier = (tier) => tier || 'N/A';
+
+                const tierHTML = categorias.map(cat => `
+                    <div class="tier-item">
+                        <span class="tier-label">${cat.label}</span>
+                        <span class="tier-value ${getTierClass(player[cat.key])}">
+                            ${getDisplayTier(player[cat.key])}
+                        </span>
+                    </div>
+                `).join('');
+
+                const updatedAt = player.updated_at ? new Date(player.updated_at).toLocaleString('pt-BR') : 'Nunca';
+
+                document.getElementById('content').innerHTML = `
+                    <div class="header">
+                        <div class="logo-container">
+                            <div class="logo">6</div>
+                            <div class="logo-text">SIXTIERS</div>
+                        </div>
+                        <div class="avatar">👤</div>
+                        <div class="username">${player.minecraft_username}</div>
+                        <div class="discord-tag">ID: ${player.discord_id}</div>
+                        <div class="status-online">● Sistema SixTiers</div>
+                    </div>
+                    <div class="tier-grid">
+                        ${tierHTML}
+                    </div>
+                    <div class="updated">🔄 Última atualização: ${updatedAt}</div>
+                `;
+
+            } catch (error) {
+                console.error('Erro:', error);
+                document.getElementById('content').innerHTML = `
+                    <div class="not-found">
+                        <div style="font-size: 48px; margin-bottom: 20px;">❌</div>
+                        <h2>Erro ao carregar</h2>
+                        <p style="color: #882222; margin-top: 10px;">Tente novamente mais tarde</p>
+                    </div>
+                `;
+            }
+        }
+
+        loadPlayer();
+    </script>
+</body>
+</html>
