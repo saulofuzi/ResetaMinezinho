@@ -128,6 +128,7 @@
             display: flex;
             align-items: center;
             gap: 15px;
+            flex-wrap: wrap;
         }
 
         .profile-info h1 .points-badge {
@@ -308,6 +309,7 @@
             .profile-info h1 {
                 flex-direction: column;
                 gap: 8px;
+                align-items: center;
             }
         }
 
@@ -393,10 +395,6 @@
             { key: 'trident_tier', label: '🔱 Trident' }
         ];
 
-        function getAvatarUrl(username) {
-            return `https://crafatar.com/avatars/${username}?overlay&size=100`;
-        }
-
         async function loadProfile() {
             const content = document.getElementById('profileContent');
 
@@ -428,6 +426,9 @@
 
                 const player = data[0];
                 const mcUsername = player.minecraft_username;
+
+                // Usa a skin_url do banco ou fallback
+                const skinUrl = player.skin_url || `https://crafatar.com/avatars/${mcUsername}?overlay&size=100`;
 
                 // Calcula os pontos
                 const totalPoints = calculateOverallPoints(player);
@@ -463,13 +464,12 @@
                     : 'Nunca';
 
                 const initial = mcUsername.charAt(0).toUpperCase();
-                const avatarUrl = getAvatarUrl(mcUsername);
 
                 content.innerHTML = `
                     <div class="profile-card">
                         <div class="profile-header">
                             <div class="profile-avatar">
-                                <img src="${avatarUrl}" 
+                                <img src="${skinUrl}" 
                                      alt="${mcUsername}" 
                                      onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\\'fallback\\'>${initial}</span>'">
                             </div>
