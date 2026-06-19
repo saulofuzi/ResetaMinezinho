@@ -16,13 +16,15 @@
             background: #0a0000;
             min-height: 100vh;
             padding: 20px;
+            color: white;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1100px;
             margin: 0 auto;
         }
 
+        /* ===== HEADER ===== */
         .header {
             display: flex;
             justify-content: space-between;
@@ -39,7 +41,6 @@
             align-items: center;
             gap: 12px;
             text-decoration: none;
-            cursor: pointer;
         }
 
         .logo-icon {
@@ -80,6 +81,7 @@
             border-color: rgba(255, 0, 0, 0.3);
         }
 
+        /* ===== PERFIL ===== */
         .profile-card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.05);
@@ -90,28 +92,40 @@
         .profile-header {
             display: flex;
             align-items: center;
-            gap: 25px;
+            gap: 30px;
             margin-bottom: 30px;
             flex-wrap: wrap;
         }
 
         .profile-avatar {
-            width: 80px;
-            height: 80px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #ff0000, #cc0000);
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border: 3px solid rgba(255, 0, 0, 0.3);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 36px;
-            font-weight: 700;
-            color: white;
+            overflow: hidden;
             flex-shrink: 0;
+            position: relative;
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-avatar .fallback {
+            font-size: 40px;
+            font-weight: 700;
+            color: #666;
         }
 
         .profile-info h1 {
             color: white;
-            font-size: 28px;
+            font-size: 32px;
             font-weight: 700;
         }
 
@@ -127,10 +141,32 @@
             margin-top: 6px;
         }
 
+        .profile-stats {
+            display: flex;
+            gap: 30px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .profile-stats .stat {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #888;
+            font-size: 14px;
+        }
+
+        .profile-stats .stat span {
+            color: white;
+            font-weight: 600;
+        }
+
+        /* ===== TIERS ===== */
         .tiers-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr;
             gap: 10px;
+            margin-top: 20px;
         }
 
         .tier-item {
@@ -151,7 +187,7 @@
 
         .tier-label {
             color: #666;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 500;
         }
 
@@ -177,6 +213,7 @@
             background: transparent;
         }
 
+        /* ===== NOT FOUND ===== */
         .not-found {
             text-align: center;
             padding: 80px 20px;
@@ -197,6 +234,7 @@
             color: #444;
         }
 
+        /* ===== LOADING ===== */
         .loading {
             text-align: center;
             padding: 80px 20px;
@@ -218,14 +256,19 @@
             to { transform: rotate(360deg); }
         }
 
-        @media (max-width: 600px) {
+        /* ===== RESPONSIVO ===== */
+        @media (max-width: 768px) {
+            .tiers-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
             .profile-header {
                 flex-direction: column;
                 text-align: center;
             }
 
-            .tiers-grid {
-                grid-template-columns: 1fr;
+            .profile-stats {
+                justify-content: center;
             }
 
             .header {
@@ -241,10 +284,17 @@
                 padding: 20px;
             }
         }
+
+        @media (max-width: 480px) {
+            .tiers-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- HEADER -->
         <header class="header">
             <a href="/" class="logo">
                 <div class="logo-icon">6</div>
@@ -253,6 +303,7 @@
             <a class="back-btn" href="/">← Voltar ao ranking</a>
         </header>
 
+        <!-- CONTEÚDO -->
         <div id="profileContent">
             <div class="loading">
                 <div class="loading-spinner"></div>
@@ -263,10 +314,10 @@
 
     <script>
         // ============================================================
-        // 🔥 CONFIGURAÇÕES DO SUPABASE (CORRETAS - COM JWT) 🔥
+        // 🔥 CONFIGURAÇÕES DO SUPABASE 🔥
         // ============================================================
         const SUPABASE_URL = 'https://ucoqonyzmckwnktdtfrg.supabase.co';
-        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVjb3Fvbnl6bWNrd25rdGR0ZnJnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE4MjA1NjksImV4cCI6MjA5NzM5NjU2OX0.fBdjaUjTROT2VV3zMVBZnp_sIsCrA0p8NDy7c2BuQRc';
+        const SUPABASE_KEY = 'sb_publishable_AF-JxbMVdy5bxlDQcFdVaA_rmfuk8bj';
 
         const username = window.location.pathname.split('/').pop();
 
@@ -280,6 +331,15 @@
             { key: 'ogv_tier', label: '⚡ OGV' },
             { key: 'trident_tier', label: '🔱 Trident' }
         ];
+
+        // ===== FUNÇÃO PARA BUSCAR SKIN DO NAMEMC =====
+        function getSkinUrl(username) {
+            return `https://crafatar.com/renders/body/${username}?overlay`;
+        }
+
+        function getAvatarUrl(username) {
+            return `https://crafatar.com/avatars/${username}?overlay&size=100`;
+        }
 
         async function loadProfile() {
             const content = document.getElementById('profileContent');
@@ -311,6 +371,10 @@
                 }
 
                 const player = data[0];
+                const mcUsername = player.minecraft_username;
+
+                // Busca quantos tiers o jogador tem
+                const totalTiers = categorias.filter(cat => player[cat.key]).length;
 
                 const getTierClass = (tier) => {
                     if (!tier) return 'tier-na';
@@ -334,16 +398,27 @@
                     ? new Date(player.updated_at).toLocaleString('pt-BR') 
                     : 'Nunca';
 
-                const initial = player.minecraft_username.charAt(0).toUpperCase();
+                const initial = mcUsername.charAt(0).toUpperCase();
+
+                // Conta quantos tiers o jogador tem
+                const tierCount = categorias.filter(cat => player[cat.key]).length;
 
                 content.innerHTML = `
                     <div class="profile-card">
                         <div class="profile-header">
-                            <div class="profile-avatar">${initial}</div>
+                            <div class="profile-avatar">
+                                <img src="${getAvatarUrl(mcUsername)}" 
+                                     alt="${mcUsername}" 
+                                     onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\\'fallback\\'>${initial}</span>'">
+                            </div>
                             <div class="profile-info">
-                                <h1>${player.minecraft_username}</h1>
+                                <h1>${mcUsername}</h1>
                                 <div class="discord-id">Discord ID: ${player.discord_id}</div>
                                 <div class="updated">🔄 Última atualização: ${updatedAt}</div>
+                                <div class="profile-stats">
+                                    <div class="stat">🏆 <span>${tierCount}</span> tiers registrados</div>
+                                    <div class="stat">📊 <span>${totalTiers}</span> categorias</div>
+                                </div>
                             </div>
                         </div>
                         <div class="tiers-grid">
