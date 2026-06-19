@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SixTiers - Minecraft Tier List</title>
     <style>
-        /* ===== RESET E ESTILOS GLOBAIS ===== */
         * {
             margin: 0;
             padding: 0;
@@ -25,7 +24,6 @@
             margin: 0 auto;
         }
 
-        /* ===== HEADER ===== */
         .header {
             display: flex;
             justify-content: space-between;
@@ -118,7 +116,23 @@
             50% { opacity: 0.5; transform: scale(0.8); }
         }
 
-        /* ===== CATEGORIAS ===== */
+        .refresh-btn {
+            background: rgba(255, 0, 0, 0.15);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            color: #ff0000;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .refresh-btn:hover {
+            background: rgba(255, 0, 0, 0.25);
+            border-color: #ff0000;
+        }
+
         .categories {
             display: flex;
             gap: 4px;
@@ -150,7 +164,6 @@
             background: rgba(255, 0, 0, 0.1);
         }
 
-        /* ===== RANKING ===== */
         .ranking-header {
             display: flex;
             justify-content: space-between;
@@ -170,7 +183,6 @@
             font-size: 14px;
         }
 
-        /* ===== PLAYER CARD ===== */
         .player-card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.05);
@@ -289,7 +301,6 @@
             font-size: 12px;
         }
 
-        /* ===== LOADING ===== */
         .loading {
             text-align: center;
             padding: 60px 20px;
@@ -311,7 +322,19 @@
             to { transform: rotate(360deg); }
         }
 
-        /* ===== RESPONSIVO ===== */
+        .update-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid rgba(255, 0, 0, 0.2);
+            color: #888;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            backdrop-filter: blur(10px);
+        }
+
         @media (max-width: 768px) {
             .header {
                 flex-direction: column;
@@ -335,6 +358,13 @@
                 width: 100%;
                 justify-content: flex-start;
                 padding-left: 56px;
+            }
+
+            .update-badge {
+                bottom: 10px;
+                right: 10px;
+                font-size: 10px;
+                padding: 4px 12px;
             }
         }
 
@@ -371,6 +401,7 @@
                 <div class="search-box">
                     <input type="text" id="searchInput" placeholder="Buscar jogador..." onkeypress="if(event.key==='Enter')searchPlayer()">
                 </div>
+                <button class="refresh-btn" onclick="loadRanking(currentCategory)">🔄 Atualizar</button>
                 <div class="status">
                     <span class="status-dot"></span>
                     Online
@@ -403,6 +434,8 @@
         </div>
     </div>
 
+    <div class="update-badge" id="updateBadge">🔄 Atualização automática a cada 30s</div>
+
     <script>
         // ============================================================
         // 🔥 CONFIGURAÇÕES
@@ -411,6 +444,7 @@
         const SUPABASE_KEY = 'sb_publishable_AF-JxbMVdy5bxlDQcFdVaA_rmfuk8bj';
 
         let currentCategory = 'overall';
+        let updateInterval = null;
 
         // ============================================================
         // 🔥 SISTEMA DE PONTOS
@@ -447,7 +481,7 @@
         }
 
         // ============================================================
-        // 🔥 MAPEAMENTO DE CATEGORIAS
+        // 🔥 MAPEAMENTO
         // ============================================================
         const categoryDbMap = {
             'overall': 'overall_tier',
@@ -472,7 +506,7 @@
         };
 
         // ============================================================
-        // 🔥 FUNÇÕES AUXILIARES
+        // 🔥 FUNÇÕES
         // ============================================================
         function searchPlayer() {
             const username = document.getElementById('searchInput').value.trim();
@@ -498,7 +532,7 @@
         }
 
         // ============================================================
-        // 🔥 CARREGAR RANKING
+        // 🔥 CARREGAR RANKING (COM TIMESTAMP PARA EVITAR CACHE)
         // ============================================================
         async function loadRanking(category) {
             const list = document.getElementById('rankingList');
@@ -510,8 +544,9 @@
             `;
 
             try {
+                const timestamp = Date.now();
                 const response = await fetch(
-                    `${SUPABASE_URL}/rest/v1/players?select=*&limit=200`,
+                    `${SUPABASE_URL}/rest/v1/players?select=*&limit=200&_=${timestamp}`,
                     {
                         headers: {
                             'apikey': SUPABASE_KEY,
@@ -527,7 +562,6 @@
                 let sorted = [];
 
                 if (category === 'overall') {
-                    // Calcula pontos e ordena
                     const withPoints = data.map(player => ({
                         ...player,
                         overall_points: calculateOverallPoints(player)
@@ -609,6 +643,9 @@
                     `;
                 }).join('');
 
+                // Atualiza o badge com o horário
+                document.getElementById('updateBadge').textContent = `🔄 Atualizado: ${new Date().toLocaleTimeString()}`;
+
             } catch (error) {
                 console.error('Erro:', error);
                 list.innerHTML = `
@@ -633,9 +670,19 @@
         });
 
         // ============================================================
-        // 🔥 INICIALIZA
+        // 🔥 INICIALIZAÇÃO COM ATUALIZAÇÃO AUTOMÁTICA
         // ============================================================
         loadRanking('overall');
+
+        // Atualiza a cada 30 segundos
+        updateInterval = setInterval(() => {
+            loadRanking(currentCategory);
+        }, 30000);
+
+        // Limpa o intervalo quando a página for fechada
+        window.addEventListener('beforeunload', () => {
+            clearInterval(updateInterval);
+        });
     </script>
 </body>
 </html>
