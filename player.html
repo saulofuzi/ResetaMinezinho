@@ -9,20 +9,18 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
         }
 
         body {
             background: #0a0000;
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            padding: 40px 20px;
+            padding: 20px;
         }
 
         .container {
             max-width: 900px;
-            width: 100%;
+            margin: 0 auto;
         }
 
         /* ===== HEADER ===== */
@@ -31,64 +29,62 @@
             justify-content: space-between;
             align-items: center;
             padding: 20px 0;
-            border-bottom: 1px solid rgba(255, 0, 0, 0.15);
+            border-bottom: 1px solid rgba(255, 0, 0, 0.1);
             margin-bottom: 30px;
             flex-wrap: wrap;
             gap: 15px;
         }
 
-        .logo-area {
+        .logo {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
+            text-decoration: none;
             cursor: pointer;
         }
 
-        .logo-circle {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, #ff0000, #cc0000);
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: #ff0000;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
+            font-size: 22px;
             font-weight: 900;
             color: white;
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
         }
 
         .logo-text {
-            font-size: 28px;
-            font-weight: 800;
-            color: #ff0000;
-            letter-spacing: 1px;
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
         }
 
         .logo-text span {
-            color: #882222;
-            font-weight: 400;
+            color: #ff0000;
         }
 
         .back-btn {
-            color: #882222;
+            color: #666;
             text-decoration: none;
             font-size: 14px;
             padding: 8px 16px;
-            border: 1px solid rgba(255, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 8px;
             transition: all 0.3s;
         }
 
         .back-btn:hover {
             color: #ff0000;
-            border-color: #ff0000;
+            border-color: rgba(255, 0, 0, 0.3);
         }
 
         /* ===== PERFIL ===== */
         .profile-card {
-            background: rgba(20, 0, 0, 0.6);
-            border: 1px solid rgba(255, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 16px;
             padding: 40px;
         }
@@ -112,37 +108,39 @@
             font-size: 36px;
             font-weight: 700;
             color: white;
-            box-shadow: 0 0 40px rgba(255, 0, 0, 0.2);
+            flex-shrink: 0;
         }
 
         .profile-info h1 {
             color: white;
             font-size: 28px;
+            font-weight: 700;
         }
 
         .profile-info .discord-id {
-            color: #882222;
+            color: #666;
             font-size: 14px;
+            margin-top: 4px;
         }
 
         .profile-info .updated {
-            color: #552222;
+            color: #444;
             font-size: 13px;
-            margin-top: 5px;
+            margin-top: 6px;
         }
 
         /* ===== TIERS ===== */
         .tiers-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 12px;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
         }
 
         .tier-item {
-            background: rgba(255, 0, 0, 0.03);
-            border: 1px solid rgba(255, 0, 0, 0.08);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 10px;
-            padding: 16px 20px;
+            padding: 14px 18px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -150,18 +148,18 @@
         }
 
         .tier-item:hover {
-            background: rgba(255, 0, 0, 0.05);
-            border-color: rgba(255, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 0, 0, 0.15);
         }
 
         .tier-label {
-            color: #882222;
+            color: #666;
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 500;
         }
 
         .tier-value {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 700;
             padding: 2px 14px;
             border-radius: 6px;
@@ -178,14 +176,14 @@
         }
 
         .tier-na {
-            color: #442222;
-            background: rgba(255, 255, 255, 0.02);
+            color: #333;
+            background: transparent;
         }
 
+        /* ===== NOT FOUND ===== */
         .not-found {
             text-align: center;
-            padding: 60px 20px;
-            color: #882222;
+            padding: 80px 20px;
         }
 
         .not-found .big-icon {
@@ -195,9 +193,37 @@
 
         .not-found h2 {
             color: #ff3333;
+            font-size: 24px;
             margin-bottom: 10px;
         }
 
+        .not-found p {
+            color: #444;
+        }
+
+        /* ===== LOADING ===== */
+        .loading {
+            text-align: center;
+            padding: 80px 20px;
+            color: #444;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 3px solid rgba(255, 0, 0, 0.1);
+            border-top: 3px solid #ff0000;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 15px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ===== RESPONSIVO ===== */
         @media (max-width: 600px) {
             .profile-header {
                 flex-direction: column;
@@ -205,7 +231,7 @@
             }
 
             .tiers-grid {
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: 1fr;
             }
 
             .header {
@@ -216,11 +242,9 @@
             .back-btn {
                 text-align: center;
             }
-        }
 
-        @media (max-width: 400px) {
-            .tiers-grid {
-                grid-template-columns: 1fr;
+            .profile-card {
+                padding: 20px;
             }
         }
     </style>
@@ -229,23 +253,26 @@
     <div class="container">
         <!-- HEADER -->
         <header class="header">
-            <div class="logo-area" onclick="window.location.href='/'">
-                <div class="logo-circle">6</div>
+            <a href="/" class="logo">
+                <div class="logo-icon">6</div>
                 <div class="logo-text">Six<span>Tiers</span></div>
-            </div>
+            </a>
             <a class="back-btn" href="/">← Voltar ao ranking</a>
         </header>
 
         <!-- CONTEÚDO -->
         <div id="profileContent">
-            <div style="text-align:center;color:#552222;padding:40px;">Carregando perfil...</div>
+            <div class="loading">
+                <div class="loading-spinner"></div>
+                <div>Carregando perfil...</div>
+            </div>
         </div>
     </div>
 
     <script>
         // ===== CONFIGURAÇÕES =====
         const SUPABASE_URL = 'https://ucoqonyzmckwnktdtfrg.supabase.co';
-        const SUPABASE_KEY = 'sb_publishable_AF-JxbMWdy5bxLDQcFdVaA_rmfuk...';
+        const SUPABASE_KEY = 'sb_publishable_AF-JxbMWdy5bxLDQcFdVaA_rmfuk...'; // ← TROQUE PELA SUA CHAVE COMPLETA
 
         const username = window.location.pathname.split('/').pop();
 
@@ -300,7 +327,7 @@
                     return 'tier-na';
                 };
 
-                const getDisplayTier = (tier) => tier || 'N/A';
+                const getDisplayTier = (tier) => tier || '—';
 
                 const tiersHTML = categorias.map(cat => `
                     <div class="tier-item">
@@ -312,40 +339,4 @@
                 `).join('');
 
                 const updatedAt = player.updated_at 
-                    ? new Date(player.updated_at).toLocaleString('pt-BR') 
-                    : 'Nunca';
-
-                const initial = player.minecraft_username.charAt(0).toUpperCase();
-
-                content.innerHTML = `
-                    <div class="profile-card">
-                        <div class="profile-header">
-                            <div class="profile-avatar">${initial}</div>
-                            <div class="profile-info">
-                                <h1>${player.minecraft_username}</h1>
-                                <div class="discord-id">ID: ${player.discord_id}</div>
-                                <div class="updated">🔄 Última atualização: ${updatedAt}</div>
-                            </div>
-                        </div>
-                        <div class="tiers-grid">
-                            ${tiersHTML}
-                        </div>
-                    </div>
-                `;
-
-            } catch (error) {
-                console.error('Erro:', error);
-                content.innerHTML = `
-                    <div class="not-found">
-                        <div class="big-icon">❌</div>
-                        <h2>Erro ao carregar</h2>
-                        <p>Tente novamente mais tarde</p>
-                    </div>
-                `;
-            }
-        }
-
-        loadProfile();
-    </script>
-</body>
-</html>
+                    ? new Date(player.updated_at).toLocaleString('
