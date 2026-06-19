@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SixTiers - Perfil do Jogador</title>
     <style>
-        /* ===== RESET ===== */
         * {
             margin: 0;
             padding: 0;
@@ -25,7 +24,6 @@
             margin: 0 auto;
         }
 
-        /* ===== HEADER ===== */
         .header {
             display: flex;
             justify-content: space-between;
@@ -83,7 +81,23 @@
             border-color: rgba(255, 0, 0, 0.3);
         }
 
-        /* ===== PERFIL ===== */
+        .refresh-btn {
+            background: rgba(255, 0, 0, 0.15);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            color: #ff0000;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .refresh-btn:hover {
+            background: rgba(255, 0, 0, 0.25);
+            border-color: #ff0000;
+        }
+
         .profile-card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.05);
@@ -174,7 +188,6 @@
             font-weight: 600;
         }
 
-        /* ===== TIERS ===== */
         .tiers-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
@@ -241,7 +254,6 @@
             background: transparent;
         }
 
-        /* ===== NOT FOUND / LOADING ===== */
         .not-found {
             text-align: center;
             padding: 80px 20px;
@@ -283,7 +295,19 @@
             to { transform: rotate(360deg); }
         }
 
-        /* ===== RESPONSIVO ===== */
+        .update-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid rgba(255, 0, 0, 0.2);
+            color: #888;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            backdrop-filter: blur(10px);
+        }
+
         @media (max-width: 768px) {
             .tiers-grid {
                 grid-template-columns: 1fr 1fr;
@@ -316,6 +340,13 @@
                 gap: 8px;
                 align-items: center;
             }
+
+            .update-badge {
+                bottom: 10px;
+                right: 10px;
+                font-size: 10px;
+                padding: 4px 12px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -333,7 +364,10 @@
                 <div class="logo-icon">6</div>
                 <div class="logo-text">Six<span>Tiers</span></div>
             </a>
-            <a class="back-btn" href="/">← Voltar ao ranking</a>
+            <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+                <button class="refresh-btn" onclick="loadProfile()">🔄 Atualizar</button>
+                <a class="back-btn" href="/">← Voltar ao ranking</a>
+            </div>
         </header>
 
         <!-- CONTEÚDO -->
@@ -345,6 +379,8 @@
         </div>
     </div>
 
+    <div class="update-badge" id="updateBadge">🔄 Atualização automática a cada 30s</div>
+
     <script>
         // ============================================================
         // 🔥 CONFIGURAÇÕES
@@ -353,6 +389,7 @@
         const SUPABASE_KEY = 'sb_publishable_AF-JxbMVdy5bxlDQcFdVaA_rmfuk8bj';
 
         const username = window.location.pathname.split('/').pop();
+        let updateInterval = null;
 
         // ============================================================
         // 🔥 SISTEMA DE PONTOS
@@ -404,14 +441,21 @@
         }
 
         // ============================================================
-        // 🔥 CARREGAR PERFIL
+        // 🔥 CARREGAR PERFIL (COM TIMESTAMP)
         // ============================================================
         async function loadProfile() {
             const content = document.getElementById('profileContent');
+            content.innerHTML = `
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    <div>Carregando perfil...</div>
+                </div>
+            `;
 
             try {
+                const timestamp = Date.now();
                 const response = await fetch(
-                    `${SUPABASE_URL}/rest/v1/players?minecraft_username=eq.${encodeURIComponent(username)}`,
+                    `${SUPABASE_URL}/rest/v1/players?minecraft_username=eq.${encodeURIComponent(username)}&_=${timestamp}`,
                     {
                         headers: {
                             'apikey': SUPABASE_KEY,
@@ -437,11 +481,7 @@
 
                 const player = data[0];
                 const mcUsername = player.minecraft_username;
-
-                // Usa a skin_url do banco ou fallback
                 const skinUrl = player.skin_url || getSkinUrl(mcUsername);
-
-                // Calcula pontos
                 const totalPoints = calculateOverallPoints(player);
                 const totalTiers = categorias.filter(cat => player[cat.key]).length;
 
@@ -502,6 +542,8 @@
                     </div>
                 `;
 
+                document.getElementById('updateBadge').textContent = `🔄 Atualizado: ${new Date().toLocaleTimeString()}`;
+
             } catch (error) {
                 console.error('Erro:', error);
                 content.innerHTML = `
@@ -514,7 +556,18 @@
             }
         }
 
+        // ============================================================
+        // 🔥 INICIALIZAÇÃO COM ATUALIZAÇÃO AUTOMÁTICA
+        // ============================================================
         loadProfile();
+
+        updateInterval = setInterval(() => {
+            loadProfile();
+        }, 30000);
+
+        window.addEventListener('beforeunload', () => {
+            clearInterval(updateInterval);
+        });
     </script>
 </body>
 </html>
