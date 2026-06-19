@@ -339,4 +339,40 @@
                 `).join('');
 
                 const updatedAt = player.updated_at 
-                    ? new Date(player.updated_at).toLocaleString('
+                    ? new Date(player.updated_at).toLocaleString('pt-BR') 
+                    : 'Nunca';
+
+                const initial = player.minecraft_username.charAt(0).toUpperCase();
+
+                content.innerHTML = `
+                    <div class="profile-card">
+                        <div class="profile-header">
+                            <div class="profile-avatar">${initial}</div>
+                            <div class="profile-info">
+                                <h1>${player.minecraft_username}</h1>
+                                <div class="discord-id">Discord ID: ${player.discord_id}</div>
+                                <div class="updated">🔄 Última atualização: ${updatedAt}</div>
+                            </div>
+                        </div>
+                        <div class="tiers-grid">
+                            ${tiersHTML}
+                        </div>
+                    </div>
+                `;
+
+            } catch (error) {
+                console.error('Erro:', error);
+                content.innerHTML = `
+                    <div class="not-found">
+                        <div class="big-icon">❌</div>
+                        <h2>Erro ao carregar</h2>
+                        <p>Tente novamente mais tarde</p>
+                    </div>
+                `;
+            }
+        }
+
+        loadProfile();
+    </script>
+</body>
+</html>
